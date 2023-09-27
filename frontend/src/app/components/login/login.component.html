@@ -1,0 +1,47 @@
+<h1>login page!</h1>
+<div class="container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+
+      <label for="email">Email</label>
+      <input placeholder="Email" formControlName="email" class="form-control">
+      <!-- <mat-hint *ngIf='loginForm.controls.[email].errors'>Email is required</mat-hint> -->
+
+      <label for="password">Password</label>
+      <input type="password" placeholder="password" formControlName="password" class="form-control">
+      <!-- <mat-hint *ngIf="loginForm.controls.password.errors">Password is required</mat-hint> -->
+
+
+      <!-- <button  [disabled]="!loginForm.valid" type="submit" class="btn btn-success">Login</button> -->
+      <!-- <button type="submit" class="btn btn-success">Login</button> -->
+      <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Login</button>
+
+
+    </div>
+  </form>
+</div>
+
+<p> user1 "email": "thor192@com",
+  "password": "thor192"</p>
+<p> user2 "email": "thor92@com",
+  "password": "thor92"</p>
+<!-- </div>
+<h1>login page!</h1>
+<div class="container">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    
+    <input placeholder="Email" formControlName="email" class="form-control">
+   // <mat-hint *ngIf='loginForm.controls.[email].errors'>Email is required</mat-hint>
+    
+    
+    <input  type="password" placeholder="password" formControlName="password" class="form-control">
+    //<mat-hint *ngIf="loginForm.controls.password.errors">Password is required</mat-hint>
+    
+    <button  [disabled]="!loginForm.valid" type="submit" class="btn btn-success">Login</button>
+    
+    
+  </div>
+</form>
+
+</div> -->

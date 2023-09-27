@@ -1,3 +1,5 @@
+import { ListEntryDTO } from "src/list/models/list-entry.dto";
+
 export interface UserDtO {
     items?: any;
     id?: number;
@@ -7,6 +9,8 @@ export interface UserDtO {
     password?: string;
     role?: UserRole;
     profileImage?: string;
+    listEntries?: ListEntryDTO[];
+    
 }
 enum UserRole {
     ADMIN = 'admin',

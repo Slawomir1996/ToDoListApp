@@ -1,0 +1,27 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  mat-toolbar{
+    height: 7vh;
+    color: white;
+  //  background-color: royalblue;
+   justify-content: space-between;
+   background-image: linear-gradient(340deg, royalblue 0%, #09c6f9 100%);
+  }
+  a{
+    margin-right: 2rem;
+    text-decoration: none;
+    color: white;
+    padding: 8px;
+    // border: 2px solid white;
+    border-radius: 10px;
+  }
+  // .logo:hover{
+    
+  // }
+  a:hover{
+    text-decoration: none;
+    color: white;
+    background-color: royalblue
+ 
+  }

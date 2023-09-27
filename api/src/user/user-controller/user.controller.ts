@@ -10,7 +10,8 @@ import { Pagination, } from 'nestjs-typeorm-paginate';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { v4 as uuidv4 } from 'uuid';
 import { diskStorage } from 'multer';
-import path, { join } from 'path';
+import { join } from 'path';
+import path = require('path');
 
 export const storage = {
     storage: diskStorage({
@@ -19,7 +20,7 @@ export const storage = {
             const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
             const extension: string = path.parse(file.originalname).ext;
 
-            cb(null, `${filename}${extension}`)
+            cb(null, `${filename}${extension}`);
         }
     })
 
@@ -32,6 +33,7 @@ export class UserController {
     findOneById(@Param('id') id: string): Observable<UserDtO> {
         return this.userService.findOneByID(Number(id))
     }
+
     @Post()
     create(@Body() user: UserDtO): Observable<UserDtO | Object> {
         return this.userService.create(user).pipe(
@@ -48,7 +50,8 @@ export class UserController {
             })
         )
     }
-
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @hasRoles(UserRole.ADMIN)
     @Get()
     index(
         @Query('page') page: number = 1,
@@ -70,14 +73,14 @@ export class UserController {
         }
     }
 
-    @hasRoles(UserRole.ADMIN)
-    @UseGuards(JwtAuthGuard, RolesGuard)
+
+    @UseGuards(JwtAuthGuard)
     @Delete(':id')
     deleteOne(@Param('id') id: string): Observable<any> {
         return this.userService.deleteOne(Number(id));
     }
 
-    @UseGuards(JwtAuthGuard, UserIsUserGuard)
+    // @UseGuards(JwtAuthGuard, UserIsUserGuard)
     @Put(':id')
     updateOne(@Param('id') id: string, @Body() user: UserDtO): Observable<any> {
         return this.userService.updateOne(Number(id), user);
@@ -104,6 +107,6 @@ export class UserController {
 
     @Get('profile-image/:imagename')
     findProfileImage(@Param('imagename') imagename, @Res() res): Observable<Object> {
-        return of(res.sendFile(join(process.cwd(), 'uploads/profileimages/' + imagename)));
+        return of(res.sendFile(join(process.cwd(), './uploads/profileimages/' + imagename)));
     }
 }

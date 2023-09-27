@@ -11,7 +11,9 @@ import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginat
 @Injectable()
 export class UserService {
 
-    constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
+
+    constructor(
+        @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
         private authService: AuthService
     ) { }
 
@@ -61,6 +63,7 @@ export class UserService {
             take: Number(options.limit) || 5,
             order: { id: "ASC" },
             select: ['id', 'name', 'username', 'email', 'role'],
+
             where: [
                 { username: Like(`%${user.username}%`) }
             ]
@@ -139,10 +142,11 @@ export class UserService {
     }
     findOneByID(id: number): Observable<UserDtO> {
         return from(this.userRepository.findOne({
-            select: ['id', 'name', 'username', 'email', 'role', 'profileImage'],
+            select: ['id', 'name', 'username', 'email', 'role', 'profileImage',],
+
             where: {
                 id,
-            },
+            }
         }))
     }
 

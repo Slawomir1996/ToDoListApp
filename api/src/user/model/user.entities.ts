@@ -1,4 +1,5 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ListEntryEntity } from "src/list/models/list-entry.entity";
+import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import UserRole from "./user.dto";
 
 
@@ -18,7 +19,7 @@ export class UserEntity {
     @Column({ unique: true, })
     email: string;
 
-    @Column({ select: true })
+    @Column({ select: false })
     password: string;
 
 
@@ -29,10 +30,12 @@ export class UserEntity {
     @Column({ nullable: true })
     profileImage: string;
 
-
-
+    @OneToMany(() => ListEntryEntity, (list) => list.author)
+    lists: ListEntryEntity
+    
     @BeforeInsert()
     emailToLowerCase() {
         this.email = this.email.toLowerCase();
     }
+    
 }

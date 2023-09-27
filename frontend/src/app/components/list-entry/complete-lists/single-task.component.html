@@ -1,0 +1,22 @@
+
+<app-calendar ></app-calendar>
+<div  *ngIf="(listEntry$ | async) as listEntry"   class="main-div">
+    <h1>{{listEntry?.title}}</h1>
+    <mat-card  class="card">
+        <mat-card-header>
+            <div style="display: flex; flex-direction: row;">
+                
+                <div style="margin-left: 20px;">
+                    <h1>{{listEntry.title}}</h1>
+                    <h2>tast:{{listEntry.body}}</h2>
+                <small>{{listEntry.author?.name}}</small>
+           
+                <button (click)=" openDailog()">EDIT</button>
+                   
+                </div>
+            </div>
+        </mat-card-header>
+        
+    </mat-card>
+</div>
+

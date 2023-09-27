@@ -15,16 +15,15 @@ export class UserIsUserGuard implements CanActivate {
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
         const request = context.switchToHttp().getRequest();
         const params = request.params;
-        // console.log(params);
+
         const user: UserDtO = request.user;
-        // console.log(request.user);
+
         return this.userService.findOneByID(user.id).pipe(
             map((user: UserDtO) => {
                 let hasPermission = false;
                 if (user.id === Number(params.id)) {
                     hasPermission = true;
                 }
-                // console.log(hasPermission);
                 return user && hasPermission;
             })
         )

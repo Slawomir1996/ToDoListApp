@@ -1,0 +1,50 @@
+<!-- <h1 class="title">{{(listByTitle$ | async)?.items?.[0]?.title}}</h1> -->
+<app-calendar></app-calendar>
+<app-heder></app-heder>
+<div class="section">
+  <form [formGroup]="form">
+
+    <div class="todo">
+      <div class="header" style="width:70vw;">
+
+
+        <input type="date"  class="todo-input form-control" matInput placeholder="Title" formControlName="title">
+
+        <br>
+
+        <input class="todo-input form-control" placeholder="Your task" formControlName="body">
+        <br>
+
+        <label for="radioInput">Is Done?</label>
+        <input type="radio" formControlName="isDone" [value]="true">
+
+        <button type="submit" class="btn btn-success"  (click)="add()">Add </button>
+      </div>
+
+
+
+    </div>
+
+  </form>
+</div>
+
+
+<div *ngFor="let list of (listByTitle$ | async)?.items " class="main-div" >
+  <br>
+  <mat-card class="card">
+    <mat-card-header>
+      <div style="display: flex; flex-direction: row;">
+
+        <div style="margin-left: 20px;" routerLink='id/{{list.id}}'>
+          <h1>{{list?.title}}</h1>
+          <h2>tast: {{list.body}}</h2>
+          <h2>isDone?: {{list.isDone}}</h2>
+          <small>{{list.author?.name}}</small>
+          
+          
+        </div>
+      </div>
+    </mat-card-header>
+  
+  </mat-card>
+</div>

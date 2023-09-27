@@ -1,0 +1,12 @@
+<mat-toolbar>
+  <a routerLink="/workspace" class="logo">To Do List App</a>
+  <div class="links">
+    <a routerLink="/login">login</a>
+    <a   routerLink="/register"> Register</a>
+    <a  routerLink="/workspace">Workspace</a>
+    <a  routerLink="/update-profile">Admin</a>
+<button (click)="logout()">Logout</button>
+  </div>
+</mat-toolbar>
+<!-- <app-calendar ></app-calendar> -->
+<router-outlet></router-outlet>
