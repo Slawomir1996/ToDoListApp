@@ -15,6 +15,7 @@ import { SingleTaskComponent } from './components/list-entry/complete-lists/sing
 import { ListForDayComponentComponent } from './components/list-entry/list-for-day-component/list-for-day-component.component';
 
 
+
 const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'register', component: RegisterComponent },
@@ -73,6 +74,7 @@ const routes: Routes = [
     component: CreateListEntryComponentComponent,
     canActivate: [AuthGuard]
   },
+
   // {
   //   path:'',
   //   redirectTo: '/workspace',

@@ -38,8 +38,8 @@ import { EditItemComponent } from './components/edit-item/edit-item.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { WeatherComponent } from './weather/weather.component';
 import { HederComponent } from './heder/heder.component';
+
 
 
 // import { tokenGetter } from './services/authentication-service/authentication.service';
@@ -62,13 +62,7 @@ import { HederComponent } from './heder/heder.component';
     ListForDayComponentComponent,
     EditItemComponent,
     CalendarComponent,
-    WeatherComponent,
     HederComponent,
-
-   
-
-
-
     // CreateBlogEntryComponent,
     // ViewBlogEntryComponent
 

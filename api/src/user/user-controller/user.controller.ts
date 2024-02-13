@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors, Request, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors, Request, Res, UploadedFiles } from '@nestjs/common';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { hasRoles } from 'src/auth/decorator/role.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-guard';
@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { diskStorage } from 'multer';
 import { join } from 'path';
 import path = require('path');
+import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
 export const storage = {
     storage: diskStorage({
@@ -104,9 +105,10 @@ export class UserController {
             map((user: UserDtO) => ({ profileImage: user.profileImage }))
         )
     }
+ 
 
     @Get('profile-image/:imagename')
-    findProfileImage(@Param('imagename') imagename, @Res() res): Observable<Object> {
+    findProfileImage(@Param('imagename') imagename: string, @Res() res): Observable<Object> {
         return of(res.sendFile(join(process.cwd(), './uploads/profileimages/' + imagename)));
     }
 }
