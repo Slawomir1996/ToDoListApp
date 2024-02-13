@@ -1,12 +1,51 @@
 <mat-toolbar>
   <a routerLink="/workspace" class="logo">To Do List App</a>
-  <div class="links">
-    <a routerLink="/login">login</a>
-    <a   routerLink="/register"> Register</a>
-    <a  routerLink="/workspace">Workspace</a>
-    <a  routerLink="/update-profile">Admin</a>
-<button (click)="logout()">Logout</button>
+  <div class="burgerMenu" >
+    <mat-form-field style="margin-left: 20px;" name="loginRegisterDropdown" >
+      <mat-select placeholder="menu">
+        <mat-option *ngIf="!isLoggedIn()" routerLink="/login">login</mat-option>
+        <mat-option *ngIf="!isLoggedIn()" routerLink="/register"> Register</mat-option>
+        <mat-option *ngIf="isLoggedIn()"   routerLink="/update-profile">Admin</mat-option>
+        <mat-option class="logoutBtn" *ngIf="isLoggedIn()" (click)="logout()">Logout</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="links mainMenu">
+    <a *ngIf="!isLoggedIn()" routerLink="/login">login</a>
+    <a *ngIf="!isLoggedIn()" routerLink="/register"> Register</a>
+    <a *ngIf="isLoggedIn()"  routerLink="/workspace">Workspace</a>
+    <a *ngIf="isLoggedIn()"   routerLink="/update-profile">Admin</a>
+<button class="logoutBtn" *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
   </div>
 </mat-toolbar>
+<!-- 
+<nav class="navbar">
+  <a class="navbar-brand" routerLink="/workspace">To Do List App</a>
+  <button class="burger-menu" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <ul class="navbar-menu" [ngClass]="{ 'active': isMenuOpen }">
+    <li class="nav-item" *ngIf="!isLoggedIn()">
+      <a class="nav-link" routerLink="/login">Login</a>
+    </li>
+    <li class="nav-item" *ngIf="!isLoggedIn()">
+      <a class="nav-link" routerLink="/register">Register</a>
+    </li>
+    <li class="nav-item" *ngIf="isLoggedIn()">
+      <a class="nav-link" routerLink="/workspace">Workspace</a>
+    </li>
+    <li class="nav-item" *ngIf="isLoggedIn()">
+      <a class="nav-link" routerLink="/update-profile">Admin</a>
+    </li>
+    <li class="nav-item" *ngIf="isLoggedIn()">
+      <button class="logoutBtn" (click)="logout()">Logout</button>
+    </li>
+  </ul>
+</nav> -->
+
+
 <!-- <app-calendar ></app-calendar> -->
+
 <router-outlet></router-outlet>

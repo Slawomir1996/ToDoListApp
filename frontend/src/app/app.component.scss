@@ -1,12 +1,37 @@
 .example-spacer {
     flex: 1 1 auto;
   }
+  $breakpoints: (
+  small: 480px,
+  medium: 768px,
+  large: 1024px
+);
+.burgerMenu{
+  @media (max-width: map-get($breakpoints, small)) {
+    display: block;
+  }
+  @media (min-width: map-get($breakpoints, small)) {
+    display: none;
+  }
+}
+.mainMenu{
+  @media (max-width: map-get($breakpoints, small)) {
+    display: none;
+  }
+  @media (min-width: map-get($breakpoints, medium)) {
+    display: block;
+  }
+}
   mat-toolbar{
     height: 7vh;
+    width: 100%;
     color: white;
-  //  background-color: royalblue;
    justify-content: space-between;
-   background-image: linear-gradient(340deg, royalblue 0%, #09c6f9 100%);
+  background-color: rgba(65, 105, 225, 0.75);
+  
+  }
+  @media screen {
+    
   }
   a{
     margin-right: 2rem;
@@ -25,3 +50,19 @@
     background-color: royalblue
  
   }
+.logoutBtn{
+  margin-right: 2rem;
+    text-decoration: none;
+    background-color: rgba(64, 93, 189, 0.034);
+    color: white;
+    padding: 4px;
+    border: none;
+    border-radius: 10px;
+
+}
+.logoutBtn:hover{
+  text-decoration: none;
+  color: white;
+  background-color: rgba(65, 105, 225, 0.76)
+}
+// MDB SCSS

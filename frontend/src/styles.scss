@@ -3,3 +3,9 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
 background-color: lightgray; }
+
+$breakpoints: (
+  small: 480px,
+  medium: 768px,
+  large: 1024px
+);

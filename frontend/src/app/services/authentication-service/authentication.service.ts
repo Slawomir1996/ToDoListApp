@@ -32,8 +32,10 @@ export class AuthenticationService {
         localStorage.setItem(JWT_NAME, token.access_token);
         return token;
       })
+      
     )
   }
+  
 
   logout() {
     localStorage.removeItem(JWT_NAME);
