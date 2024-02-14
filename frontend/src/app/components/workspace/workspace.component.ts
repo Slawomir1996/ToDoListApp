@@ -1,12 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { Title } from '@angular/platform-browser';
-import { map, Observable, switchMap, tap } from 'rxjs';
 import { ListEntriesPageable } from 'src/app/models/list-entry.dto';
-import { UserDtO } from 'src/app/models/user.dto';
-import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
-import { ListService } from 'src/app/services/list-service/list.service';
-import { UserService } from 'src/app/services/user/user.service';
 import { Router, ActivatedRoute, Data } from '@angular/router';
 
 
@@ -20,8 +13,7 @@ export class WorkspaceComponent implements OnInit {
   dataSource: ListEntriesPageable | any = null;
   filterValue: string | any;
 
-  constructor(private listService: ListService, private authService: AuthenticationService,
-    private userService: UserService,
+  constructor(
     private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {

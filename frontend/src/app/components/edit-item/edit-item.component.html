@@ -4,7 +4,7 @@
     <div class="todo">
       <div class="header" style="width:70vw;">
 
-        <input type="text" class="todo-input form-control" matInput style="color: black;" formControlName="id" >
+        <input type="text" class="todo-input form-control idInput" matInput style="color: black;" formControlName="id" >
 
         <input type="date"  class="todo-input form-control" style="color: black;" matInput  formControlName="title">
 
@@ -14,13 +14,15 @@
 
 
         <br>
+        <div class="radioLabel">
+          <label for="radioInput" >Is Done?</label>
+          <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox" formControlName="isDone" [value]="true">
+          <br>
+        </div>
 
-        <label for="radioInput">Is Done?</label>
-        <input type="radio" formControlName="isDone" [value]="true">
+        <button mat-flat-button class="edit" [disabled]="!form.valid" type="submit">Update</button>
 
-        <button mat-flat-button color="primary" [disabled]="!form.valid" type="submit">Update task</button>
-
-        <button mat-flat-button color="primary" (click)="clouse()" >X</button>
+        <button mat-flat-button class="delete" (click)="clouse()" >Delete</button>
       </div>
 
 

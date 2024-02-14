@@ -1,19 +1,19 @@
 
-<app-calendar ></app-calendar>
 <div class="section">
   <form [formGroup]="form">
-
+    
     <div class="todo">
       <div class="header" style="width:70vw;">
-
-   
-       
+        
+        <app-calendar ></app-calendar>
+        
+        
         
         <input type="hidden" formControlName="title"  >
-
+        
         <br>
-
-        <input class="todo-input form-control" placeholder="Your task" formControlName="body">
+        
+        <input  class="todo-input form-control" placeholder="Your task" formControlName="body">
         <br>
 
         <label for="radioInput">Is Done?</label>
