@@ -12,19 +12,14 @@ export interface LoginForm {
 
 export const JWT_NAME = 'blog-token';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-
   constructor(private http: HttpClient,
     private jwtHelper: JwtHelperService
   ) { }
-
-  //name1@g.com qwe12
+  
   login(loginForm: LoginForm) {
 
     return this.http.post<any>('/api/users/login', { email: loginForm.email, password: loginForm.password }).pipe(
@@ -36,8 +31,7 @@ export class AuthenticationService {
     )
   }
   
-
-  logout() {
+logout() {
     localStorage.removeItem(JWT_NAME);
   }
 
@@ -60,6 +54,4 @@ export class AuthenticationService {
       ));
 
   }
-
-
 }

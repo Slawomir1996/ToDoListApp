@@ -40,12 +40,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { HederComponent } from './heder/heder.component';
 
-
-
-
-// import { tokenGetter } from './services/authentication-service/authentication.service';
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,12 +58,8 @@ import { HederComponent } from './heder/heder.component';
     EditItemComponent,
     CalendarComponent,
     HederComponent,
-    // CreateBlogEntryComponent,
-    // ViewBlogEntryComponent
-
   ],
   imports: [
-
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -82,8 +72,6 @@ import { HederComponent } from './heder/heder.component';
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    
-
     MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
@@ -93,9 +81,6 @@ import { HederComponent } from './heder/heder.component';
     MatPaginatorModule,
     MatCardModule,
     MatDialogModule,
- 
-
-
   ],
   providers: [
     WINDOW_PROVIDERS,
@@ -106,9 +91,6 @@ import { HederComponent } from './heder/heder.component';
       useClass: JwtInterceptor,
       multi: true
     },
-    
-   
-
   ],
   bootstrap: [AppComponent]
 })
