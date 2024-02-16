@@ -43,7 +43,7 @@
 .todo button {
     display: flex;
     justify-content: center;
-    margin: auto;
+   margin-left: 3rem;
     font-size: 1.5rem;
     cursor: pointer;
     background-color: rgba(26, 228, 7, 0.7);
@@ -55,9 +55,9 @@
 }
 
 
-.complete {
-    color: var(--light-blue);
-}
+// .complete {
+//     color: var(--light-blue);
+// }
 
 
 mat-card{ width: 94vw;

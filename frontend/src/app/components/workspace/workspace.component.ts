@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ListEntriesPageable } from 'src/app/models/list-entry.dto';
 import { Router, ActivatedRoute, Data } from '@angular/router';
+import { ListService } from 'src/app/services/list-service/list.service';
+import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
+import { UserService } from 'src/app/services/user/user.service';
+
 
 
 @Component({
@@ -9,21 +13,11 @@ import { Router, ActivatedRoute, Data } from '@angular/router';
   styleUrls: ['./workspace.component.scss']
 })
 export class WorkspaceComponent implements OnInit {
-
-  dataSource: ListEntriesPageable | any = null;
-  filterValue: string | any;
-
-  constructor(
-    private router: Router, private activatedRoute: ActivatedRoute) { }
-
   ngOnInit(): void {
   }
 
-  navigateTo(title: Date) {
-    this.router.navigate(['/list-entries/title/'+ title], { relativeTo: this.activatedRoute });
-  }
+ 
   
 
 }
 
-// userId: number,title:string, page: number, limit: number

@@ -1,11 +1,11 @@
 <!-- <h1 class="title">{{(listByTitle$ | async)?.items?.[0]?.title}}</h1> -->
 <app-heder></app-heder>
+<app-calendar class="calendar"></app-calendar>
 <div class="section">
   <form [formGroup]="form">
     
     <div class="todo">
       <div class="header" >
-        <app-calendar class="calendar"></app-calendar>
         
         
         <input style="display: none;" type="date"  class="todo-input form-control" matInput placeholder="Title" formControlName="title">
@@ -18,8 +18,8 @@
         <div class="radioLabel">
           <label for="radioInput" >Is Done?</label>
           <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox" formControlName="isDone" [value]="true">
+          <button mat-flat-button type="submit" class="tools edit"  (click)="add()">Add </button>
         </div>
-        <button mat-flat-button type="submit" class="tools edit"  (click)="add()">Add </button>
         
 
       </div>

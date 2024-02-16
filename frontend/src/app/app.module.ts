@@ -40,6 +40,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { HederComponent } from './heder/heder.component';
 
+import { WeatherComponent } from './components/weather/weather.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +60,7 @@ import { HederComponent } from './heder/heder.component';
     EditItemComponent,
     CalendarComponent,
     HederComponent,
+    WeatherComponent,
   ],
   imports: [
     BrowserModule,

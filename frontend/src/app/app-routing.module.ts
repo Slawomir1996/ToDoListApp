@@ -13,6 +13,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { CreateListEntryComponentComponent } from './components/list-entry/create-list-entry-component/create-list-entry-component.component';
 import { SingleTaskComponent } from './components/list-entry/complete-lists/single-task.component';
 import { ListForDayComponentComponent } from './components/list-entry/list-for-day-component/list-for-day-component.component';
+import { WeatherComponent } from './components/weather/weather.component';
 
 
 
@@ -74,7 +75,10 @@ const routes: Routes = [
     component: CreateListEntryComponentComponent,
     canActivate: [AuthGuard]
   },
-
+  {
+    path:'weather',
+    component: WeatherComponent,
+  }
   // {
   //   path:'',
   //   redirectTo: '/workspace',

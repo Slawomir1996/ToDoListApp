@@ -43,7 +43,7 @@ form: FormGroup|any;
       id: [{value: null, disabled: true}, [Validators.required]],
       name: [null, [Validators.required]],
       username: [null, [Validators.required]],
-      profileImage: [null]
+      profileImage: [null],
     });
 
     this.authService.getUserId().pipe(
