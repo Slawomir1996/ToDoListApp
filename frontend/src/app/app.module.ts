@@ -10,7 +10,6 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
-
 import { UsersComponent } from './components/users/users.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -34,13 +33,14 @@ import { CreateListEntryComponentComponent } from './components/list-entry/creat
 import { SingleTaskComponent } from './components/list-entry/complete-lists/single-task.component';
 import { ListForDayComponentComponent } from './components/list-entry/list-for-day-component/list-for-day-component.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { EditItemComponent } from './components/edit-item/edit-item.component';
+import { EditItemComponent } from './components/list-entry/edit-item/edit-item.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { HederComponent } from './heder/heder.component';
 
 import { WeatherComponent } from './components/weather/weather.component';
+import { DeleteListItemComponent } from './components/delete-list-item/delete-list-item.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +61,7 @@ import { WeatherComponent } from './components/weather/weather.component';
     CalendarComponent,
     HederComponent,
     WeatherComponent,
+    DeleteListItemComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,7 +6,8 @@ import { map, Observable, switchMap, tap } from 'rxjs';
 import {  ListEntry } from 'src/app/models/list-entry.dto';
 import { ListService } from 'src/app/services/list-service/list.service';
 import { WINDOW } from 'src/app/window-token';
-import { EditItemComponent } from '../../edit-item/edit-item.component';
+import { EditItemComponent } from '../edit-item/edit-item.component';
+import { DeleteListItemComponent } from '../../delete-list-item/delete-list-item.component';
 
 @Component({
   selector: 'app-single-task',
@@ -17,7 +18,7 @@ export class SingleTaskComponent implements OnInit {
   
   form: FormGroup | any;
   formBuilder: any;
-
+  taskId:string|any
   constructor(
     private activatedRoute: ActivatedRoute,
     private listService: ListService, @Inject(WINDOW) private window: Window,
@@ -42,21 +43,32 @@ export class SingleTaskComponent implements OnInit {
    
   }
   
+  
   openDailog(){
-    let taskId = this.activatedRoute.snapshot.paramMap.get('id')
-    console.log(taskId)
+    this.taskId = this.activatedRoute.snapshot.paramMap.get('id')
+    console.log(this.taskId)
     
     this.dialogRef.open(EditItemComponent,{
       disableClose: true,
       data:{
-      id: Number(taskId)
+      id: Number(this.taskId)
         
       }
       
     })
-  
-    
-    
   }
   
+  deleteItem() {
+    this.taskId = this.activatedRoute.snapshot.paramMap.get('id')
+    console.log(this.taskId)
+    
+    this.dialogRef.open(DeleteListItemComponent,{
+      disableClose: true,
+      data:{
+      id: Number(this.taskId)
+        
+      }
+      
+    })
+  }
 }

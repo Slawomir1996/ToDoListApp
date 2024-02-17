@@ -16,6 +16,9 @@ export class ListEntryEntity {
 
     @Column({ default: '' })
     body: string;
+   
+    @Column({ default: false})
+    isDone: boolean;
 
     @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date;
@@ -23,8 +26,6 @@ export class ListEntryEntity {
     @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP" })
     updatedAt: Date;
 
-    @Column({ nullable: true})
-    isDone: boolean;
 
     @ManyToOne(() => UserEntity, (author) => author.lists)
     author: UserEntity

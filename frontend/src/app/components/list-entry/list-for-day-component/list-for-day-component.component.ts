@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class ListForDayComponentComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private listService: ListService, @Inject(WINDOW) private window: Window, 
     private formBuilder: FormBuilder,
-    private authService: AuthenticationService,   private router: Router, private route: ActivatedRoute
+    private authService: AuthenticationService, private router: Router, private route: ActivatedRoute
     ) { }
     origin = this.window.location.origin;
     
@@ -62,5 +63,7 @@ export class ListForDayComponentComponent implements OnInit {
         window.location.reload();
       }
    
+   
+    
       
 }

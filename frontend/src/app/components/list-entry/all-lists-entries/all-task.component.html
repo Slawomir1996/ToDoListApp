@@ -3,11 +3,13 @@
  <section class="allTask"><h2>All your task</h2>
     <mat-card *ngFor="let listEntry of (dataSource | async)?.items " routerLink="../list-entries/id/{{listEntry.id}}"
       style="margin-top: 15px; margin-bottom: 15px;">
-      <div>task to: {{listEntry.title}}</div>
+      <div> {{listEntry.title}}</div>
       <div style="margin-top: 15px;">
         <div> task {{listEntry.body}}</div>
+        <div>  {{listEntry.isDone}}</div>
+        <h1  [ngStyle]="{ 'color': listEntry.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }">status: {{listEntry.isDone ? 'done' : 'to to'}}</h1>
       </div>
-  
+ 
   
     </mat-card></section>
 

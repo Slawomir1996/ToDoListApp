@@ -6,9 +6,9 @@ export interface ListEntryDTO {
     slug?: string;
     title?: string;
     body?: string;
+    isDone?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
     author?: UserDtO;
-    isDone?: boolean;
 
 }

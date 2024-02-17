@@ -41,6 +41,7 @@ dataSource: Observable<ListEntriesPageable>= this.listService.indexAll(1,10)
   done(id:number) {
     this.listService.delete(id)
   }
+  
 
   
 

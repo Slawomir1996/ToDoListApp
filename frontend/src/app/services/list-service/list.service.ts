@@ -117,11 +117,13 @@ export class ListService {
   
   updateOne(listEntry:ListEntry): Observable<ListEntry> {
     console.log(listEntry);
+   
     return this.http.put('/api/list-entries/' + listEntry.id, listEntry);
   }
 
+ 
   delete(id:number):Observable<ListEntry>{
-    return this.http.delete('/api/list-entries' + id);
+    return this.http.delete('/api/list-entries/'+id);
   }
 
   // getListId():Observable<number>{

@@ -92,7 +92,7 @@ export class ListController {
     @UseGuards(JwtAuthGuard, UserIsUserGuard)
     @Delete(':id')
     deleteOne(@Param('id') id: number): Observable<any> {
-        return this.listService.deleteOne(id);
+        return this.listService.deleteOne(Number(id));
     }
 
     // @UseGuards(JwtAuthGuard)

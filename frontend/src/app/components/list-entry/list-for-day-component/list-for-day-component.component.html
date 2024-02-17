@@ -16,8 +16,8 @@
         <br>
 
         <div class="radioLabel">
-          <label for="radioInput" >Is Done?</label>
-          <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox" formControlName="isDone" [value]="true">
+          <label for="isDone" >Is done?</label>
+          <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox" formControlName="isDone" >
           <button mat-flat-button type="submit" class="tools edit"  (click)="add()">Add </button>
         </div>
         
@@ -41,9 +41,10 @@
         <div style="margin-left: 20px;" routerLink='id/{{list.id}}'>
           <h1>{{list?.title}}</h1>
           <h2>tast: {{list.body}}</h2>
-          <h2>isDone?: {{list.isDone}}</h2>
+          <h1  [ngStyle]="{ 'color': list.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }">status: {{list.isDone ? 'done' : 'to to'}}</h1>
           <small>{{list.author?.name}}</small>
           
+
           
         </div>
       </div>

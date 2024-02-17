@@ -10,9 +10,11 @@
                     <h1>{{listEntry.title}}</h1>
                     <h2>tast:{{listEntry.body}}</h2>
                 <small>{{listEntry.author?.name}}</small>
+                <h1  [ngStyle]="{ 'color': listEntry.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }">status: {{listEntry.isDone ? 'done' : 'to to'}}</h1>
            
                 <button (click)=" openDailog()">EDIT</button>
-                   
+                <button mat-flat-button class="delete" (click)="deleteItem()">Delete</button> 
+                <!-- <button mat-flat-button class="delete" (click)="deleteItem()">Delete</button> -->
                 </div>
             </div>
         </mat-card-header>
