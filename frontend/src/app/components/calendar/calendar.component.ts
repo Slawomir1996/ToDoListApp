@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { WeatherService } from 'src/app/services/weatherService/weather.service';
 import { WINDOW } from 'src/app/window-token';
 
 @Component({
@@ -11,10 +12,11 @@ export class CalendarComponent implements OnInit {
   selected?: Date | null
 
   calendarData?:string
-  constructor( private router: Router,
-   
+  constructor(
+     private router: Router,
     private activatedRoute: ActivatedRoute,
-    @Inject(WINDOW) private window: Window,) { }
+    @Inject(WINDOW) private window: Window,
+    private weatherService:WeatherService) { }
 
   ngOnInit(): void {
     // window.location.reload();
@@ -42,4 +44,72 @@ export class CalendarComponent implements OnInit {
     // window.location.reload();
   }
 
+  city: string | any = null;
+  temp:number= 0;
+  humidity:number=0;
+  description:string='';
+  weatherId:number=0;
+  
+  async onSubmit(event: Event) {
+    if (this.city !== '') {
+      try {
+        const weatherData = await this.weatherService.getWeatherData(this.city);
+        this.displayWeatherInfo(weatherData);
+      } catch (error) {
+        console.error(error);
+        // this.displayError(error);
+      }
+    } else {
+      this.displayError('Please enter a city');
+    }
+  }
+
+ 
+
+  displayWeatherInfo(data: any) {
+    const{name:city, 
+      main:{temp,humidity},
+      weather:[{description, id}]}= data;
+ 
+  this.city=  data.name;
+  this.temp=  data.main.temp;
+  this.humidity= data.main.humidity;
+  this.description=data.weather[0].description;
+  this.weatherId= data.weather[0].id
+  console.log(typeof(id));
+  }
+
+  getWeatherEmoji(id:number) {
+    
+    switch (true) {
+      case (id>=200&& id<300):
+          
+      return "⛈️";
+      case (id>=300&& id<500):
+          
+      return "🌧️";
+      case (id>=500&& id<600):
+          
+      return "🌧️";
+      case (id>=600&& id<700):
+          
+      return "❄️";
+      case (id>=700&& id<800):
+          
+      return "🌫️";
+      case (id==800):
+          
+      return "☀️";
+      case (id>=801&& id<810):
+          
+      return "☁️";
+     default:
+      return '❓'
+      
+  }
+  }
+
+  displayError(message: string) {
+    // Kod funkcji displayError pozostaje bez zmian
+  }
 }

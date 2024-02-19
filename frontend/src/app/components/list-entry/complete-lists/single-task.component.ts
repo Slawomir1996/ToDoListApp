@@ -22,7 +22,7 @@ export class SingleTaskComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private listService: ListService, @Inject(WINDOW) private window: Window,
-    private dialogRef:MatDialog,) { 
+    private dialogRef:MatDialog) { 
       
     }
   origin = this.window.location.origin;

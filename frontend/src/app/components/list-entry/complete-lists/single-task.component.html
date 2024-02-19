@@ -1,24 +1,16 @@
 
 <app-calendar ></app-calendar>
 <div  *ngIf="(listEntry$ | async) as listEntry"   class="main-div">
-    <h1>{{listEntry?.title}}</h1>
-    <mat-card  class="card">
-        <mat-card-header>
-            <div style="display: flex; flex-direction: row;">
-                
-                <div style="margin-left: 20px;">
-                    <h1>{{listEntry.title}}</h1>
-                    <h2>tast:{{listEntry.body}}</h2>
-                <small>{{listEntry.author?.name}}</small>
-                <h1  [ngStyle]="{ 'color': listEntry.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }">status: {{listEntry.isDone ? 'done' : 'to to'}}</h1>
-           
-                <button (click)=" openDailog()">EDIT</button>
-                <button mat-flat-button class="delete" (click)="deleteItem()">Delete</button> 
-                <!-- <button mat-flat-button class="delete" (click)="deleteItem()">Delete</button> -->
-                </div>
-            </div>
+   <mat-card class="card">
+        <mat-card-header class="contener" >
+          <mat-card-title class="hedind">{{listEntry.title}}</mat-card-title>
+          <mat-card-subtitle style="padding-top: 1.3rem;" class="hedind subHeder">tast:{{listEntry.body}}</mat-card-subtitle>
+          <h1  class="subHeder" [ngStyle]="{ 'color': listEntry.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }">status: {{listEntry.isDone ? 'done' : 'to to'}}</h1>
+          <div class="toolsBar">
+            <button class="edit tools" (click)=" openDailog()">Edite</button>
+            <button class="delete tools" (click)="deleteItem()">Delete</button> 
+          </div>
         </mat-card-header>
-        
-    </mat-card>
+      </mat-card>
 </div>
-
+  

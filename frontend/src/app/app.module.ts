@@ -37,9 +37,6 @@ import { EditItemComponent } from './components/list-entry/edit-item/edit-item.c
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { HederComponent } from './heder/heder.component';
-
-import { WeatherComponent } from './components/weather/weather.component';
 import { DeleteListItemComponent } from './components/delete-list-item/delete-list-item.component';
 
 @NgModule({
@@ -59,9 +56,10 @@ import { DeleteListItemComponent } from './components/delete-list-item/delete-li
     ListForDayComponentComponent,
     EditItemComponent,
     CalendarComponent,
-    HederComponent,
-    WeatherComponent,
+  
+    
     DeleteListItemComponent,
+    
   ],
   imports: [
     BrowserModule,

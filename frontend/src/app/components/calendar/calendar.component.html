@@ -1,5 +1,30 @@
 
-<mat-card   class="demo-inline-calendar-card calendar calendar"  >
-    <mat-calendar   [(selected)]="selected" (click)="navigateTo(selected)"> </mat-calendar>
+<div class=" heder">
+<mat-card    class="demo-inline-calendar-card calendar calendar"  >
+      <mat-calendar   [(selected)]="selected" (click)="navigateTo(selected)"> </mat-calendar>
+    </mat-card>
+   
+    
+    
+    <mat-card class="weatherCard"  >
+      <form class="weatherForm" id="weatherForm" (ngSubmit)="onSubmit(city)">
+        <input class="weatherInput" style="width: 40%;" type="text" [(ngModel)]="city"
+        name="city" placeholder="cityName">
+        <button class="weatherBtn getBtn" type="submit">Get Weather</button>
+      </form>
+      <div class="card" style="display: block; background-color:#424242;">
+          <mat-card-header >
+        <div mat-card-avatar>
+          <p>{{getWeatherEmoji(weatherId)}}</p>
+        </div>
+      <mat-card-title >{{city}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p >Temperature: {{(temp -273.15).toFixed(1)}}°C</p>
+        <p>Humidity{{humidity}} %</p>
+        <p>Description {{description}} </p>
+    
+      </mat-card-content>
+      </div>
   </mat-card>
- 
+</div>
