@@ -43,7 +43,7 @@ export class CalendarComponent implements OnInit {
     this.router.navigate(['/list-entries/title/'+ this.calendarData], { relativeTo: this.activatedRoute });
     // window.location.reload();
   }
-
+//weather 
   city: string | any = null;
   temp:number= 0;
   humidity:number=0;

@@ -30,7 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
 import { AllTaskComponent } from './components/list-entry/all-lists-entries/all-task.component';
 import { CreateListEntryComponentComponent } from './components/list-entry/create-list-entry-component/create-list-entry-component.component';
-import { SingleTaskComponent } from './components/list-entry/complete-lists/single-task.component';
+
 import { ListForDayComponentComponent } from './components/list-entry/list-for-day-component/list-for-day-component.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditItemComponent } from './components/list-entry/edit-item/edit-item.component';
@@ -52,7 +52,6 @@ import { DeleteListItemComponent } from './components/delete-list-item/delete-li
     WorkspaceComponent,
     AllTaskComponent,
     CreateListEntryComponentComponent,
-    SingleTaskComponent,
     ListForDayComponentComponent,
     EditItemComponent,
     CalendarComponent,
@@ -83,6 +82,7 @@ import { DeleteListItemComponent } from './components/delete-list-item/delete-li
     MatPaginatorModule,
     MatCardModule,
     MatDialogModule,
+    
   ],
   providers: [
     WINDOW_PROVIDERS,

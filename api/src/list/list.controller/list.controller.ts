@@ -1,12 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, Request, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { InjectRepository } from '@nestjs/typeorm';
-import { query } from 'express';
-import { get } from 'http';
-import { title } from 'process';
 import { from, Observable } from 'rxjs';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-guard';
-import { UserIsUserGuard } from 'src/auth/guards/userIsUserGuard';
 import { UserIsAuthorGuard } from '../guards/user-is-author.guard';
 import { ListService } from '../list-service/list.service';
 import { ListEntryDTO } from '../models/list-entry.dto';
@@ -42,7 +36,7 @@ export class ListController {
             route: LIST_ENTRIES_URL
         })
     }
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Get('user/:user')
     indexByUser(
         @Query('page') page: number = 1,
@@ -58,7 +52,7 @@ export class ListController {
             route: LIST_ENTRIES_URL + '/user/' + userId
         }, Number(userId))
     }
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Get('user/:user/title/:title')
     indexByUserAndTitle(
         @Param('title') title: string,
@@ -74,7 +68,7 @@ export class ListController {
             route: LIST_ENTRIES_URL + '/user/' + userId + '/title/' + title
         }, Number(userId), title)
     }
-    // @UseGuards(JwtAuthGuard, UserIsUserGuard)
+    @UseGuards(JwtAuthGuard,UserIsAuthorGuard)
     @Get(':id')
     findOne(@Param('id') id: number): Observable<ListEntryDTO> {
         return this.listService.findOne(Number(id));
@@ -89,7 +83,7 @@ export class ListController {
         return this.listService.updateOne(Number(id), listEntry);
     }
 
-    @UseGuards(JwtAuthGuard, UserIsUserGuard)
+    @UseGuards(JwtAuthGuard)
     @Delete(':id')
     deleteOne(@Param('id') id: number): Observable<any> {
         return this.listService.deleteOne(Number(id));

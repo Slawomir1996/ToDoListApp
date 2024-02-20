@@ -11,7 +11,6 @@ import { UsersComponent } from './components/users/users.component';
 import { WorkspaceComponent } from './components/workspace/workspace.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CreateListEntryComponentComponent } from './components/list-entry/create-list-entry-component/create-list-entry-component.component';
-import { SingleTaskComponent } from './components/list-entry/complete-lists/single-task.component';
 import { ListForDayComponentComponent } from './components/list-entry/list-for-day-component/list-for-day-component.component';
 
 
@@ -45,21 +44,9 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'list-entries/id/:id',
-    component: SingleTaskComponent,
-    canActivate: [AuthGuard]
-
-  },
-  {
     path: 'list-entries/title/:title',
     component: ListForDayComponentComponent,
     canActivate: [AuthGuard]
-  },
-  {
-    path: 'list-entries/title/:title/id/:id',
-    component: SingleTaskComponent,
-    canActivate: [AuthGuard]
-
   },
   {
     path: 'home',

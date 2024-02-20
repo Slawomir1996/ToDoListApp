@@ -109,21 +109,47 @@ export class ListService {
 
 
   post(listEntry: ListEntry) {
+    
     return this.http.post<any>('/api/list-entries', listEntry);
   }
  
 
 
   
-  updateOne(listEntry:ListEntry): Observable<ListEntry> {
+  updateOne(listEntry:ListEntry): Observable<ListEntry> { const JWT_NAME = 'blog-token';
+  let tokenJWT: string|any
+  
+  tokenJWT=localStorage.getItem(JWT_NAME)
+  console.log(tokenJWT);
+  let user= this.jwtHelper.decodeToken(tokenJWT)
+  let userId =user.user.id
+  const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${JWT_NAME}`
+      })
+    let params = new HttpParams();
+    
     console.log(listEntry);
    
-    return this.http.put('/api/list-entries/' + listEntry.id, listEntry);
+    return this.http.put('/api/list-entries/' + listEntry.id, listEntry , {params});
   }
 
  
-  delete(id:number):Observable<ListEntry>{
-    return this.http.delete('/api/list-entries/'+id);
+  delete(id:number):Observable<any>{
+    const JWT_NAME = 'blog-token';
+    let tokenJWT: string|any
+    
+    tokenJWT=localStorage.getItem(JWT_NAME)
+    console.log(tokenJWT);
+    let user= this.jwtHelper.decodeToken(tokenJWT)
+    let userId =user.user.id
+    const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${JWT_NAME}`
+        })
+      let params = new HttpParams();
+      console.log(id);
+    return this.http.delete('/api/list-entries/'+id, {params}) ;
   }
 
   // getListId():Observable<number>{
