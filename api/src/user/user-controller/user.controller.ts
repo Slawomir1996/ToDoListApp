@@ -12,11 +12,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { diskStorage } from 'multer';
 import { join } from 'path';
 import path = require('path');
-import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
 export const storage = {
     storage: diskStorage({
-        destination: './uploads/profileimages',
+        destination: './uploads/profileImages',
         filename: (_req, file, cb) => {
             const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
             const extension: string = path.parse(file.originalname).ext;
@@ -107,8 +106,8 @@ export class UserController {
     }
  
 
-    @Get('profile-image/:imagename')
-    findProfileImage(@Param('imagename') imagename: string, @Res() res): Observable<Object> {
-        return of(res.sendFile(join(process.cwd(), './uploads/profileimages/' + imagename)));
+    @Get('profile-image/:imageName')
+    findProfileImage(@Param('imageName') imageName: string, @Res() res): Observable<Object> {
+        return of(res.sendFile(join(process.cwd(), './uploads/profileImages/' + imageName)));
     }
 }

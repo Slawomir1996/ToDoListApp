@@ -17,7 +17,7 @@ import { ListForDayComponentComponent } from './components/list-entry/list-for-d
 
 
 const routes: Routes = [
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent,canActivate: [AuthGuard]  },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'workspace', component: WorkspaceComponent, canActivate: [AuthGuard] },

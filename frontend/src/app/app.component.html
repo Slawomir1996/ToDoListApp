@@ -16,7 +16,7 @@
     <a *ngIf="!isLoggedIn()" routerLink="/register"> Register</a>
     <a *ngIf="isLoggedIn()"  routerLink="/workspace">Workspace</a>
     <a *ngIf="isLoggedIn()"   routerLink="/update-profile">Update Profile</a>
-    <a *ngIf="isLoggedIn()"   routerLink="/users">Users</a>
+    <!-- <a *ngIf="isLoggedIn()"   routerLink="/users">Users</a> -->
 <button class="logoutBtn" *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
   </div>
 </mat-toolbar>

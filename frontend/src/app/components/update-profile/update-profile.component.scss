@@ -1,10 +1,27 @@
-.updateForm{
+.container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    margin-top: 1.5rem; 
-}
-.container{
-    padding: 6vh;
+    justify-content: center;
+    flex-direction: center;
 }
 
+.card {
+    width: 80%;
+    max-width: 80%;
+    height: 300px;
+    margin-top: 2%;
+    margin-left: 10%;
+}
+
+mat-form-field{
+    width: 100%;
+    margin-top: 10px;
+}
+
+img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+}

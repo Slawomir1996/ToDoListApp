@@ -2,14 +2,14 @@
 <div class="board">
   <div  class=" heder"   >
     <!-- calendar -->
-    <mat-card   class="demo-inline-calendar-card calendar calendar" style=" box-shadow: none; background-color: rgba(0, 0, 0, 0.008);"  >
+  <mat-card   class="demo-inline-calendar-card calendar calendar" style=" box-shadow: none; background-color: rgba(0, 0, 0, 0.008);"  >
         <mat-calendar  [(selected)]="selected" (click)="navigateTo(selected)"> </mat-calendar>
       
       </mat-card>
       <!-- weather -->
       <mat-card class="weatherCard" >
         <form class="weatherForm" id="weatherForm" (ngSubmit)="onSubmit(city)">
-          <input class="weatherInput" autocomplete="off" type="text" [(ngModel)]="city"
+          <input class="weatherInput" autocomplete="off" required type="text" [(ngModel)]="city"
           name="city" placeholder="cityName" >
           <button class="weatherBtn getBtn" type="submit">🔍</button>
         </form>
@@ -18,7 +18,7 @@
           <div mat-card-avatar>
             <p class="weatherImg">{{getWeatherEmoji(weatherId)}}</p>
           </div>
-        <mat-card-title  class="cityName">{{city}}</mat-card-title>
+        <mat-card-title  class="cityName">{{cityName}}</mat-card-title>
         </mat-card-header>
         <mat-card-content >
           <p class="temp">{{(temp -273.15).toFixed(1)}}°C</p>

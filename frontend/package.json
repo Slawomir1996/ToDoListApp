@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "version": "0.0.0",
+  "author": "Sławomir Buczyński <slawomir.buczynski10@gmail.com>",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

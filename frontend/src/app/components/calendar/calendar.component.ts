@@ -43,6 +43,7 @@ export class CalendarComponent implements OnInit {
   }
 //weather 
   city: string | any = null;
+  cityName:string='';
   temp:number= 0;
   humidity:number=0;
   description:string='';
@@ -65,16 +66,12 @@ export class CalendarComponent implements OnInit {
     }
   }
 displayWeatherInfo(data: any) {
-    const{name:city, 
-      main:{temp,humidity},
-      weather:[{description, id}]}= data;
- 
-  this.city=  data.name;
+  this.cityName= data.name;
   this.temp=  data.main.temp;
   this.humidity= data.main.humidity;
   this.description=data.weather[0].description;
   this.weatherId= data.weather[0].id
-  console.log(typeof(id));
+  
   }
 
   getWeatherEmoji(id:number) {

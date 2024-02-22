@@ -56,14 +56,8 @@
               <div *ngIf="(registerForm.controls['confirmPassword'].value!==registerForm.controls['password'].value) && (registerForm.controls['confirmPassword'].dirty || registerForm.controls['confirmPassword'].touched)"
               class="alert">Password must be the same</div>
             </div>
-          
-           
-        <!-- <button type="submit" class="btn btn-success">Submit</button> -->
-        <!-- <button type="submit" class="btn btn-primary">Primary</button> -->
-        <!-- <button [disabled]="registerForm.valid" mat-flat-button color="primary">Register</button> -->
         <button type="submit" class="btn btn-success" [disabled]="!registerForm.valid">Submit</button>
   
       </form>
-      <p>registerForm value: {{ registerForm.value | json }}</p>
-      <p>registerForm status: {{ registerForm.status | json }}</p>
+     
       
