@@ -4,6 +4,7 @@
     <!-- calendar -->
   <mat-card   class="demo-inline-calendar-card calendar calendar" style=" box-shadow: none; background-color: rgba(0, 0, 0, 0.008);"  >
         <mat-calendar  [(selected)]="selected" (click)="navigateTo(selected)"> </mat-calendar>
+      
       </mat-card>
       <!-- weather -->
       <mat-card class="weatherCard" >
@@ -12,18 +13,17 @@
           name="city" placeholder="cityName" >
           <button class="weatherBtn getBtn" type="submit">🔍</button>
         </form>
-        <div class="card"  [ngStyle]="{ 'display': displayStyle }"style=" background-color: rgba(0, 0, 0, 0.008);">
+        <div class="card"  [ngStyle]="{ 'display': displayStyle }"style="opacity: 0.8; border: none; background-color: rgba(0, 0, 0, 0.008);">
             <mat-card-header >
           <div mat-card-avatar>
-            <p>{{getWeatherEmoji(weatherId)}}</p>
+            <p class="weatherImg">{{getWeatherEmoji(weatherId)}}</p>
           </div>
-        <mat-card-title >{{city}}</mat-card-title>
+        <mat-card-title  class="cityName">{{city}}</mat-card-title>
         </mat-card-header>
-        <mat-card-content>
-          <p >Temperature: {{(temp -273.15).toFixed(1)}}°C</p>
-          <p>Humidity{{humidity}} %</p>
-          <p>Description {{description}} </p>
-      
+        <mat-card-content >
+          <p class="temp">{{(temp -273.15).toFixed(1)}}°C</p>
+          <p>Humidity: {{humidity}}%</p>
+          <p>Description: {{description}} </p>
         </mat-card-content>
           </div>
     </mat-card>

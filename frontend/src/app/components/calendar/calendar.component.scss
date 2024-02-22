@@ -1,27 +1,19 @@
 *{
     box-sizing: border-box;
 }
-$breakpoints: (
-    small: 480px,
-    medium: 768px,
-    large: 1024px
-  );
-  body{
+body{
     display: flex;
     position: absolute;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
-  
     opacity: 0.15;
     width: 90vw;
     height: 100%;
     background-image: url('../..//img/maskBoard.png');
   }
 .board{
-  
     margin-top: 1rem;
-    width: 95vw; 
     margin-right: auto;
     margin-left: auto;
     background-color: rgba(0, 0, 0, 0.792);
@@ -33,74 +25,35 @@ $breakpoints: (
   
   .heder{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px,2fr));
+    grid-template-columns: repeat(auto-fit, minmax(35vw,1fr));
+    min-height: 60vh;
     justify-content: center;
-    align-items: center;
     font-family: monospace;
     opacity: 0.6; 
-    
-
   }
+
 .calendar{
-    
-    justify-content: end;
-    width: 30vw;
-    
+   min-width: 35vw;
     margin-left: auto;
     margin-right: auto;
-    // padding: 7rem;
-    @media (max-width: map-get($breakpoints, small)) {
-        width: 80vw;    
-            }
-            @media (min-width: map-get($breakpoints, small)) {
-                width: 30vw;    
-            }
-          
-          .mainMenu{
-            @media (max-width: map-get($breakpoints, small)) {
-                width: 30vw;    
-            }
-            @media (min-width: map-get($breakpoints, medium)) {
-                width: 80vw;    
-            }
-        
-} 
+  
 }
 .weatherCard{
-    margin: 1rem;
-    justify-content: end;
-    width: 30vw;
+    min-width: 35vw;
     background-color: rgba(0, 0, 0, 0.008);
+    margin-top: 3rem;
     margin-left: auto;
     margin-right: auto;
     box-shadow: none;
-    // padding: 7rem;
-    @media (max-width: map-get($breakpoints, small)) {
-        width: 80vw;
-        height: 40vh;
-            }
-            @media (min-width: map-get($breakpoints, small)) {
-                width: 30vw;    height: 60vh;
-            }
-          }
-          .mainMenu{
-            @media (max-width: map-get($breakpoints, small)) {
-                width: 30vw;    height: 60vh;
-            }
-            @media (min-width: map-get($breakpoints, medium)) {
-                width: 80vw;    height: 40vh;
-            }
-
 };
 .weatherForm{
     display: flex;
     align-items: center;
     opacity: 0,6;
-    margin-bottom: 1.5rem;
+    margin-bottom: 3rem;
    
 }
 .weatherInput{
-    margin-right: 1.5rem;
     padding: 0.5rem;
     background-color: transparent;
     border:none;
@@ -114,7 +67,24 @@ $breakpoints: (
         background-color: rgba(0, 0, 0, 0.09);
       }
 }
+.weatherImg{
+  display: flex;
+  margin-top: 1rem;
+  font-size: 4rem;
 
+}
+.cityName{
+  font-size: 3rem;
+  padding-left: 2rem;
+  padding-bottom: 2rem;
+  
+}
+.temp{
+  font-size: 4rem;
+  padding-top:1rem;
+  padding-bottom: 1rem;
+
+}
 .weatherBtn{
     display: flex;
     font-size: 1.8rem;

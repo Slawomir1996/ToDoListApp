@@ -10,20 +10,18 @@ import { WINDOW } from 'src/app/window-token';
 })
 export class CalendarComponent implements OnInit {
   selected?: Date | null
-
   calendarData?:string
+  
   constructor(
-     private router: Router,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     @Inject(WINDOW) private window: Window,
     private weatherService:WeatherService) { }
-
+    
   ngOnInit(): void {
-    // window.location.reload();
+    
   }
   navigateTo(selected: any) {
-    
-    
     if(Number(this.selected?.getMonth())<=9){
       if(Number(this.selected?.getDate())<=9){
         this.calendarData = `${this.selected?.getFullYear()}-0${Number(this.selected?.getMonth())+1}-0${this.selected?.getDate()}`
@@ -50,6 +48,7 @@ export class CalendarComponent implements OnInit {
   description:string='';
   weatherId:number=0;
   displayStyle: string = 'none';
+  message: string=''
 
   async onSubmit(event: Event) {
     if (this.city !== '') {
@@ -65,10 +64,7 @@ export class CalendarComponent implements OnInit {
       this.displayError('Please enter a city');
     }
   }
-
- 
-
-  displayWeatherInfo(data: any) {
+displayWeatherInfo(data: any) {
     const{name:city, 
       main:{temp,humidity},
       weather:[{description, id}]}= data;
@@ -113,5 +109,12 @@ export class CalendarComponent implements OnInit {
 
   displayError(message: string) {
     // Kod funkcji displayError pozostaje bez zmian
+
+    
   }
+
+
+  
+    
+  
 }
