@@ -1,54 +1,29 @@
 <!-- <h1 class="title">{{(listByTitle$ | async)?.items?.[0]?.title}}</h1> -->
 
 <app-calendar class="calendar"></app-calendar>
-<div class="section">
-  <form [formGroup]="form">
-    
-    <div class="todo">
-      <div class="header" >
-        
-        
-        <input style="display: none;" type="date"  class="todo-input form-control" matInput placeholder="Title" formControlName="title">
-
-        <br>
-
-        <input class="todo-input form-control" placeholder="Your task" formControlName="body">
-        <br>
-
-        <div class="radioLabel">
-          <label for="isDone" >Is done?</label>
-          <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox" formControlName="isDone" >
-          <button mat-flat-button type="submit" class="tools edit"  (click)="add()">Add </button>
-        </div>
-        
-
-      </div>
 
 
-
+<div class="grigContainer">
+  <div class="main-div">
+    <form [formGroup]="form" class="addForm"  >
+      <input style="display: none;" type="date"  class="todo-input form-control" matInput placeholder="Title" formControlName="title">
+     <br><input class="todo-input form-control taskInput"  placeholder="Add new task" formControlName="body">
+      <br>
+      <label for="isDone" >Is done?</label>
+      <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox" formControlName="isDone" >
+     <br> <button mat-flat-button type="submit" class="addBtn"  (click)="add()">+</button>
+      
+    </form>
+  </div>
+    <div *ngFor="let list of (listByTitle$ | async)?.items"   class="main-div"  >
+      <br>
+      <div class="cart" style="font-family: 'Montserrat', sans-serif" >
+        <div routerLink='id/{{list.id}}'>
+              <h1 >{{list?.title}}</h1>
+              <h2>task: {{list.body}}</h2>
+              <h1  [ngStyle]="{ 'color': list.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }">status: {{list.isDone ? 'done' : 'to to'}}</h1>
+              <small>{{list.author?.name}}</small>
+          </div>
+        </div> 
     </div>
-
-  </form>
-</div>
-
-
-<div *ngFor="let list of (listByTitle$ | async)?.items " class="main-div" >
-  <br>
-  <mat-card class="card">
-    <mat-card-header>
-      <div style="display: flex; flex-direction: row;">
-
-        <div style="margin-left: 20px;" routerLink='id/{{list.id}}'>
-          <h1>{{list?.title}}</h1>
-          <h2>tast: {{list.body}}</h2>
-          <h1  [ngStyle]="{ 'color': list.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }">status: {{list.isDone ? 'done' : 'to to'}}</h1>
-          <small>{{list.author?.name}}</small>
-          
-
-          
-        </div>
-      </div>
-    </mat-card-header>
-  
-  </mat-card>
-</div>
+  </div>

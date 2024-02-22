@@ -49,16 +49,9 @@ form: FormGroup | any;
       this.dataSource =this.listService.indexAll(page,limit)
     }
     
-    // deleteItem(id:number) {
-      //   console.log(id);
-      //   // this.listService.delete(Number(id))
-      
-      //  }
-      delete(id: number|any) {
-        
-        
-    return this.listService.delete(Number(id)).pipe(
-      tap(() => this.router.navigate(['/workspace']))).subscribe();
+  delete(id: number|any) {
+        return this.listService.delete(Number(id)).pipe(
+      tap(() => window.location.reload())).subscribe();
     
   }
   openDailog(taskId:number|any) {
@@ -66,11 +59,9 @@ form: FormGroup | any;
       disableClose: true,
       data:{
       id: Number(taskId)
-        
       }
-      
     })
-  }
+   }
   
 
 

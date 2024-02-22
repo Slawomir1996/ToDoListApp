@@ -49,12 +49,14 @@ export class CalendarComponent implements OnInit {
   humidity:number=0;
   description:string='';
   weatherId:number=0;
-  
+  displayStyle: string = 'none';
+
   async onSubmit(event: Event) {
     if (this.city !== '') {
       try {
         const weatherData = await this.weatherService.getWeatherData(this.city);
         this.displayWeatherInfo(weatherData);
+        this.displayStyle = 'block';
       } catch (error) {
         console.error(error);
         // this.displayError(error);

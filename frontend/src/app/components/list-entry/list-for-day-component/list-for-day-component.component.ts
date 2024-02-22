@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./list-for-day-component.component.scss']
 })
 export class ListForDayComponentComponent implements OnInit {
-  
+  imagePath :string='./img/IMG_20240220_045626_preview_rev_1.png'
   form: FormGroup|any
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -55,6 +55,7 @@ export class ListForDayComponentComponent implements OnInit {
       
     });
     }
+  
     
     add() {
       this.listService.post(this.form?.getRawValue( )).pipe(
@@ -62,7 +63,8 @@ export class ListForDayComponentComponent implements OnInit {
         ).subscribe();
         window.location.reload();
       }
-   
+      
+     
    
     
       

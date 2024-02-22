@@ -37,7 +37,7 @@ import { EditItemComponent } from './components/list-entry/edit-item/edit-item.c
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { DeleteListItemComponent } from './components/delete-list-item/delete-list-item.component';
+
 
 @NgModule({
   declarations: [
@@ -56,9 +56,6 @@ import { DeleteListItemComponent } from './components/delete-list-item/delete-li
     EditItemComponent,
     CalendarComponent,
   
-    
-    DeleteListItemComponent,
-    
   ],
   imports: [
     BrowserModule,
