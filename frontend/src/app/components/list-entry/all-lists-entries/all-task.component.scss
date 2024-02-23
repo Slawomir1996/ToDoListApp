@@ -44,6 +44,11 @@
 }
 .status{
     font-weight: bold;
+    cursor: pointer;
+    transition: background-color .15;
+    &:hover{
+        background-color: rgba(255, 255, 0, 0.2)
+    }
     
 }
 .grigContainer{
@@ -68,7 +73,7 @@
 
 .cart{
     display: flex;
-    align-items: center;
+   margin-top: 4vh;
     margin-left: auto;
     margin-right: auto;
     font-family: 'Montserrat', sans-serif

@@ -2,20 +2,12 @@
     box-sizing: border-box;
 }
 body{
-    display: flex;
-    position: absolute;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
     opacity: 0.15;
-    width: 90vw;
-    height: 100%;
     background-image: url('../..//img/maskBoard.png');
   }
 .board{
     margin-top: 1rem;
-    margin-right: auto;
-    margin-left: auto;
+  
     background-color: rgba(0, 0, 0, 0.792);
     padding-bottom: 1rem;
     border: 1.3rem solid transparent; 
@@ -26,8 +18,6 @@ body{
   .heder{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px,1fr));
-    min-height: 60vh;
-    justify-content: center;
   font-family: monospace;
     opacity: 0.6; 
   }
@@ -35,13 +25,22 @@ body{
 
 
 .calendar{
-   min-width: 35vw;
-    margin-left: auto;
-    margin-right: auto;
-  
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+ 
+}
+.clockCard{
+  color: aliceblue;
+ margin: auto;
+  width: 10vw;
+}
+.clockDisplay{
+  font-size: 1.5rem;
+  justify-content: left;
 }
 .weatherCard{
-    min-width: 35vw;
+    // min-width: 35vw;
     background-color: rgba(0, 0, 0, 0.008);
     margin-top: 3rem;
     margin-left: auto;

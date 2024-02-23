@@ -6,6 +6,9 @@
         <mat-calendar  [(selected)]="selected" (click)="navigateTo(selected)"> </mat-calendar>
       
       </mat-card>
+      <div class="clockCard">
+        <p class="clockDisplay">{{ currentTime | date: 'HH:mm:ss' }}</p>
+      </div>
       <!-- weather -->
       <mat-card class="weatherCard" >
         <form class="weatherForm" id="weatherForm" (ngSubmit)="onSubmit(city)">

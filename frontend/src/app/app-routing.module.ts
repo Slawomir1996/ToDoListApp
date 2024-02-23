@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent,canActivate: [AuthGuard]  },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'workspace', component: WorkspaceComponent, canActivate: [AuthGuard] },
+  { path: 'workspace', component: WorkspaceComponent },
   {
     path: 'users',
     children: [

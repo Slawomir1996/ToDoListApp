@@ -11,7 +11,7 @@ import { WINDOW } from 'src/app/window-token';
 export class CalendarComponent implements OnInit {
   selected?: Date | null
   calendarData?:string
-  
+  currentTime: Date = new Date();
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -19,7 +19,9 @@ export class CalendarComponent implements OnInit {
     private weatherService:WeatherService) { }
     
   ngOnInit(): void {
-    
+    setInterval(() => {
+      this.currentTime = new Date();
+    }, 1000);
   }
   navigateTo(selected: any) {
     if(Number(this.selected?.getMonth())<=9){

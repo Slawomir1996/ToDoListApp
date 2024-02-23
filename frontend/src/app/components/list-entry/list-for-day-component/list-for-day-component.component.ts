@@ -9,6 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
+import { EditItemComponent } from '../edit-item/edit-item.component';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ListForDayComponentComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private listService: ListService, @Inject(WINDOW) private window: Window, 
     private formBuilder: FormBuilder,
-    private authService: AuthenticationService, private router: Router, private route: ActivatedRoute
+    private authService: AuthenticationService, private dialogRef:MatDialog, private route: ActivatedRoute
     ) { }
     origin = this.window.location.origin;
     
@@ -63,8 +64,27 @@ export class ListForDayComponentComponent implements OnInit {
         ).subscribe();
         window.location.reload();
       }
+  delete(id: number|any) {
+        return this.listService.delete(Number(id)).pipe(
+      tap(() => window.location.reload())).subscribe();
+    
+  }
+  openDailog(taskId:number|any) {
+    this.dialogRef.open(EditItemComponent,{
+      disableClose: true,
+      data:{
+      id: Number(taskId)
+      }
+    })
+   }
       
-     
+      statusChange(listEntries:any){
+        listEntries.isDone = !listEntries.isDone;
+        this.listService.updateOne(listEntries).subscribe(updatedEntry => {
+          console.log(updatedEntry);
+        });
+    
+       }
    
     
       

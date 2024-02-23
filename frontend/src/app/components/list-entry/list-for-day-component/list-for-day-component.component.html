@@ -20,9 +20,13 @@
       <div class="cart" style="font-family: 'Montserrat', sans-serif" >
         <div routerLink='id/{{list.id}}'>
               <h1 >{{list?.title}}</h1>
+              <h2>time</h2>
               <h2>task: {{list.body}}</h2>
-              <h1  [ngStyle]="{ 'color': list.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }">status: {{list.isDone ? 'done' : 'to to'}}</h1>
-              <small>{{list.author?.name}}</small>
+              <h1 class="status" [ngStyle]="{ 'color': list.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }" (dblclick)="statusChange(list)">status: {{list.isDone ? 'done' : 'to to'}}</h1>
+              <div class="toolsBar">
+                <button mat-flat-button class="edit tools" sty (click)="openDailog(list.id)">📝 </button>
+                <button mat-flat-button class="delete tools" (click)="delete(list.id)">x</button>
+              </div>
           </div>
         </div> 
     </div>

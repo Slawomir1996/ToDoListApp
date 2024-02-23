@@ -64,7 +64,13 @@ form: FormGroup | any;
    }
   
 
+   statusChange(listEntries:any){
+    listEntries.isDone = !listEntries.isDone;
+    this.listService.updateOne(listEntries).subscribe(updatedEntry => {
+      console.log(updatedEntry);
+    });
 
+   }
 
 
  
