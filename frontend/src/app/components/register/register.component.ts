@@ -78,20 +78,23 @@ export class RegisterComponent implements OnInit {
         })
 
     }
-
-
-
+    displayStyle: string = 'none';
     onSubmit() {
-        if (this.registerForm.invalid) {
+        let isUnique: boolean;
+        this.authService.isUserNameUnique(this.registerForm.value.username).subscribe((result) => {
+          isUnique = result;
+          if (this.registerForm.invalid || !isUnique) {
+            this.displayStyle = 'block';
             return;
-        } console.log('ok');
-        this.authService.register(this.registerForm.value).pipe(
-            map(user => this.router.navigate(['login']))
-
-        ).subscribe()
-        
-    }
-  
-
+          }
+          console.log('ok');
+          this.displayStyle='none'
+          this.authService.register(this.registerForm.value).subscribe(() => {
+            this.router.navigate(['login']);
+          });
+        });
+      }
+      
+   
 
 }

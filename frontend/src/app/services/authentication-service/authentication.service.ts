@@ -35,6 +35,9 @@ logout() {
     localStorage.removeItem(JWT_NAME);
   }
 
+  isUserNameUnique(username: string): Observable<boolean> {
+    return this.http.get<boolean>(`/api/users/unique/${username}`);
+  }
   register(user: UserDtO) {
     return this.http.post<any>('/api/users', user);
   }

@@ -10,34 +10,48 @@ import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginat
 
 @Injectable()
 export class UserService {
-
-
+    
+    
     constructor(
         @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
         private authService: AuthService
-    ) { }
-
+        ) { }
+        
+    isUserNameUnique(username: string): Observable<boolean> {
+            return from(this.userRepository.findOne({ where: { username } })).pipe(
+              map((user) => !user) //If the answer is true be used by a user
+            );
+          }
     create(user: UserDtO): Observable<UserDtO> {
-        return this.authService.hashPassword(user.password).pipe(
-            switchMap((passwordHash: string) => {
-                const newUser = new UserEntity();
-                newUser.name = user.name;
-                newUser.username = user.username;
-                newUser.email = user.email;
-                newUser.password = passwordHash;
-                newUser.role = user.role;
-                newUser.profileImage = user.profileImage;
-
-                return from(this.userRepository.save(newUser)).pipe(
-                    map((user: UserDtO) => {
-                        const { password, ...result } = user;
-                        return result;
-                    }),
-                    catchError(err => throwError(err))
-                )
-            })
-        )
-    }
+            return this.isUserNameUnique(user.username).pipe(
+              switchMap((isUnique) => {
+                if (isUnique) {
+                  return this.authService.hashPassword(user.password).pipe(
+                    switchMap((passwordHash: string) => {
+                      const newUser = new UserEntity();
+                      newUser.name = user.name;
+                      newUser.username = user.username;
+                      newUser.email = user.email;
+                      newUser.password = passwordHash;
+                      newUser.role = user.role;
+                      newUser.profileImage = user.profileImage;
+          
+                      return from(this.userRepository.save(newUser)).pipe(
+                        map((user: UserDtO) => {
+                          const { password, ...result } = user;
+                          return result;
+                        }),
+                        catchError(err => throwError(err))
+                      );
+                    })
+                  );
+                } else {
+                  throw new Error('User Name is busy ');
+                }
+              })
+            );
+          }
+  
 
     findAll(): Observable<UserDtO[]> {
         return from(this.findAll())
@@ -150,4 +164,5 @@ export class UserService {
         }))
     }
 
+    
 }

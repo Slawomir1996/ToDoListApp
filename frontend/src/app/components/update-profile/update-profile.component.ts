@@ -32,11 +32,14 @@ form: FormGroup|any;
   origin = 'localhost:3000/api/';
 
   constructor(
+
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     private userService: UserService,
     @Inject(WINDOW) private window: Window
-  ) { }
+  ) { 
+    
+  }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -53,7 +56,7 @@ form: FormGroup|any;
             id: user.id,
             name: user.name,
             username: user.username,
-            profileImage: this.form.profileImage
+            profileImage: user.profileImage
           })
         })
       ))

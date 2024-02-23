@@ -19,16 +19,20 @@ export const storage = {
         filename: (_req, file, cb) => {
             const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
             const extension: string = path.parse(file.originalname).ext;
-
+            
             cb(null, `${filename}${extension}`);
         }
     })
-
+    
 }
 
 @Controller('users')
 export class UserController {
     constructor(private userService: UserService) { }
+    @Get('unique/:username')
+    isUserNameUnique(@Param('username') username: string): Observable<boolean> {
+      return this.userService.isUserNameUnique(username);
+    };
     @Get(':id')
     findOneById(@Param('id') id: string): Observable<UserDtO> {
         return this.userService.findOneByID(Number(id))
