@@ -23,8 +23,8 @@ export class ListEntryEntity {
     @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date;
 
-    @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP" })
-    updatedAt: Date;
+    @Column({default: '' })
+    startAt: string;
 
 
     @ManyToOne(() => UserEntity, (author) => author.lists)

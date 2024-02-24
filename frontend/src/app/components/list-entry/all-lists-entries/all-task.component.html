@@ -7,8 +7,8 @@
          <br>
          <div class="cart" style="font-family: 'Montserrat', sans-serif" >
            <div >
-                 <h1 >{{listEntry.title}}</h1>
-                 <h2>time</h2>
+                 <h1 >{{listEntry.title}} </h1>
+                 <p >at: {{listEntry.startAt}}</p>
                  <h3>task:{{listEntry.body}}</h3>
                  <h1 class="status" [ngStyle]="{ 'color': listEntry.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }" (dblclick)="statusChange(listEntry)">status: {{listEntry.isDone ? 'done' : 'to to'}}</h1>
                  <div class="toolsBar">

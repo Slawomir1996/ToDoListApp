@@ -11,7 +11,8 @@
       <br>
       <label for="isDone" >Is done?</label>
       <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox" formControlName="isDone" >
-     <br> <button mat-flat-button type="submit" class="addBtn"  (click)="add()">+</button>
+     <br>  <input class="todo-input form-control taskInput"  type="time"  min="00:00" max="23:59" formControlName="startAt">
+     <br><button mat-flat-button type="submit" class="addBtn"  (click)="add()">+</button>
       
     </form>
   </div>
@@ -19,8 +20,8 @@
       <br>
       <div class="cart" style="font-family: 'Montserrat', sans-serif" >
         <div routerLink='id/{{list.id}}'>
-              <h1 >{{list?.title}}</h1>
-              <h2>time</h2>
+              <h1 >{{list?.title}} <p *ngIf="list.startAt">{{list?.startAt}}</p> </h1>
+              
               <h2>task: {{list.body}}</h2>
               <h1 class="status" [ngStyle]="{ 'color': list.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }" (dblclick)="statusChange(list)">status: {{list.isDone ? 'done' : 'to to'}}</h1>
               <div class="toolsBar">

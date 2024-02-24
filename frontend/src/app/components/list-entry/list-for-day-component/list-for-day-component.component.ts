@@ -44,6 +44,7 @@ export class ListForDayComponentComponent implements OnInit {
         slug: [null, {disabled: true}],
         title: [this.route.snapshot.paramMap.get('title')],
         body: [null, [Validators.required]],
+        startAt: [null],
         isDone: [false, [Validators.required]]
         
         

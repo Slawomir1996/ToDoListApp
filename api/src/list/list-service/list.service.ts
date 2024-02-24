@@ -26,7 +26,6 @@ export class ListService {
 
 
     create(user: UserDtO, listEntry: ListEntryDTO): Observable<ListEntryDTO> {
-        console.log(user);
         listEntry.author = user;
         console.log(listEntry);
         return this.generateSlug(listEntry.title).pipe(

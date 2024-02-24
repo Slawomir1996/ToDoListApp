@@ -17,7 +17,6 @@ export class ListController {
     @Post()
     create(@Body() listEntry: ListEntryDTO, @Request() req): Observable<ListEntryDTO> {
         const user = req.user;
-        console.log(user);
         return this.listService.create(user, listEntry);
     }
    

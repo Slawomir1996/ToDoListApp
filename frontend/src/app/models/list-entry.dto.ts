@@ -6,7 +6,7 @@ export interface ListEntry {
     title?: string;
     body?: string;
     createdAt?: Date;
-    updatedAt?: Date;
+    startAt?: string;
     author?: UserDtO;
     isDone?: boolean;
 

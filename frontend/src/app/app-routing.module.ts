@@ -63,11 +63,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
  
-  // {
-  //   path:'',
-  //   redirectTo: '/workspace',
-  //   pathMatch:'full'
-  // }
+  {
+    path:'',
+    redirectTo: '/workspace',
+    pathMatch:'full'
+  }
 ];
 
 @NgModule({

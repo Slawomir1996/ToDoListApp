@@ -8,7 +8,7 @@ export interface ListEntryDTO {
     body?: string;
     isDone?: boolean;
     createdAt?: Date;
-    updatedAt?: Date;
+    startAt?: string;
     author?: UserDtO;
 
 }
