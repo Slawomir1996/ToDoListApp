@@ -1,4 +1,4 @@
-<h1>login page!</h1>
+
 <div class="container">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
@@ -21,27 +21,12 @@
   </form>
 </div>
 
-<p> user1 "email": "thor192@com",
+<!-- <p> user1 "email": "thor192@com",
   "password": "thor192"</p>
 <p> user2 "email": "thor92@com",
-  "password": "thor92"</p>
-<!-- </div>
-<h1>login page!</h1>
-<div class="container">
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    
-    <input placeholder="Email" formControlName="email" class="form-control">
-   // <mat-hint *ngIf='loginForm.controls.[email].errors'>Email is required</mat-hint>
-    
-    
-    <input  type="password" placeholder="password" formControlName="password" class="form-control">
-    //<mat-hint *ngIf="loginForm.controls.password.errors">Password is required</mat-hint>
-    
-    <button  [disabled]="!loginForm.valid" type="submit" class="btn btn-success">Login</button>
-    
-    
-  </div>
-</form>
+  "password": "thor92"</p> -->
 
-</div> -->
+  <div class="displayRegister" (click)="expanded = !expanded">I don't have account yet!</div>
+  <div class="register" *ngIf="expanded">
+   <app-register></app-register> 
+</div>

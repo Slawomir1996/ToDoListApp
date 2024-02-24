@@ -1,6 +1,7 @@
 
 .container {
     display: flex;
+    margin-top: 10vh;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -23,4 +24,22 @@
 
 .ng-invalid:not(form)  {
   border-left: 5px solid #a94442; /* red */
+}
+.displayRegister{
+  display: flex;
+   cursor: pointer;
+    justify-content: center;
+    margin-right: auto;
+    width: 60vw; 
+    margin-left: auto;
+    padding: 1rem;
+    font-size: 1.3rem;
+    transition: font-size 0.3s;
+    &:hover{
+      // padding: 1.2rem;
+      font-size: 1.5rem;
+    }
+}
+.register{
+  margin-top: 5vh;
 }

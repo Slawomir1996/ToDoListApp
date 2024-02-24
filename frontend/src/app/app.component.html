@@ -4,7 +4,7 @@
     <mat-form-field style="margin-left: 20px;" name="loginRegisterDropdown" >
       <mat-select placeholder="menu">
         <mat-option *ngIf="!isLoggedIn()" routerLink="/login">login</mat-option>
-        <mat-option *ngIf="!isLoggedIn()" routerLink="/register"> Register</mat-option>
+        <!-- <mat-option *ngIf="!isLoggedIn()" routerLink="/register"> Register</mat-option> -->
         <mat-option *ngIf="isLoggedIn()"   routerLink="/workspace">Workspace</mat-option>
         <mat-option *ngIf="isLoggedIn()"   routerLink="/update-profile">Admin</mat-option>
         <mat-option class="logoutBtn" *ngIf="isLoggedIn()" (click)="logout()">Logout</mat-option>
@@ -13,7 +13,7 @@
   </div>
   <div class="links mainMenu">
     <a *ngIf="!isLoggedIn()" routerLink="/login">login</a>
-    <a *ngIf="!isLoggedIn()" routerLink="/register"> Register</a>
+    <!-- <a *ngIf="!isLoggedIn()" routerLink="/register"> Register</a> -->
     <a *ngIf="isLoggedIn()"  routerLink="/workspace">Workspace</a>
     <a *ngIf="isLoggedIn()"   routerLink="/update-profile">Update Profile</a>
     <!-- <a *ngIf="isLoggedIn()"   routerLink="/users">Users</a> -->
@@ -22,4 +22,13 @@
 </mat-toolbar>
 
 
+
+
+
 <router-outlet></router-outlet>
+<!-- <footer>
+  <div class="text-center p-3" style="background-color: rgba(65, 105, 225, 0.76);">
+    © 2020 Copyright:
+    <a class="text-white" href="http://localhost:4200/workspace">Task Mate</a>
+  </div>
+</footer> -->

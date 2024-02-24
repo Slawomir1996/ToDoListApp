@@ -2,6 +2,13 @@
 <!-- <input type="date" [(ngModel)]="filterValue" (change)="navigateTo(filterValue)" > -->
 <!-- <section class="createNew"><app-create-list-entry-component></app-create-list-entry-component></section> -->
 <!-- <app-calendar ></app-calendar> -->
-<section class="listOfTask"><app-task></app-task></section>
 
+
+  
+<div *ngIf="isLoggedIn(); else loginForm">
+    <section class="listOfTask"><app-task></app-task></section>
+  </div>
+  <ng-template #loginForm>
+    <app-login></app-login>
+  </ng-template>
   

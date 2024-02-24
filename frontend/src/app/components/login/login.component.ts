@@ -9,10 +9,11 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+
 export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
-  
+  expanded = false;
   constructor(
     private authService: AuthenticationService,
     private formBuilder: FormBuilder,
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit {
     ).subscribe()
     
   }
+  
 
 
 }

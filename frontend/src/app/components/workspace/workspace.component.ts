@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ListEntriesPageable } from 'src/app/models/list-entry.dto';
-import { Router, ActivatedRoute, Data } from '@angular/router';
-import { ListService } from 'src/app/services/list-service/list.service';
+import { Component } from '@angular/core';
+import { Router} from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
-import { UserService } from 'src/app/services/user/user.service';
-
+import { JWT_NAME } from 'src/app/services/authentication-service/authentication.service';
 
 
 @Component({
@@ -12,12 +9,16 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './workspace.component.html',
   styleUrls: ['./workspace.component.scss']
 })
-export class WorkspaceComponent implements OnInit {
-  ngOnInit(): void {
-  }
-
+export class WorkspaceComponent  {
+  constructor(
+    private router: Router, private authService: AuthenticationService,){}
+     navigateTo(value: string) {
+      this.router.navigate(['../', value]);
+    }
  
-  
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem(JWT_NAME); // Sprawdzenie obecności tokenu JWT w localStorage
+  }
 
 }
 
