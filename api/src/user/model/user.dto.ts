@@ -10,6 +10,10 @@ export interface UserDtO {
     role?: UserRole;
     profileImage?: string;
     listEntries?: ListEntryDTO[];
+    tempPassword?:string;
+    isTempPasswordActive?: boolean;
+    tempPasswordExpirationDate?: Date;
+   
     
 }
 enum UserRole {

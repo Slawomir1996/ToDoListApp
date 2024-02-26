@@ -1,6 +1,7 @@
 import { ListEntryEntity } from "src/list/models/list-entry.entity";
-import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import UserRole from "./user.dto";
+
 
 
 
@@ -37,5 +38,13 @@ export class UserEntity {
     emailToLowerCase() {
         this.email = this.email.toLowerCase();
     }
+
+    @Column({ nullable: true })
+    tempPassword:string;
+
+    @Column({default: false})
+    isTempPasswordActive: boolean;
+    @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP" })
+    tempPasswordExpirationDate:Date
     
 }

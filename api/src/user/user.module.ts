@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './model/user.entities';
 import { AuthModule } from 'src/auth/auth.module';
 
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity]),

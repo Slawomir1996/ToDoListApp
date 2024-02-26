@@ -3,13 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../model/user.entities';
 import { Like, Repository } from 'typeorm';
 import { UserDtO } from '../model/user.dto';
-import { catchError, from, map, Observable, switchMap, tap, throwError } from 'rxjs';
-import { AuthService } from 'src/auth/auth-services/auth.service';
+import { catchError, from, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
+import { AuthService} from 'src/auth/auth-services/auth.service';
 import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginate';
+import { use } from 'passport';
 
 
+let id:number
 @Injectable()
 export class UserService {
+   
     
     
     constructor(
@@ -20,8 +23,103 @@ export class UserService {
     isUserNameUnique(username: string): Observable<boolean> {
             return from(this.userRepository.findOne({ where: { username } })).pipe(
               map((user) => !user) //If the answer is true be used by a user
+            )
+          }
+
+    findOneBYNameAndEmail(username: string, email: string){
+       return this.userRepository.findOne( {
+            select: ['id', 'name', 'username', 'email', 'password', 'role', 'profileImage', "tempPassword", 'isTempPasswordActive', 'tempPasswordExpirationDate'],
+            where: {
+              username,email 
+            }}
+            
+        )
+        }
+        generateRandomPassword(length: number): string {
+            const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let password = '';
+            for (let i = 0; i < length; i++) {
+              const randomIndex = Math.floor(Math.random() * charset.length);
+              password += charset[randomIndex];
+            }
+            console.log(password);
+            return password;
+          }
+    
+          addTempPassword(username: string, email: string): Observable<any> {
+            return from(this.findOneBYNameAndEmail(username, email)).pipe(
+              switchMap((userToUpdate) => {
+                if (!userToUpdate) {
+                  throw new Error('Użytkownik nie istnieje');
+                }
+                
+                // Aktualizuj dane użytkownika
+                userToUpdate.tempPassword = this.generateRandomPassword(10); // Ustaw tymczasowe hasło
+                userToUpdate.isTempPasswordActive = true; // Ustaw flagę aktywności tymczasowego hasła
+                const expirationDate = new Date();
+                expirationDate.setDate(expirationDate.getDate() + 1); // Dodaj 1 dzień do bieżącej daty
+                userToUpdate.tempPasswordExpirationDate = expirationDate; //
+
+                return this.authService.hashPassword(userToUpdate.tempPassword).pipe( // Zaszyfrowanie nowego hasła
+                  switchMap((hashedPassword: string) => {
+                    userToUpdate.tempPassword = hashedPassword; // Ustawienie zaszyfrowanego hasła tymczasowego
+                    return from(this.userRepository.save(userToUpdate)).pipe(
+                      map(() => userToUpdate)
+                    );
+                  })
+                );
+              }),
+              catchError(() => throwError('Użytkownik o podanym username i email nie został znaleziony'))
             );
           }
+          
+          
+          
+ 
+
+
+validateUser(email: string, password: string): Observable<UserDtO> {
+    return from(this.userRepository.findOne({
+      select: ['id', 'name', 'username', 'email', 'password', 'role', 'profileImage', "tempPassword", 'isTempPasswordActive', 'tempPasswordExpirationDate'],
+      where: {
+        email,
+      },
+    })).pipe(
+      switchMap((user: UserDtO) => {
+        if (user.isTempPasswordActive) {
+          if (new Date() > user.tempPasswordExpirationDate) {
+            user.isTempPasswordActive = false; // Zmiana isTempPasswordActive na false
+            return from(this.userRepository.update(user.id, { isTempPasswordActive: false })).pipe(
+              switchMap(() => throwError('Hasło tymczasowe wygasło. Proszę wygenerować nowe hasło.')) // Zwrócenie błędu informującego o wygaśnięciu hasła tymczasowego
+            );
+          } else {
+            return this.authService.compareTempPasswords(password, user.tempPassword).pipe(
+              map((match: boolean) => {
+                if (match) {
+                  const { tempPassword, ...result } = user;
+                  return result;
+                } else {
+                  // Handle mismatch case
+                }
+              })
+            );
+          }
+        } else {
+          return this.authService.comparePasswords(password, user.password).pipe(
+            map((match: boolean) => {
+              if (match) {
+                const { password, ...result } = user;
+                return result;
+              } else {
+                throw new Error('Invalid password');
+              }
+            })
+          );
+        }
+      })
+    );
+  }
+  
     create(user: UserDtO): Observable<UserDtO> {
             return this.isUserNameUnique(user.username).pipe(
               switchMap((isUnique) => {
@@ -121,7 +219,7 @@ export class UserService {
         return from(this.userRepository.update(id, user));
     }
 
-    login(user: UserDtO): Observable<string> {
+login(user: UserDtO): Observable<string> {
         return this.validateUser(user.email, user.password).pipe(
             tap((user: UserDtO) => console.log(user)),
             switchMap((user: UserDtO) => {
@@ -134,26 +232,7 @@ export class UserService {
         )
     }
 
-    validateUser(email: string, password: string): Observable<UserDtO> {
-        return from(this.userRepository.findOne({
-            select: ['id', 'name', 'username', 'email', 'password', 'role', 'profileImage'],
-            where: {
-                email,
-            },
-        })).pipe(
-            switchMap((user: UserDtO) => this.authService.comparePasswords(password, user.password).pipe(
-                map((match: boolean) => {
-                    if (match) {
-                        const { password, ...result } = user;
-                        return result;
-                    } else {
-                        throw Error;
-                    }
-                })
-            ))
-        )
-
-    }
+   
     findOneByID(id: number): Observable<UserDtO> {
         return from(this.userRepository.findOne({
             select: ['id', 'name', 'username', 'email', 'role', 'profileImage',],
@@ -163,6 +242,9 @@ export class UserService {
             }
         }))
     }
-
     
 }
+function generateRandomPassword(arg0: number): string {
+    throw new Error('Function not implemented.');
+}
+

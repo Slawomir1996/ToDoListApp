@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors, Request, Res, UploadedFiles } from '@nestjs/common';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors, Request, Res, UploadedFiles, HttpException, HttpStatus } from '@nestjs/common';
+import { catchError, from, map, Observable, of, switchMap, tap } from 'rxjs';
 import { hasRoles } from 'src/auth/decorator/role.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-guard';
 import { RolesGuard } from 'src/auth/guards/roles-guard';
@@ -12,6 +12,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { diskStorage } from 'multer';
 import { join } from 'path';
 import path = require('path');
+import { UserEntity } from '../model/user.entities';
+import { get } from 'http';
+
 
 export const storage = {
     storage: diskStorage({
@@ -29,6 +32,15 @@ export const storage = {
 @Controller('users')
 export class UserController {
     constructor(private userService: UserService) { }
+
+@Get('/:username/:email')
+findOneBYNameAndEmail(@Param ('username') username: string, @Param('email') email: string):Observable<any>{
+    return from (this.userService. findOneBYNameAndEmail(username,email)).pipe(
+        tap(user => console.log(user))
+      );
+      
+}
+
     @Get('unique/:username')
     isUserNameUnique(@Param('username') username: string): Observable<boolean> {
       return this.userService.isUserNameUnique(username);
@@ -37,6 +49,49 @@ export class UserController {
     findOneById(@Param('id') id: string): Observable<UserDtO> {
         return this.userService.findOneByID(Number(id))
     }
+
+
+
+
+
+////
+@Post('recovery-password/:username/:email')
+updateUser(
+    @Param('username') username: string,
+    @Param('email') email: string,
+   
+  ): Observable<void> {
+    return this.userService.addTempPassword(username, email).pipe(
+      switchMap(() => {
+        // Tutaj możesz zwrócić odpowiedź, np. status HTTP 200 OK
+        return new Observable<void>((observer) => {
+          observer.next();
+          observer.complete();
+        });
+      }),
+      catchError((error) => {
+        // Tutaj obsłuż błąd, np. zwróć status HTTP 404 Not Found
+        // lub inny odpowiedni status w zależności od sytuacji
+        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+      }),
+    );
+  }
+
+
+    // @Post('recovery-password')
+    // addTempPassword(@Body() user: UserDtO): Observable<UserEntity|any> {
+    //   return (this.userService.addTempPassword(user.username,user.email))
+    // }
+///
+@Post('recovery-password/login')
+    tempLogin(@Body() user: UserDtO): Observable<Object> {
+        return this.userService.login(user).pipe(
+            map((jwt: string) => {
+                return { access_token: jwt };
+            })
+        )
+    }
+
 
     @Post()
     create(@Body() user: UserDtO): Observable<UserDtO | Object> {
@@ -77,6 +132,9 @@ export class UserController {
         }
     }
 
+
+
+    
 
     @UseGuards(JwtAuthGuard)
     @Delete(':id')
