@@ -12,94 +12,79 @@ import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginat
 
 @Injectable()
 export class UserService {
-   
-    
-    
-    constructor(
-        @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
-        private authService: AuthService
-        ) { }
+   constructor(
+     @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
+      private authService: AuthService
+   ) { }
         
-    isUserNameUnique(username: string): Observable<boolean> {
-            return from(this.userRepository.findOne({ where: { username } })).pipe(
-              map((user) => !user) //If the answer is true be used by a user
-            )
-          }
+  isUserNameUnique(username: string): Observable<boolean> {
+     return from(this.userRepository.findOne({ where: { username } })).pipe(
+       map((user) => !user) //If the answer is true be used by a user
+      )
+    }
 
-    findOneBYNameAndEmail(username: string, email: string){
-       return this.userRepository.findOne( {
-            select: ['id', 'name', 'username', 'email', 'password', 'role', 'profileImage', "tempPassword", 'isTempPasswordActive', 'tempPasswordExpirationDate'],
-            where: {
-              username,email 
-            }}
-            
-        )
-        }
-        generateRandomPassword(length: number): string {
-            const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let password = '';
-            for (let i = 0; i < length; i++) {
-              const randomIndex = Math.floor(Math.random() * charset.length);
-              password += charset[randomIndex];
-            }
-            console.log(password);
+  isEmailUnique(email: string): Observable<boolean> {
+    return from(this.userRepository.findOne({ where: { email } })).pipe(
+       map((user) => !user) //If the answer is true be used by a user
+     )
+    }
+
+  findOneBYNameAndEmail(username: string, email: string){
+    return this.userRepository.findOne( {
+      select: ['id', 'name', 'username', 'email', 'password', 'role', 'profileImage', "tempPassword", 'isTempPasswordActive', 'tempPasswordExpirationDate'],
+         where: { username,email }})
+    }
+   generateRandomPassword(length: number): string {
+    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let password = '';
+        for (let i = 0; i < length; i++) {
+           const randomIndex = Math.floor(Math.random() * charset.length);
+           password += charset[randomIndex];
+          }
+          console.log(password);
             return password;
-          }
+  }
     
-          addTempPassword(username: string, email: string): Observable<any> {
-            return from(this.findOneBYNameAndEmail(username, email)).pipe(
-              switchMap((userToUpdate) => {
-                if (!userToUpdate) {
-                  throw new Error('Użytkownik nie istnieje');
-                }
-                
-                // Aktualizuj dane użytkownika
-                userToUpdate.tempPassword = this.generateRandomPassword(10); // Ustaw tymczasowe hasło
-                userToUpdate.isTempPasswordActive = true; // Ustaw flagę aktywności tymczasowego hasła
-                const expirationDate = new Date();
-                expirationDate.setDate(expirationDate.getDate() + 1); // Dodaj 1 dzień do bieżącej daty
-                userToUpdate.tempPasswordExpirationDate = expirationDate; //
+  addTempPassword(username: string, email: string): Observable<any> {
+    return from(this.findOneBYNameAndEmail(username, email)).pipe(
+      switchMap((userToUpdate) => {
+        if (!userToUpdate) {
+          throw new Error('Użytkownik nie istnieje');}
+      // Aktualizuj dane użytkownika
+          userToUpdate.tempPassword = this.generateRandomPassword(10); // Ustaw tymczasowe hasło
+          userToUpdate.isTempPasswordActive = true; // Ustaw flagę aktywności tymczasowego hasła
+          const expirationDate = new Date();
+          expirationDate.setDate(expirationDate.getDate() + 1); // Dodaj 1 dzień do bieżącej daty
+          userToUpdate.tempPasswordExpirationDate = expirationDate; 
+          return this.authService.hashPassword(userToUpdate.tempPassword).pipe( // Zaszyfrowanie nowego hasła
+            switchMap((hashedPassword: string) => {
+               userToUpdate.tempPassword = hashedPassword; // Ustawienie zaszyfrowanego hasła tymczasowego
+                return from(this.userRepository.save(userToUpdate)).pipe(
+                   map(() => userToUpdate));
+            })
+          );
+      }),
+      catchError(() => throwError('Użytkownik o podanym username i email nie został znaleziony')));
+  }
 
-                return this.authService.hashPassword(userToUpdate.tempPassword).pipe( // Zaszyfrowanie nowego hasła
-                  switchMap((hashedPassword: string) => {
-                    userToUpdate.tempPassword = hashedPassword; // Ustawienie zaszyfrowanego hasła tymczasowego
-                    return from(this.userRepository.save(userToUpdate)).pipe(
-                      map(() => userToUpdate)
-                    );
-                  })
-                );
-              }),
-              catchError(() => throwError('Użytkownik o podanym username i email nie został znaleziony'))
-            );
-          }
-          
-          updatePassword(userId: number, newPassword: string): Observable<any> {
-        
-            return from(this.findOneByID(userId)).pipe(
-              switchMap((user: UserDtO | undefined) => {
-                if (!user) {
-                  throw new Error('Użytkownik o podanym ID nie istnieje.');
-                }
-                
-                user.isTempPasswordActive = false; // Ustaw flagę aktywności tymczasowego hasła
-                
-                user.tempPassword=''
-                
-                return from(this.authService.hashPassword(newPassword)).pipe(
-                  switchMap((hashedPassword: string) => {
-                    user.password = hashedPassword;
-                    return from(this.userRepository.save(user));
-                  })
-                );
-              }),
-              catchError((error: Error) => {
-                return throwError(error);
-              })
-            );
-          }
-          
- 
-
+  updatePassword(userId: number, newPassword: string): Observable<any> {
+   return from(this.findOneByID(userId)).pipe( switchMap((user: UserDtO | undefined) => {
+      if (!user) {
+       throw new Error('Użytkownik o podanym ID nie istnieje.');}
+        user.isTempPasswordActive = false; // Ustaw flagę aktywności tymczasowego hasła
+        user.tempPassword=''
+        return from(this.authService.hashPassword(newPassword)).pipe(
+          switchMap((hashedPassword: string) => {
+            user.password = hashedPassword;
+            return from(this.userRepository.save(user));
+          })
+        );
+  }),
+      catchError((error: Error) => {
+        return throwError(error);
+      })
+  );
+  }
 
 validateUser(email: string, password: string): Observable<UserDtO> {
     return from(this.userRepository.findOne({
@@ -142,36 +127,36 @@ validateUser(email: string, password: string): Observable<UserDtO> {
       })
     );
   }
+
+
   
-    create(user: UserDtO): Observable<UserDtO> {
-            return this.isUserNameUnique(user.username).pipe(
-              switchMap((isUnique) => {
-                if (isUnique) {
-                  return this.authService.hashPassword(user.password).pipe(
-                    switchMap((passwordHash: string) => {
-                      const newUser = new UserEntity();
-                      newUser.name = user.name;
-                      newUser.username = user.username;
-                      newUser.email = user.email;
-                      newUser.password = passwordHash;
-                      newUser.role = user.role;
-                      newUser.profileImage = user.profileImage;
+ create(user: UserDtO): Observable<UserDtO> {
+  return this.isUserNameUnique(user.username).pipe(
+    switchMap((isUnique) => {
+      if (isUnique) {
+        return this.authService.hashPassword(user.password).pipe(
+          switchMap((passwordHash: string) => {
+            const newUser = new UserEntity();
+            newUser.name = user.name;
+            newUser.username = user.username;
+            newUser.email = user.email;
+            newUser.password = passwordHash;
+            newUser.role = user.role;
+            newUser.profileImage = user.profileImage;
           
-                      return from(this.userRepository.save(newUser)).pipe(
-                        map((user: UserDtO) => {
-                          const { password, ...result } = user;
-                          return result;
-                        }),
-                        catchError(err => throwError(err))
-                      );
-                    })
-                  );
-                } else {
-                  throw new Error('User Name is busy ');
-                }
-              })
-            );
-          }
+           return from(this.userRepository.save(newUser)).pipe(
+              map((user: UserDtO) => {
+                 const { password, ...result } = user;
+                  return result;
+              }),
+             catchError(err => throwError(err))
+           );
+          })
+        );
+      } else { throw new Error('User Name is busy ')}
+    })
+  );
+  }
   
 
     findAll(): Observable<UserDtO[]> {

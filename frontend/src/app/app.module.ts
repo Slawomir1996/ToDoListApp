@@ -31,13 +31,16 @@ import { UpdateProfileComponent } from './components/update-profile/update-profi
 import { AllTaskComponent } from './components/list-entry/all-lists-entries/all-task.component';
 import { CreateListEntryComponentComponent } from './components/list-entry/create-list-entry-component/create-list-entry-component.component';
 
+
 import { ListForDayComponentComponent } from './components/list-entry/list-for-day-component/list-for-day-component.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditItemComponent } from './components/list-entry/edit-item/edit-item.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { UpdatePasswordComponent } from './components/update-password/update-password.component';
+import { UpdatePasswordComponent } from './components/update-password/updatePassword.component';
+import { ForgottenPasswordComponent } from './components/forgottenPassword/forgottenPassword.component';
+
 
 
 @NgModule({
@@ -57,6 +60,9 @@ import { UpdatePasswordComponent } from './components/update-password/update-pas
     EditItemComponent,
     CalendarComponent,
     UpdatePasswordComponent,
+    ForgottenPasswordComponent
+    
+    
   
   ],
   imports: [
@@ -81,6 +87,7 @@ import { UpdatePasswordComponent } from './components/update-password/update-pas
     MatPaginatorModule,
     MatCardModule,
     MatDialogModule,
+    ReactiveFormsModule
     
   ],
   providers: [

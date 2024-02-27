@@ -13,7 +13,7 @@ export interface UserDtO {
     tempPassword?:string;
     isTempPasswordActive?: boolean;
     tempPasswordExpirationDate?: Date;
-   
+    invalidCounter?:number;
     
 }
 

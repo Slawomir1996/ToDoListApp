@@ -44,29 +44,36 @@ findOneBYNameAndEmail(@Param ('username') username: string, @Param('email') emai
     isUserNameUnique(@Param('username') username: string): Observable<boolean> {
       return this.userService.isUserNameUnique(username);
     };
+    @Get('unique/:email')
+    isEmailUnique(@Param('email') email: string): Observable<boolean> {
+      return this.userService.isEmailUnique(email);
+    };
     @Get(':id')
     findOneById(@Param('id') id: string): Observable<UserDtO> {
         return this.userService.findOneByID(Number(id))
     }
-
-@Post('recovery-password')
-updateUser(@Body() body: {username:string ,email:string }): Observable<void> {
-    const {username } = body;
-    const {email } = body;
-    return this.userService.addTempPassword(username, email).pipe(
-      switchMap(() => {
-        // Tutaj możesz zwrócić odpowiedź, np. status HTTP 200 OK
-        return new Observable<void>((observer) => {
-          observer.next();
-          observer.complete();
-        });
-      }),
-      catchError((error) => {
-        
-        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
-      }),
-    );
-  }
+    @Post('recovery-password/:username/:email')
+    updateUser(
+        @Param('username') username: string,
+        @Param('email') email: string,
+    
+      ): Observable<void> {
+        return this.userService.addTempPassword(username, email).pipe(
+          switchMap(() => {
+            // Tutaj możesz zwrócić odpowiedź, np. status HTTP 200 OK
+            return new Observable<void>((observer) => {
+              observer.next();
+              observer.complete();
+            });
+          }),
+          catchError((error) => {
+            // Tutaj obsłuż błąd, np. zwróć status HTTP 404 Not Found
+            // lub inny odpowiedni status w zależności od sytuacji
+            throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+          }),
+        );
+      }
+    
 
 @Post()
 create(@Body() user: UserDtO): Observable<UserDtO | Object> {
@@ -118,7 +125,7 @@ create(@Body() user: UserDtO): Observable<UserDtO | Object> {
                 updateOne(@Param('id') id: string, @Body() user: UserDtO): Observable<any> {
                     return this.userService.updateOne(Number(id), user);
                 }
-                @UseGuards(JwtAuthGuard)
+                // @UseGuards(JwtAuthGuard)
                 @Post(':id/update-password')
                 updatePassword(@Param('id') userId: number, @Body() body: {email:string,password:string, newPassword: string }): Observable<any> {
                     const {email } = body;

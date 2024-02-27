@@ -12,7 +12,7 @@ import { WorkspaceComponent } from './components/workspace/workspace.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CreateListEntryComponentComponent } from './components/list-entry/create-list-entry-component/create-list-entry-component.component';
 import { ListForDayComponentComponent } from './components/list-entry/list-for-day-component/list-for-day-component.component';
-import { UpdatePasswordComponent } from './components/update-password/update-password.component';
+import { UpdatePasswordComponent } from './components/update-password/updatePassword.component';
 
 
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap, switchMap } from "rxjs/operators";
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { UserDtO } from '../../models/user.dto'
 
 export interface LoginForm {
@@ -58,8 +58,8 @@ logout() {
       ));
 
   }
-
-  checkIsTempPasswordActive():Observable<boolean>{
+  
+checkIsTempPasswordActive():Observable<boolean>{
     return of(localStorage.getItem(JWT_NAME)).pipe(
       tap((jwt) => console.log(jwt)),
       switchMap((jwt: string | any) => of(this.jwtHelper.decodeToken(jwt)).pipe(
@@ -68,7 +68,19 @@ logout() {
       )
       ));
   }
-
-
+updatePassword(updateData: any){
+  const JWT_NAME = 'blog-token';
+   let tokenJWT: string|any
+   
+   tokenJWT=localStorage.getItem(JWT_NAME)
+    let user= this.jwtHelper.decodeToken(tokenJWT)
+    let userId =user.user.id
+    console.log(`${userId}-id`);
+    console.log(updateData);
+  return this.http.post<any>(`/api/users/${userId}/update-password`,updateData)
+}
+forgottenPassword(username: string, email: string) {
+  return this.http.post(`/api/users/recovery-password/${username}/${email}`, { EmailAddress: email });
+}
 
 }

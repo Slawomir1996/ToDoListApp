@@ -25,6 +25,10 @@
   "password": "thor192"</p>
 <p> user2 "email": "thor92@com",
   "password": "thor92"</p> -->
+  <div class="displayRegister" (click)="expanded = !expanded">forgotten password</div>
+  <div class="register" *ngIf="expanded">
+   <app-forgottenPassword></app-forgottenPassword> 
+  </div>
 
   <div class="displayRegister" (click)="expanded = !expanded">I don't have account yet!</div>
   <div class="register" *ngIf="expanded">

@@ -38,8 +38,12 @@ export class UserEntity {
         this.email = this.email.toLowerCase();
     }
 
-    @Column({ nullable: true })
+    @Column({ nullable:true, select:false })
     tempPassword:string;
+
+    @Column({nullable: true})
+    invalidCounter:number;
+  
 
     @Column({default: false})
     isTempPasswordActive: boolean;
