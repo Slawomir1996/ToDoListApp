@@ -1,5 +1,5 @@
 import { ListEntryEntity } from "src/list/models/list-entry.entity";
-import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity,  OneToMany,  BeforeUpdate, PrimaryGeneratedColumn } from "typeorm";
 import UserRole from "./user.dto";
 
 
@@ -20,10 +20,9 @@ export class UserEntity {
     @Column({ unique: true, })
     email: string;
 
-    @Column({ select: false })
+    @Column({ select: true })
     password: string;
-
-
+    
     // default: UserRole.ADMIN
     @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
     role: UserRole;

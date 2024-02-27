@@ -37,6 +37,7 @@ import { EditItemComponent } from './components/list-entry/edit-item/edit-item.c
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { UpdatePasswordComponent } from './components/update-password/update-password.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     ListForDayComponentComponent,
     EditItemComponent,
     CalendarComponent,
+    UpdatePasswordComponent,
   
   ],
   imports: [

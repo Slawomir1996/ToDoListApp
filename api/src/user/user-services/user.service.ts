@@ -6,10 +6,10 @@ import { UserDtO } from '../model/user.dto';
 import { catchError, from, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { AuthService} from 'src/auth/auth-services/auth.service';
 import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginate';
-import { use } from 'passport';
 
 
-let id:number
+
+
 @Injectable()
 export class UserService {
    
@@ -73,7 +73,30 @@ export class UserService {
             );
           }
           
-          
+          updatePassword(userId: number, newPassword: string): Observable<any> {
+        
+            return from(this.findOneByID(userId)).pipe(
+              switchMap((user: UserDtO | undefined) => {
+                if (!user) {
+                  throw new Error('Użytkownik o podanym ID nie istnieje.');
+                }
+                
+                user.isTempPasswordActive = false; // Ustaw flagę aktywności tymczasowego hasła
+                
+                user.tempPassword=''
+                
+                return from(this.authService.hashPassword(newPassword)).pipe(
+                  switchMap((hashedPassword: string) => {
+                    user.password = hashedPassword;
+                    return from(this.userRepository.save(user));
+                  })
+                );
+              }),
+              catchError((error: Error) => {
+                return throwError(error);
+              })
+            );
+          }
           
  
 
@@ -96,7 +119,7 @@ validateUser(email: string, password: string): Observable<UserDtO> {
             return this.authService.compareTempPasswords(password, user.tempPassword).pipe(
               map((match: boolean) => {
                 if (match) {
-                  const { tempPassword, ...result } = user;
+                  const { tempPassword,password, ...result } = user;
                   return result;
                 } else {
                   // Handle mismatch case
@@ -108,7 +131,7 @@ validateUser(email: string, password: string): Observable<UserDtO> {
           return this.authService.comparePasswords(password, user.password).pipe(
             map((match: boolean) => {
               if (match) {
-                const { password, ...result } = user;
+                const { password, tempPassword, ...result } = user;
                 return result;
               } else {
                 throw new Error('Invalid password');
@@ -244,7 +267,5 @@ login(user: UserDtO): Observable<string> {
     }
     
 }
-function generateRandomPassword(arg0: number): string {
-    throw new Error('Function not implemented.');
-}
+
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 
 @Component({
@@ -29,14 +29,22 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log(this.loginForm.value);
-    if(this.loginForm.invalid) {
+    if (this.loginForm.invalid) {
       return;
     }
     this.authService.login(this.loginForm.value).pipe(
-      map(token => this.router.navigate(['workspace']))
-    ).subscribe()
-    
+      switchMap(token => this.authService.checkIsTempPasswordActive().pipe(
+        tap(isTempPasswordActive => {
+          if (isTempPasswordActive) {
+            this.router.navigate(['updatePassword']); // Redirect to update password page
+          } else {
+            this.router.navigate(['workspace']); // Redirect to workspace
+          }
+        })
+      ))
+    ).subscribe();
   }
+  
   
 
 

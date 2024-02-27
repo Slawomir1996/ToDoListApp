@@ -25,6 +25,7 @@ export class AuthenticationService {
     return this.http.post<any>('/api/users/login', { email: loginForm.email, password: loginForm.password }).pipe(
       map((token) => {
         localStorage.setItem(JWT_NAME, token.access_token);
+        
         return token;
       })
       
@@ -57,4 +58,17 @@ logout() {
       ));
 
   }
+
+  checkIsTempPasswordActive():Observable<boolean>{
+    return of(localStorage.getItem(JWT_NAME)).pipe(
+      tap((jwt) => console.log(jwt)),
+      switchMap((jwt: string | any) => of(this.jwtHelper.decodeToken(jwt)).pipe(
+        map((jwt: any) => (jwt.user.isTempPasswordActive))
+        
+      )
+      ));
+  }
+
+
+
 }
