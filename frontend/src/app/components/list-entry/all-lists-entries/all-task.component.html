@@ -1,6 +1,9 @@
 <app-calendar ></app-calendar>
 
 <div > 
+  <mat-paginator [length]="(dataSource | async)?.meta?.totalItems" [pageSize]="(dataSource | async)?.meta?.itemsPerPage"
+    [pageSizeOptions]="[5,10,25,100]" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
+  </mat-paginator>
   <div class="grigContainer">
    
        <div *ngFor="let listEntry of (dataSource | async)?.items "   class="main-div"  >
@@ -20,7 +23,4 @@
        </div>
      </div>
 
-  <mat-paginator [length]="(dataSource | async)?.meta?.totalItems" [pageSize]="(dataSource | async)?.meta?.itemsPerPage"
-    [pageSizeOptions]="[5,10,25,100]" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
-  </mat-paginator>
 </div>
