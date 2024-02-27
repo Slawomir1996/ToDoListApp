@@ -105,7 +105,7 @@ export class ListService {
         )
     }
 
-    deleteOne(id: number): Observable<ListEntryDTO|any> {
+    deleteOne(id: number): Observable<ListEntryDTO | any> {
         return from(this.listRepository.delete(id));
     }
 

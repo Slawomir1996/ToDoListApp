@@ -19,7 +19,7 @@ export class ListController {
         const user = req.user;
         return this.listService.create(user, listEntry);
     }
-   
+
     @UseGuards(JwtAuthGuard,)
     @Get('')
     index(
@@ -67,7 +67,7 @@ export class ListController {
             route: LIST_ENTRIES_URL + '/user/' + userId + '/title/' + title
         }, Number(userId), title)
     }
-    @UseGuards(JwtAuthGuard,UserIsAuthorGuard)
+    @UseGuards(JwtAuthGuard, UserIsAuthorGuard)
     @Get(':id')
     findOne(@Param('id') id: number): Observable<ListEntryDTO> {
         return this.listService.findOne(Number(id));
@@ -88,15 +88,5 @@ export class ListController {
         return this.listService.deleteOne(Number(id));
     }
 
-    // @UseGuards(JwtAuthGuard)
-    // @Post('image/upload')
-    // @UseInterceptors(FileInterceptor('file', storage))
-    // uploadFile(@UploadedFile() file, @Request() req): Observable<Image> {
-    //     return of(file);
-    // }
-
-    // @Get('image/:imagename')
-    // findImage(@Param('imagename') imagename, @Res() res): Observable<Object> {
-    //     return of(res.sendFile(join(process.cwd(), 'uploads/blog-entry-images/' + imagename)));
-    // }
+   
 }

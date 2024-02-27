@@ -1,4 +1,3 @@
-
 <div class="container">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
@@ -9,11 +8,7 @@
 
       <label for="password">Password</label>
       <input type="password" placeholder="password" formControlName="password" class="form-control">
-      <!-- <mat-hint *ngIf="loginForm.controls.password.errors">Password is required</mat-hint> -->
 
-
-      <!-- <button  [disabled]="!loginForm.valid" type="submit" class="btn btn-success">Login</button> -->
-      <!-- <button type="submit" class="btn btn-success">Login</button> -->
       <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Login</button>
 
 
@@ -25,12 +20,12 @@
   "password": "thor192"</p>
 <p> user2 "email": "thor92@com",
   "password": "thor92"</p> -->
-  <div class="displayRegister" (click)="expanded = !expanded">forgotten password</div>
-  <div class="register" *ngIf="expanded">
-   <app-forgottenPassword></app-forgottenPassword> 
-  </div>
+<div class="displayRegister" (click)="expanded = !expanded">forgotten password</div>
+<div class="register" *ngIf="expanded">
+  <app-forgottenPassword></app-forgottenPassword>
+</div>
 
-  <div class="displayRegister" (click)="expanded = !expanded">I don't have account yet!</div>
-  <div class="register" *ngIf="expanded">
-   <app-register></app-register> 
+<div class="displayRegister" (click)="expanded = !expanded">I don't have account yet!</div>
+<div class="register" *ngIf="expanded">
+  <app-register></app-register>
 </div>

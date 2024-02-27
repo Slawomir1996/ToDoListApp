@@ -19,7 +19,7 @@ export interface File {
 })
 export class UpdateProfileComponent implements OnInit {
 
-  @ViewChild("fileUpload", {static: false}) fileUpload!: ElementRef ;
+  @ViewChild("fileUpload", { static: false }) fileUpload!: ElementRef;
 
   file: File = {
     data: null,
@@ -27,7 +27,7 @@ export class UpdateProfileComponent implements OnInit {
     progress: 0
   };
 
-form: FormGroup|any;
+  form: FormGroup | any;
 
   origin = 'localhost:3000/api/';
 
@@ -37,13 +37,13 @@ form: FormGroup|any;
     private authService: AuthenticationService,
     private userService: UserService,
     @Inject(WINDOW) private window: Window
-  ) { 
-    
+  ) {
+
   }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      id: [{value: null, disabled: true}, [Validators.required]],
+      id: [{ value: null, disabled: true }, [Validators.required]],
       name: [null, [Validators.required]],
       username: [null, [Validators.required]],
       profileImage: [null],
@@ -74,7 +74,7 @@ form: FormGroup|any;
       };
       this.fileUpload.nativeElement.value = '';
       this.uploadFile();
-    };    
+    };
   }
 
   uploadFile() {
@@ -96,12 +96,12 @@ form: FormGroup|any;
         this.file.inProgress = false;
         return of('Upload failed');
       })).subscribe((event: any) => {
-        if(typeof (event) === 'object') {
-          this.form.patchValue({profileImage: event.body.profileImage});
+        if (typeof (event) === 'object') {
+          this.form.patchValue({ profileImage: event.body.profileImage });
         }
       })
   }
-  
+
   update() {
     this.userService.updateOne(this.form.getRawValue()).subscribe();
   }

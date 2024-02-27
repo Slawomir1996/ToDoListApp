@@ -1,10 +1,8 @@
-
 <h1 style="text-align: center;">All Users</h1>
 
 <!-- <mat-form-field> -->
-    <!-- <mat-label>Filter by Username</mat-label> -->
-    <input  type="text" [(ngModel)]="filterValue"
-    (input)="findByName(filterValue)" placeholder="Search Username">
+<!-- <mat-label>Filter by Username</mat-label> -->
+<input type="text" [(ngModel)]="filterValue" (input)="findByName(filterValue)" placeholder="Search Username">
 <!-- </mat-form-field> -->
 
 <div *ngIf="dataSource">
@@ -38,12 +36,8 @@
             <mat-cell *matCellDef="let row">{{row.role}}</mat-cell>
         </ng-container>
     </mat-table>
-    
-    <mat-paginator 
-        [length]="dataSource.meta.totalItems" 
-        [pageSize]="dataSource.meta.itemsPerPage" 
-        [pageSizeOptions]="[5,10,25,100]"
-        (page)="pageEvent = $event; onPaginateChange($event)"
-        showFirstLastButtons>
+
+    <mat-paginator [length]="dataSource.meta.totalItems" [pageSize]="dataSource.meta.itemsPerPage"
+        [pageSizeOptions]="[5,10,25,100]" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
     </mat-paginator>
 </div>

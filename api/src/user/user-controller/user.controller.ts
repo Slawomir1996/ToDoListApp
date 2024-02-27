@@ -21,21 +21,21 @@ export const storage = {
     filename: (_req, file, cb) => {
       const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
       const extension: string = path.parse(file.originalname).ext;
-      
+
       cb(null, `${filename}${extension}`);
     }
   })
-  
+
 }
 
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) { }
-  
+
   @Get('profileImage/:imageName')
   findProfileImage(@Param('imageName') imageName: string, @Res() res): Observable<Object> {
     console.log(imageName);
-    return of(res.sendFile(join(process.cwd(),'./uploads/profileImage/'+imageName)));
+    return of(res.sendFile(join(process.cwd(), './uploads/profileImage/' + imageName)));
   }
   @Get('/find/:username/:email')
   findOneBYNameAndEmail(@Param('username') username: string, @Param('email') email: string): Observable<any> {
@@ -52,9 +52,9 @@ export class UserController {
   };
   @Get(':id')
   findOneById(@Param('id') id: string): Observable<UserDtO> {
- 
+
     return this.userService.findOneByID(Number(id))
-  
+
   }
 
   @Post('recovery-password')

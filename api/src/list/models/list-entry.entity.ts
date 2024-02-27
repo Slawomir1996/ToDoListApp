@@ -1,5 +1,3 @@
-
-
 import { UserEntity } from "src/user/model/user.entities";
 import { BeforeUpdate, Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -16,14 +14,14 @@ export class ListEntryEntity {
 
     @Column({ default: '' })
     body: string;
-   
-    @Column({ default: false})
+
+    @Column({ default: false })
     isDone: boolean;
 
     @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date;
 
-    @Column({default: '' })
+    @Column({ default: '' })
     startAt: string;
 
 

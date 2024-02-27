@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map, switchMap, tap } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticationService,
     private formBuilder: FormBuilder,
     private router: Router
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -44,8 +44,8 @@ export class LoginComponent implements OnInit {
       ))
     ).subscribe();
   }
-  
-  
+
+
 
 
 }

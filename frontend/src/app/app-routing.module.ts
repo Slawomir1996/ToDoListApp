@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
 import { AllTaskComponent } from "./components/list-entry/all-lists-entries/all-task.component";
-import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
@@ -18,11 +17,11 @@ import { UpdatePasswordComponent } from './components/update-password/updatePass
 
 
 const routes: Routes = [
-  { path: 'admin', component: AdminComponent,canActivate: [AuthGuard]  },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'workspace', component: WorkspaceComponent },
-  {path: 'updatePassword', component: UpdatePasswordComponent},
+  { path: 'updatePassword', component: UpdatePasswordComponent },
   {
     path: 'users',
     children: [
@@ -50,10 +49,7 @@ const routes: Routes = [
     component: ListForDayComponentComponent,
     canActivate: [AuthGuard]
   },
-  {
-    path: 'home',
-    component: HomeComponent
-  },
+
   {
     path: 'all',
     component: AllTaskComponent,
@@ -64,11 +60,11 @@ const routes: Routes = [
     component: CreateListEntryComponentComponent,
     canActivate: [AuthGuard]
   },
- 
+
   {
-    path:'',
+    path: '',
     redirectTo: '/workspace',
-    pathMatch:'full'
+    pathMatch: 'full'
   }
 ];
 

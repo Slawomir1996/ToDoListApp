@@ -1,26 +1,27 @@
-<app-calendar ></app-calendar>
+<app-calendar></app-calendar>
 
-<div > 
+<div>
   <mat-paginator [length]="(dataSource | async)?.meta?.totalItems" [pageSize]="(dataSource | async)?.meta?.itemsPerPage"
     [pageSizeOptions]="[5,10,25,100]" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
   </mat-paginator>
   <div class="grigContainer">
-   
-       <div *ngFor="let listEntry of (dataSource | async)?.items "   class="main-div"  >
-         <br>
-         <div class="cart" style="font-family: 'Montserrat', sans-serif" >
-           <div >
-                 <h1 >{{listEntry.title}} </h1>
-                 <p >at: {{listEntry.startAt}}</p>
-                 <h3>task:{{listEntry.body}}</h3>
-                 <h1 class="status" [ngStyle]="{ 'color': listEntry.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }" (dblclick)="statusChange(listEntry)">status: {{listEntry.isDone ? 'done' : 'to to'}}</h1>
-                 <div class="toolsBar">
-                  <button mat-flat-button class="edit tools" sty (click)="openDailog(listEntry.id)">📝 </button>
-                  <button mat-flat-button class="delete tools" (click)="delete(listEntry.id)">x</button>
-                </div>
-             </div>
-           </div> 
-       </div>
-     </div>
+
+    <div *ngFor="let listEntry of (dataSource | async)?.items " class="main-div">
+      <br>
+      <div class="cart" style="font-family: 'Montserrat', sans-serif">
+        <div>
+          <h1>{{listEntry.title}} </h1>
+          <p>at: {{listEntry.startAt}}</p>
+          <h3>task:{{listEntry.body}}</h3>
+          <h1 class="status" [ngStyle]="{ 'color': listEntry.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }"
+            (dblclick)="statusChange(listEntry)">status: {{listEntry.isDone ? 'done' : 'to to'}}</h1>
+          <div class="toolsBar">
+            <button mat-flat-button class="edit tools" sty (click)="openDailog(listEntry.id)">📝 </button>
+            <button mat-flat-button class="delete tools" (click)="delete(listEntry.id)">x</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>

@@ -1,14 +1,13 @@
-
-.toolsBar{
+.toolsBar {
     position: absolute;
-    display:flex;
-  justify-content: space-between;
-  width: 180px;
+    display: flex;
+    justify-content: space-between;
+    width: 180px;
 
 }
 
 
-.delete{ 
+.delete {
     font-size: 1.8rem;
     font-weight: 100;
     padding: 0.5rem;
@@ -17,17 +16,17 @@
     border: none;
     cursor: pointer;
     font-weight: 100;
-    transition:  font-weigh .15s, font-size .15s;
-   
-    &:hover{
+    transition: font-weigh .15s, font-size .15s;
+
+    &:hover {
         font-weight: 400;
-       
+
         font-size: 2rem;
     }
 }
 
 
-.edit{
+.edit {
     display: flex;
     font-size: 1.8rem;
     padding: 0.8rem;
@@ -37,28 +36,33 @@
     cursor: pointer;
     font-weight: 100;
     transition: font-size .15s;
-    &:hover{
-      
+
+    &:hover {
+
         font-size: 2rem;
     }
 }
-.status{
+
+.status {
     font-weight: bold;
     cursor: pointer;
     transition: background-color .15;
-    &:hover{
+
+    &:hover {
         background-color: rgba(255, 255, 0, 0.2)
     }
-    
+
 }
-.grigContainer{
+
+.grigContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     // grid-template-columns: repeat(5,1fr);
     background-image: url('../../../img/blat-drewniany-dab-bc-szczegol.jpg');
-    
+
 }
-.main-div{
+
+.main-div {
     display: flex;
     margin-left: auto;
     margin-right: auto;
@@ -66,17 +70,12 @@
     width: 300px;
     height: 310px;
     font-family: 'Montserrat', sans-serif
-    
- 
 }
 
-.cart{
+.cart {
     display: flex;
-   margin-top: 4vh;
+    margin-top: 4vh;
     margin-left: auto;
     margin-right: auto;
     font-family: 'Montserrat', sans-serif
-   
-    
 }
-

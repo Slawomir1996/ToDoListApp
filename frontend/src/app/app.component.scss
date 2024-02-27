@@ -1,66 +1,74 @@
-*{
+* {
   box-sizing: border-box;
 }
-  $breakpoints: (
+
+$breakpoints: (
   small: 480px,
   medium: 768px,
   large: 1024px
 );
-.burgerMenu{
+
+.burgerMenu {
   @media (max-width: map-get($breakpoints, medium)) {
     display: block;
   }
+
   @media (min-width: map-get($breakpoints, medium)) {
     display: none;
   }
 }
-.mainMenu{
+
+.mainMenu {
   @media (max-width: map-get($breakpoints, medium)) {
     display: none;
   }
+
   @media (min-width: map-get($breakpoints, medium)) {
     display: block;
   }
 }
-  mat-toolbar{
-    height: 7vh;
-    width: 100%;
-    color: white;
-   justify-content: space-between;
+
+mat-toolbar {
+  height: 7vh;
+  width: 100%;
+  color: white;
+  justify-content: space-between;
   background-color: rgba(65, 105, 225, 0.75);
-  
-  }
-  @media screen {
-    
-  }
-  a{
-    margin-right: 2rem;
-    text-decoration: none;
-    color: white;
-    padding: 8px;
-    // border: 2px solid white;
-    border-radius: 10px;
-  }
-  // .logo:hover{
-    
-  // }
-  a:hover{
-    text-decoration: none;
-    color: white;
-    background-color: royalblue
- 
-  }
-.logoutBtn{
-  margin-right: 2rem;
-    text-decoration: none;
-    background-color: rgba(64, 93, 189, 0.034);
-    color: white;
-    padding: 4px;
-    border: none;
-    border-radius: 10px;
 
 }
-.logoutBtn:hover{
+
+@media screen {}
+
+a {
+  margin-right: 2rem;
+  text-decoration: none;
+  color: white;
+  padding: 8px;
+  // border: 2px solid white;
+  border-radius: 10px;
+}
+
+// .logo:hover{
+
+// }
+a:hover {
+  text-decoration: none;
+  color: white;
+  background-color: royalblue
+}
+
+.logoutBtn {
+  margin-right: 2rem;
+  text-decoration: none;
+  background-color: rgba(64, 93, 189, 0.034);
+  color: white;
+  padding: 4px;
+  border: none;
+  border-radius: 10px;
+
+}
+
+.logoutBtn:hover {
   text-decoration: none;
   color: white;
   background-color: rgba(65, 105, 225, 0.76)
@@ -74,4 +82,3 @@ footer {
   padding: 10px;
   text-align: center;
 }
-    

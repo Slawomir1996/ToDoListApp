@@ -17,8 +17,6 @@ export interface UserDtO {
     
 }
 
-
-
 enum UserRole {
     ADMIN = 'admin',
     EDITOR = 'editor',

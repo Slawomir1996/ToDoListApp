@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AdminComponent } from './admin/admin.component';
-import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
@@ -51,7 +50,6 @@ import { ForgottenPasswordComponent } from './components/forgottenPassword/forgo
     UsersComponent,
     UpdateProfileComponent,
     UserProfileComponent,
-    HomeComponent,
     UsersComponent,
     WorkspaceComponent,
     AllTaskComponent,
@@ -61,9 +59,9 @@ import { ForgottenPasswordComponent } from './components/forgottenPassword/forgo
     CalendarComponent,
     UpdatePasswordComponent,
     ForgottenPasswordComponent
-    
-    
-  
+
+
+
   ],
   imports: [
     BrowserModule,
@@ -88,7 +86,7 @@ import { ForgottenPasswordComponent } from './components/forgottenPassword/forgo
     MatCardModule,
     MatDialogModule,
     ReactiveFormsModule
-    
+
   ],
   providers: [
     WINDOW_PROVIDERS,

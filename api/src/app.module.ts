@@ -1,4 +1,4 @@
-import {  Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,7 +14,6 @@ import { ListModule } from './list/list.module';
 
 @Module({
   imports: [
-  
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, './', 'frontend'),
     }),
@@ -28,10 +27,6 @@ import { ListModule } from './list/list.module';
     UserModule,
     AuthModule,
     ListModule,
-
-
-
-
   ],
   controllers: [AppController],
   providers: [AppService],
