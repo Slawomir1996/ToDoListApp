@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../model/user.entities';
 import { Like, Repository } from 'typeorm';
 import { UserDtO } from '../model/user.dto';
-import { catchError, from, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
+import { catchError, forkJoin, from, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { AuthService } from 'src/auth/auth-services/auth.service';
 import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginate';
 
@@ -17,23 +17,39 @@ export class UserService {
     private authService: AuthService
   ) { }
 
+  isUserUnique(username: string, email: string): Observable<boolean> {
+    const user = this.isUserNameUnique(username)
+    const userWithEmail = this.isEmailUnique(email)
+
+    return forkJoin([user, userWithEmail]).pipe(
+      map(([isUserUnique, isEmailUnique]) => {
+        if (!isUserUnique && !isEmailUnique) {
+          throw new Error('user name and email are busy');
+        } else if (!isUserUnique) {
+          throw new Error('user name is busy');
+        } else if (!isEmailUnique) {
+          throw new Error('email is busy');
+        }
+        return true;
+      })
+    );
+  }
+
+
   isUserNameUnique(username: string): Observable<boolean> {
     return from(this.userRepository.findOne({ where: { username } })).pipe(
-      map((user) => !user) //If the answer is true be used by a user
+      map((user) => !user)
     )
   }
 
   isEmailUnique(email: string): Observable<boolean> {
     return from(this.userRepository.findOne({ where: { email } })).pipe(
-      map((user) => !user) //If the answer is true be used by a user
+      map((user) => !user)
     )
   }
 
   findOneBYNameAndEmail(username: string, email: string) {
-    return this.userRepository.findOne({
-      select: ['id', 'name', 'username', 'email', 'password', 'role', 'profileImage', "tempPassword", 'isTempPasswordActive', 'tempPasswordExpirationDate'],
-      where: { username, email }
-    })
+    return this.userRepository.findOne({ where: { username, email } })
   }
   generateRandomPassword(length: number): string {
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -50,31 +66,30 @@ export class UserService {
     return from(this.findOneBYNameAndEmail(username, email)).pipe(
       switchMap((userToUpdate) => {
         if (!userToUpdate) {
-          throw new Error('Użytkownik nie istnieje');
+          throw new Error("'user don't exist'");
         }
-        // Aktualizuj dane użytkownika
-        userToUpdate.tempPassword = this.generateRandomPassword(10); // Ustaw tymczasowe hasło
-        userToUpdate.isTempPasswordActive = true; // Ustaw flagę aktywności tymczasowego hasła
+        userToUpdate.tempPassword = this.generateRandomPassword(10);
+        userToUpdate.isTempPasswordActive = true;
         const expirationDate = new Date();
-        expirationDate.setDate(expirationDate.getDate() + 1); // Dodaj 1 dzień do bieżącej daty
+        expirationDate.setDate(expirationDate.getDate() + 1);
         userToUpdate.tempPasswordExpirationDate = expirationDate;
-        return this.authService.hashPassword(userToUpdate.tempPassword).pipe( // Zaszyfrowanie nowego hasła
+        return this.authService.hashPassword(userToUpdate.tempPassword).pipe(
           switchMap((hashedPassword: string) => {
-            userToUpdate.tempPassword = hashedPassword; // Ustawienie zaszyfrowanego hasła tymczasowego
+            userToUpdate.tempPassword = hashedPassword;
             return from(this.userRepository.save(userToUpdate)).pipe(
               map(() => userToUpdate));
           })
         );
       }),
-      catchError(() => throwError('Użytkownik o podanym username i email nie został znaleziony')));
+      catchError(() => throwError("user don't exist")));
   }
 
   updatePassword(userId: number, newPassword: string): Observable<any> {
     return from(this.findOneByID(userId)).pipe(switchMap((user: UserDtO | undefined) => {
       if (!user) {
-        throw new Error('Użytkownik o podanym ID nie istnieje.');
+        throw new Error('The user with the given ID does not exist.');
       }
-      user.isTempPasswordActive = false; // Ustaw flagę aktywności tymczasowego hasła
+      user.isTempPasswordActive = false;
       user.tempPassword = ''
       return from(this.authService.hashPassword(newPassword)).pipe(
         switchMap((hashedPassword: string) => {
@@ -90,18 +105,13 @@ export class UserService {
   }
 
   validateUser(email: string, password: string): Observable<UserDtO> {
-    return from(this.userRepository.findOne({
-      select: ['id', 'name', 'username', 'email', 'password', 'role', 'profileImage', "tempPassword", 'isTempPasswordActive', 'tempPasswordExpirationDate'],
-      where: {
-        email,
-      },
-    })).pipe(
+    return from(this.userRepository.findOne({ where: { email } })).pipe(
       switchMap((user: UserDtO) => {
         if (user.isTempPasswordActive) {
           if (new Date() > user.tempPasswordExpirationDate) {
-            user.isTempPasswordActive = false; // Zmiana isTempPasswordActive na false
+            user.isTempPasswordActive = false;
             return from(this.userRepository.update(user.id, { isTempPasswordActive: false })).pipe(
-              switchMap(() => throwError('Hasło tymczasowe wygasło. Proszę wygenerować nowe hasło.')) // Zwrócenie błędu informującego o wygaśnięciu hasła tymczasowego
+              switchMap(() => throwError('The temporary password has expired. Please generate a new password.'))
             );
           } else {
             return this.authService.compareTempPasswords(password, user.tempPassword).pipe(
@@ -109,8 +119,6 @@ export class UserService {
                 if (match) {
                   const { tempPassword, password, ...result } = user;
                   return result;
-                } else {
-                  // Handle mismatch case
                 }
               })
             );
@@ -134,7 +142,7 @@ export class UserService {
 
 
   create(user: UserDtO): Observable<UserDtO> {
-    return this.isUserNameUnique(user.username).pipe(
+    return this.isUserUnique(user.username, user.email).pipe(
       switchMap((isUnique) => {
         if (isUnique) {
           return this.authService.hashPassword(user.password).pipe(
@@ -156,7 +164,7 @@ export class UserService {
               );
             })
           );
-        } else { throw new Error('User Name is busy ') }
+        }
       })
     );
   }
@@ -184,10 +192,7 @@ export class UserService {
     return from(this.userRepository.findAndCount({
       skip: Number(options.page) * Number(options.limit) || 0,
       take: Number(options.limit) || 5,
-      order: { id: "ASC" },
-      select: ['id', 'name', 'username', 'email', 'role'],
-
-      where: [
+      order: { id: "ASC" }, where: [
         { username: Like(`%${user.username}%`) }
       ]
     })).pipe(
@@ -222,9 +227,13 @@ export class UserService {
     delete user.password;
     delete user.role;
     return from(this.userRepository.update(id, user)).pipe(
-      switchMap(() => this.findOneByID(id))
+      switchMap(() => this.findOneByID(id)),
+      catchError(error => {
+        return throwError('user name is busy');
+      })
     );
   }
+
 
   updateRoleOfUser(id: number, user: UserDtO): Observable<any> {
     return from(this.userRepository.update(id, user));
@@ -246,8 +255,7 @@ export class UserService {
 
   findOneByID(id: number): Observable<UserDtO> {
     return from(this.userRepository.findOne({
-      select: ['id', 'name', 'username', 'email', 'role', 'profileImage',],
-
+      select: ['id'],
       where: {
         id,
       }

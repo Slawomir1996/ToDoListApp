@@ -37,47 +37,31 @@ export class UserController {
     console.log(imageName);
     return of(res.sendFile(join(process.cwd(), './uploads/profileImage/' + imageName)));
   }
-  @Get('find/:username/:email')
-  findOneBYNameAndEmail(@Param('username') username: string, @Param('email') email: string): Observable<any> {
-    console.log(username);
-    return from(this.userService.findOneBYNameAndEmail(username, email)).pipe(
-      tap(user => console.log(user))
-    );
 
-  }
 
-  @Get('unique/:username')
-  isUserNameUnique(@Param('username') username: string): Observable<boolean> {
-    return this.userService.isUserNameUnique(username);
-  };
   @Get(':id')
   findOneById(@Param('id') id: string): Observable<UserDtO> {
-
     return this.userService.findOneByID(Number(id))
-
   }
 
   @Post('recovery-password/:username/:email')
   updateUser(
-      @Param('username') username: string,
-      @Param('email') email: string,
+    @Param('username') username: string,
+    @Param('email') email: string,
 
-    ): Observable<void> {
-      return this.userService.addTempPassword(username, email).pipe(
-        switchMap(() => {
-          // Tutaj możesz zwrócić odpowiedź, np. status HTTP 200 OK
-          return new Observable<void>((observer) => {
-            observer.next();
-            observer.complete();
-          });
-        }),
-        catchError((error) => {
-          // Tutaj obsłuż błąd, np. zwróć status HTTP 404 Not Found
-          // lub inny odpowiedni status w zależności od sytuacji
-          throw new HttpException(error.message, HttpStatus.NOT_FOUND);
-        }),
-      );
-    }
+  ): Observable<void> {
+    return this.userService.addTempPassword(username, email).pipe(
+      switchMap(() => {
+        return new Observable<void>((observer) => {
+          observer.next();
+          observer.complete();
+        });
+      }),
+      catchError((error) => {
+        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+      }),
+    );
+  }
 
   @Post()
   create(@Body() user: UserDtO): Observable<UserDtO | Object> {
@@ -140,7 +124,7 @@ export class UserController {
         if (validatedUser) {
           return this.userService.updatePassword(userId, newPassword);
         } else {
-          throw new Error('Nieprawidłowy użytkownik');
+          throw new Error('Invalid user');
         }
       })
     );
