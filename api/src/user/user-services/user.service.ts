@@ -71,15 +71,15 @@ export class UserService {
         if (!userToUpdate) {
           throw new Error("'user don't exist'");
         }
-        
-        userToUpdate.tempPassword = this.generateRandomPassword(10); 
-        userToUpdate.isTempPasswordActive = true; 
+
+        userToUpdate.tempPassword = this.generateRandomPassword(10);
+        userToUpdate.isTempPasswordActive = true;
         const expirationDate = new Date();
-        expirationDate.setDate(expirationDate.getDate() + 1); 
+        expirationDate.setDate(expirationDate.getDate() + 1);
         userToUpdate.tempPasswordExpirationDate = expirationDate;
-        return this.authService.hashPassword(userToUpdate.tempPassword).pipe(  
+        return this.authService.hashPassword(userToUpdate.tempPassword).pipe(
           switchMap((hashedPassword: string) => {
-            userToUpdate.tempPassword = hashedPassword; 
+            userToUpdate.tempPassword = hashedPassword;
             return from(this.userRepository.save(userToUpdate)).pipe(
               map(() => userToUpdate));
           })
