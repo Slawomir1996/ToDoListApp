@@ -87,7 +87,6 @@ export class RegisterComponent implements OnInit {
                 this.displayStyle = 'block';
                 return;
             }
-            console.log('ok');
             this.displayStyle = 'none'
             this.authService.register(this.registerForm.value).subscribe(() => {
                 this.router.navigate(['login']);

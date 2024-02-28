@@ -37,7 +37,7 @@ export class UserController {
     console.log(imageName);
     return of(res.sendFile(join(process.cwd(), './uploads/profileImage/' + imageName)));
   }
-  @Get('/find/:username/:email')
+  @Get('find/:username/:email')
   findOneBYNameAndEmail(@Param('username') username: string, @Param('email') email: string): Observable<any> {
     console.log(username);
     return from(this.userService.findOneBYNameAndEmail(username, email)).pipe(
@@ -57,24 +57,27 @@ export class UserController {
 
   }
 
-  @Post('recovery-password')
-  updateUser(@Body() body: { username: string, email: string }): Observable<void> {
-    const { username } = body;
-    const { email } = body;
-    return this.userService.addTempPassword(username, email).pipe(
-      switchMap(() => {
-        // Tutaj możesz zwrócić odpowiedź, np. status HTTP 200 OK
-        return new Observable<void>((observer) => {
-          observer.next();
-          observer.complete();
-        });
-      }),
-      catchError((error) => {
+  @Post('recovery-password/:username/:email')
+  updateUser(
+      @Param('username') username: string,
+      @Param('email') email: string,
 
-        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
-      }),
-    );
-  }
+    ): Observable<void> {
+      return this.userService.addTempPassword(username, email).pipe(
+        switchMap(() => {
+          // Tutaj możesz zwrócić odpowiedź, np. status HTTP 200 OK
+          return new Observable<void>((observer) => {
+            observer.next();
+            observer.complete();
+          });
+        }),
+        catchError((error) => {
+          // Tutaj obsłuż błąd, np. zwróć status HTTP 404 Not Found
+          // lub inny odpowiedni status w zależności od sytuacji
+          throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+        }),
+      );
+    }
 
   @Post()
   create(@Body() user: UserDtO): Observable<UserDtO | Object> {

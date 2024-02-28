@@ -13,7 +13,8 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
-  expanded = false;
+  registerExpanded = false;
+  forgottenPasswordExpanded= false
   constructor(
     private authService: AuthenticationService,
     private formBuilder: FormBuilder,
@@ -26,10 +27,10 @@ export class LoginComponent implements OnInit {
       password: new FormControl(null, [Validators.required, Validators.minLength(3)])
     })
   }
-
+  
   onSubmit() {
-    console.log(this.loginForm.value);
     if (this.loginForm.invalid) {
+      
       return;
     }
     this.authService.login(this.loginForm.value).pipe(

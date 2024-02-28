@@ -71,12 +71,12 @@ checkIsTempPasswordActive():Observable<boolean>{
 updatePassword(updateData: any){
   const JWT_NAME = 'blog-token';
    let tokenJWT: string|any
-   
    tokenJWT=localStorage.getItem(JWT_NAME)
     let user= this.jwtHelper.decodeToken(tokenJWT)
     let userId =user.user.id
-    console.log(`${userId}-id`);
-    console.log(updateData);
+    let userEmail= user.user.email
+  user.user.email=userEmail
+   
   return this.http.post<any>(`/api/users/${userId}/update-password`,updateData)
 }
 forgottenPassword(username: string, email: string) {
