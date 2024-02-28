@@ -49,7 +49,10 @@ export class UserService {
   }
 
   findOneBYNameAndEmail(username: string, email: string) {
-    return this.userRepository.findOne({ where: { username, email } })
+    return this.userRepository.findOne({
+      select: ['id', 'name', 'username', 'email', 'password', 'role', 'profileImage', "tempPassword", 'isTempPasswordActive', 'tempPasswordExpirationDate'],
+      where: { username, email }
+    })
   }
   generateRandomPassword(length: number): string {
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -68,20 +71,21 @@ export class UserService {
         if (!userToUpdate) {
           throw new Error("'user don't exist'");
         }
-        userToUpdate.tempPassword = this.generateRandomPassword(10);
-        userToUpdate.isTempPasswordActive = true;
+        
+        userToUpdate.tempPassword = this.generateRandomPassword(10); 
+        userToUpdate.isTempPasswordActive = true; 
         const expirationDate = new Date();
-        expirationDate.setDate(expirationDate.getDate() + 1);
+        expirationDate.setDate(expirationDate.getDate() + 1); 
         userToUpdate.tempPasswordExpirationDate = expirationDate;
-        return this.authService.hashPassword(userToUpdate.tempPassword).pipe(
+        return this.authService.hashPassword(userToUpdate.tempPassword).pipe(  
           switchMap((hashedPassword: string) => {
-            userToUpdate.tempPassword = hashedPassword;
+            userToUpdate.tempPassword = hashedPassword; 
             return from(this.userRepository.save(userToUpdate)).pipe(
               map(() => userToUpdate));
           })
         );
       }),
-      catchError(() => throwError("user don't exist")));
+      catchError(() => throwError('The user with the specified username and email address was not found')));
   }
 
   updatePassword(userId: number, newPassword: string): Observable<any> {
@@ -105,7 +109,12 @@ export class UserService {
   }
 
   validateUser(email: string, password: string): Observable<UserDtO> {
-    return from(this.userRepository.findOne({ where: { email } })).pipe(
+    return from(this.userRepository.findOne({
+      select: ['id', 'name', 'username', 'email', 'password', 'role', 'profileImage', "tempPassword", 'isTempPasswordActive', 'tempPasswordExpirationDate'],
+      where: {
+        email,
+      },
+    })).pipe(
       switchMap((user: UserDtO) => {
         if (user.isTempPasswordActive) {
           if (new Date() > user.tempPasswordExpirationDate) {
@@ -164,7 +173,7 @@ export class UserService {
               );
             })
           );
-        }
+        } else { throw new Error(`email or username is busy`) }
       })
     );
   }
@@ -192,7 +201,10 @@ export class UserService {
     return from(this.userRepository.findAndCount({
       skip: Number(options.page) * Number(options.limit) || 0,
       take: Number(options.limit) || 5,
-      order: { id: "ASC" }, where: [
+      order: { id: "ASC" },
+      select: ['id', 'name', 'username', 'email', 'role'],
+
+      where: [
         { username: Like(`%${user.username}%`) }
       ]
     })).pipe(
@@ -229,7 +241,7 @@ export class UserService {
     return from(this.userRepository.update(id, user)).pipe(
       switchMap(() => this.findOneByID(id)),
       catchError(error => {
-        return throwError('user name is busy');
+        return throwError('Error: Failed to update user information');
       })
     );
   }
@@ -255,7 +267,8 @@ export class UserService {
 
   findOneByID(id: number): Observable<UserDtO> {
     return from(this.userRepository.findOne({
-      select: ['id'],
+      select: ['id', 'name', 'username', 'email', 'role', 'profileImage',],
+
       where: {
         id,
       }

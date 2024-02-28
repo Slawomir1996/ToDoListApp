@@ -73,6 +73,8 @@ export class ListController {
         return this.listService.findOne(Number(id));
     }
 
+
+
     @UseGuards(JwtAuthGuard, UserIsAuthorGuard)
     @Put(':id')
     updateOne(@Param('id') id: number, @Body() listEntry: ListEntryDTO): Observable<ListEntryDTO> {
