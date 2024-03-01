@@ -14,13 +14,13 @@ body {
 
 .heder {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   font-family: monospace;
   opacity: 0.6;
 }
 
 .calendar {
-  width: 90%;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
 }

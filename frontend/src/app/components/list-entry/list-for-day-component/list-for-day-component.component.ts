@@ -9,6 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 import { MatDialog } from '@angular/material/dialog';
 import { EditItemComponent } from '../edit-item/edit-item.component';
 import { PageEvent } from '@angular/material/paginator';
+import { Dialog } from '@angular/cdk/dialog';
 
 
 @Component({
@@ -84,6 +85,7 @@ export class ListForDayComponentComponent implements OnInit {
 
   }
   openDailog(taskId: number | any) {
+    
     this.dialogRef.open(EditItemComponent, {
       disableClose: true,
       data: {

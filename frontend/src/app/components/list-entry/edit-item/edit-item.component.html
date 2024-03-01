@@ -1,33 +1,30 @@
-<!-- <app-calendar ></app-calendar> -->
-<form [formGroup]="form" (ngSubmit)="update()">
-  <div class="todo">
-    <div class="header" style="width:70vw;">
 
-      <input type="text" class="todo-input form-control idInput" matInput style="color: black;" formControlName="id">
+<div class="grigContainer" style=" display: flex; margin: 0; padding: 0; justify-content: center; align-items: center;  "  >
 
-      <input type="date" class="todo-input form-control" style="color: black;" matInput formControlName="title">
-
+  <div class="main-div" >
+    <form [formGroup]="form" class="addForm" (ngSubmit)="update()">
       <br>
-
-      <input class="todo-input form-control" style="color: black;" formControlName="body"><br>
-      <input class="todo-input form-control" style="color: black;" type="time" min="00:00" max="23:59"
-        formControlName="startAt">
-
       <br>
-      <div class="radioLabel">
-        <label for="isDone">Is Done?</label>
-        <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox"
-          formControlName="isDone">
-        <br>
+      <input type="text" style="display: none;" class="todo-input form-control " matInput  formControlName="id">
+      
+      <input type="date" class="todo-input form-control taskInput" style="color: black;" matInput formControlName="title">
+      
+      
+      <input style="display: none;" type="date" class="todo-input form-control" matInput placeholder="Title"
+      formControlName="title">
+      <br><input class="todo-input form-control taskInput" placeholder="Add new task" formControlName="body">
+      <br>
+      <label for="isDone">Is done?</label>
+      <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox"
+      formControlName="isDone">
+      <br> <input class="todo-input form-control taskInput" type="time" min="00:00" max="23:59"
+      formControlName="startAt">
+      <br> <div class="toolsBar" >
+        <button style="display: inline;color: tomato;" mat-flat-button class="delete tools"  (click)="clouse()">X</button>
+        <button style="display: inline; color: green;" mat-flat-button class="addBtn tools"   [disabled]="!form.valid"
+        type="submit">✓</button>
       </div>
-
-      <button style="display: inline;" mat-flat-button class="edit" [disabled]="!form.valid"
-        type="submit">Update</button>
-
-      <button style="display: inline;" mat-flat-button class="delete" (click)="clouse()">Cancel</button>
-
-
-    </div>
+      
+    </form>
   </div>
-
-</form>
+</div>

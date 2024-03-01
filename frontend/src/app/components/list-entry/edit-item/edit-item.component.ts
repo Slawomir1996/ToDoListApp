@@ -13,7 +13,7 @@ import { Title } from 'chart.js';
 @Component({
   selector: 'app-edit-item',
   templateUrl: './edit-item.component.html',
-  styleUrls: ['./edit-item.component.scss']
+  styleUrls: ['../list.base.scss']
 })
 export class EditItemComponent implements OnInit {
   form: FormGroup | any;
