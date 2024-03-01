@@ -1,36 +1,40 @@
 <!-- <h1 class="title">{{(listByTitle$ | async)?.items?.[0]?.title}}</h1> -->
 
 <app-calendar class="calendar"></app-calendar>
-
-<div class="grigContainer">
-  <div class="main-div">
-    <form [formGroup]="form" class="addForm">
-      <input style="display: none;" type="date" class="todo-input form-control" matInput placeholder="Title"
-        formControlName="title">
-      <br><input class="todo-input form-control taskInput" placeholder="Add new task" formControlName="body">
+<div>
+  <mat-paginator [length]="(dataSource | async)?.meta?.totalItems" [pageSize]="(dataSource | async)?.meta?.itemsPerPage"
+      [pageSizeOptions]="[5,10,25,100]" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
+    </mat-paginator>
+  <div class="grigContainer">
+    <div class="main-div">
+      <form [formGroup]="form" class="addForm">
+        <input style="display: none;" type="date" class="todo-input form-control" matInput placeholder="Title"
+          formControlName="title">
+        <br><input class="todo-input form-control taskInput" placeholder="Add new task" formControlName="body">
+        <br>
+        <label for="isDone">Is done?</label>
+        <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox"
+          formControlName="isDone">
+        <br> <input class="todo-input form-control taskInput" type="time" min="00:00" max="23:59"
+          formControlName="startAt">
+        <br><button mat-flat-button type="submit" class="addBtn" (click)="add()">+</button>
+  
+      </form>
+    </div>
+    <div *ngFor="let list of (dataSource | async)?.items" class="main-div">
       <br>
-      <label for="isDone">Is done?</label>
-      <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox"
-        formControlName="isDone">
-      <br> <input class="todo-input form-control taskInput" type="time" min="00:00" max="23:59"
-        formControlName="startAt">
-      <br><button mat-flat-button type="submit" class="addBtn" (click)="add()">+</button>
-
-    </form>
-  </div>
-  <div *ngFor="let list of (listByTitle$ | async)?.items" class="main-div">
-    <br>
-    <div class="cart" style="font-family: 'Montserrat', sans-serif">
-      <div routerLink='id/{{list.id}}'>
-        <h1>{{list?.title}} <p *ngIf="list.startAt">{{list?.startAt}}</p>
-        </h1>
-
-        <h2>task: {{list.body}}</h2>
-        <h1 class="status" [ngStyle]="{ 'color': list.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }"
-          (dblclick)="statusChange(list)">status: {{list.isDone ? 'done' : 'to to'}}</h1>
-        <div class="toolsBar">
-          <button mat-flat-button class="edit tools" sty (click)="openDailog(list.id)">📝 </button>
-          <button mat-flat-button class="delete tools" (click)="delete(list.id)">x</button>
+      <div class="cart" style="font-family: 'Montserrat', sans-serif">
+        <div routerLink='id/{{list.id}}'>
+          <h1>{{list?.title}} <p *ngIf="list.startAt">{{list?.startAt}}</p>
+          </h1>
+  
+          <h2>task: {{list.body}}</h2>
+          <h1 class="status" [ngStyle]="{ 'color': list.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }"
+            (dblclick)="statusChange(list)">status: {{list.isDone ? 'done' : 'to to'}}</h1>
+          <div class="toolsBar">
+            <button mat-flat-button class="edit tools" sty (click)="openDailog(list.id)">📝 </button>
+            <button mat-flat-button class="delete tools" (click)="delete(list.id)">x</button>
+          </div>
         </div>
       </div>
     </div>

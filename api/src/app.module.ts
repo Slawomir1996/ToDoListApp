@@ -12,6 +12,7 @@ import { join } from 'path';
 import { ListModule } from './list/list.module';
 
 
+
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -27,6 +28,7 @@ import { ListModule } from './list/list.module';
     UserModule,
     AuthModule,
     ListModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],

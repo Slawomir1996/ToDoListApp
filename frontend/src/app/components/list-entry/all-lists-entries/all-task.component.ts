@@ -15,7 +15,7 @@ import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-task',
   templateUrl: './all-task.component.html',
-  styleUrls: ['./all-task.component.scss']
+  styleUrls: ['../list.base.scss']
 })
 export class AllTaskComponent implements OnInit {
 

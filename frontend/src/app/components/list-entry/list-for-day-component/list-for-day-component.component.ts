@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, switchMap, tap } from 'rxjs';
 import { ListEntriesPageable } from 'src/app/models/list-entry.dto';
@@ -8,23 +8,34 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditItemComponent } from '../edit-item/edit-item.component';
+import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
   selector: 'app-list-for-day-component',
   templateUrl: './list-for-day-component.component.html',
-  styleUrls: ['./list-for-day-component.component.scss']
+  styleUrls: ['../list.base.scss']
+  
 })
 export class ListForDayComponentComponent implements OnInit {
+  dataSource: Observable<ListEntriesPageable> = this.activatedRoute.params.pipe(switchMap((params: Params) => {
+    const title: string = params['title'];
+    console.log(title);
+    return this.listService.findByTitle(title).pipe(tap(a => console.log(a)));
+  }))
   imagePath: string = './img/IMG_20240220_045626_preview_rev_1.png'
   form: FormGroup | any
+  @Input() listEntries?: ListEntriesPageable;
+  @Output() paginate: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
+  pageEvent?: PageEvent;
+  origin = this.window.location.origin;
   constructor(
     private activatedRoute: ActivatedRoute,
     private listService: ListService, @Inject(WINDOW) private window: Window,
     private formBuilder: FormBuilder,
     private authService: AuthenticationService, private dialogRef: MatDialog, private route: ActivatedRoute
   ) { }
-  origin = this.window.location.origin;
+
 
 
   listByTitle$: Observable<ListEntriesPageable> = this.activatedRoute.params.pipe(switchMap((params: Params) => {
@@ -51,6 +62,14 @@ export class ListForDayComponentComponent implements OnInit {
       this.authService.isAuthenticated()
 
     });
+  }
+  onPaginateChange(event: PageEvent) {
+    let page = event.pageIndex;
+    let limit = event.pageSize;
+
+    page = page + 1;
+
+    this.dataSource = this.listService.indexAll(page, limit)
   }
 
   add() {

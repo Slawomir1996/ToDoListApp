@@ -1,0 +1,33 @@
+<!-- <app-calendar ></app-calendar> -->
+<form [formGroup]="form" (ngSubmit)="update()">
+  <div class="todo">
+    <div class="header" style="width:70vw;">
+
+      <input type="text" class="todo-input form-control idInput" matInput style="color: black;" formControlName="id">
+
+      <input type="date" class="todo-input form-control" style="color: black;" matInput formControlName="title">
+
+      <br>
+
+      <input class="todo-input form-control" style="color: black;" formControlName="body"><br>
+      <input class="todo-input form-control" style="color: black;" type="time" min="00:00" max="23:59"
+        formControlName="startAt">
+
+      <br>
+      <div class="radioLabel">
+        <label for="isDone">Is Done?</label>
+        <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox"
+          formControlName="isDone">
+        <br>
+      </div>
+
+      <button style="display: inline;" mat-flat-button class="edit" [disabled]="!form.valid"
+        type="submit">Update</button>
+
+      <button style="display: inline;" mat-flat-button class="delete" (click)="clouse()">Cancel</button>
+
+
+    </div>
+  </div>
+
+</form>

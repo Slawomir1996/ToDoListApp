@@ -2,16 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
 import { AllTaskComponent } from "./components/list-entry/all-lists-entries/all-task.component";
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { LoginComponent } from './components/forms/login/login.component';
+import { RegisterComponent } from './components/forms/register/register.component';
+import { UpdateProfileComponent } from './components/forms/update-profile/update-profile.component';
+import { UserProfileComponent } from './components/forms/user-profile/user-profile.component';
 import { UsersComponent } from './components/users/users.component';
 import { WorkspaceComponent } from './components/workspace/workspace.component';
 import { AuthGuard } from './guards/auth.guard';
-import { CreateListEntryComponentComponent } from './components/list-entry/create-list-entry-component/create-list-entry-component.component';
 import { ListForDayComponentComponent } from './components/list-entry/list-for-day-component/list-for-day-component.component';
-import { UpdatePasswordComponent } from './components/update-password/updatePassword.component';
+import { UpdatePasswordComponent } from './components/forms/update-password/updatePassword.component';
 
 
 
@@ -55,11 +54,7 @@ const routes: Routes = [
     component: AllTaskComponent,
     canActivate: [AuthGuard]
   },
-  {
-    path: 'add-new',
-    component: CreateListEntryComponentComponent,
-    canActivate: [AuthGuard]
-  },
+ 
 
   {
     path: '',

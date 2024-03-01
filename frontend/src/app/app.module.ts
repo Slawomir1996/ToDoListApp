@@ -6,9 +6,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AdminComponent } from './admin/admin.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { LoginComponent } from './components/forms/login/login.component';
+import { RegisterComponent } from './components/forms/register/register.component';
+import { UserProfileComponent } from './components/forms/user-profile/user-profile.component';
 import { UsersComponent } from './components/users/users.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,9 +26,9 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { WINDOW_PROVIDERS } from './window-token';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
-import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
+import { UpdateProfileComponent } from './components/forms/update-profile/update-profile.component';
 import { AllTaskComponent } from './components/list-entry/all-lists-entries/all-task.component';
-import { CreateListEntryComponentComponent } from './components/list-entry/create-list-entry-component/create-list-entry-component.component';
+
 
 
 import { ListForDayComponentComponent } from './components/list-entry/list-for-day-component/list-for-day-component.component';
@@ -37,8 +37,8 @@ import { EditItemComponent } from './components/list-entry/edit-item/edit-item.c
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { UpdatePasswordComponent } from './components/update-password/updatePassword.component';
-import { ForgottenPasswordComponent } from './components/forgottenPassword/forgottenPassword.component';
+import { UpdatePasswordComponent } from './components/forms/update-password/updatePassword.component';
+import { ForgottenPasswordComponent } from './components/forms/forgottenPassword/forgottenPassword.component';
 
 
 
@@ -53,7 +53,7 @@ import { ForgottenPasswordComponent } from './components/forgottenPassword/forgo
     UsersComponent,
     WorkspaceComponent,
     AllTaskComponent,
-    CreateListEntryComponentComponent,
+   
     ListForDayComponentComponent,
     EditItemComponent,
     CalendarComponent,
