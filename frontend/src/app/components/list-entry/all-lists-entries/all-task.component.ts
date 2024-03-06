@@ -67,7 +67,7 @@ export class AllTaskComponent implements OnInit {
   statusChange(listEntries: any) {
     listEntries.isDone = !listEntries.isDone;
     this.listService.updateOne(listEntries).subscribe(updatedEntry => {
-      console.log(updatedEntry);
+      // console.log(updatedEntry);
     });
 
   }

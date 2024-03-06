@@ -86,7 +86,7 @@ export class ListService {
     let tokenJWT: string | any
 
     tokenJWT = localStorage.getItem(JWT_NAME)
-    console.log(tokenJWT);
+  
     let user = this.jwtHelper.decodeToken(tokenJWT)
 
     const headers = new HttpHeaders({
@@ -104,7 +104,7 @@ export class ListService {
     let tokenJWT: string | any
 
     tokenJWT = localStorage.getItem(JWT_NAME)
-    console.log(tokenJWT);
+   
     let user = this.jwtHelper.decodeToken(tokenJWT)
     let userId = user.user.id
     const headers = new HttpHeaders({
