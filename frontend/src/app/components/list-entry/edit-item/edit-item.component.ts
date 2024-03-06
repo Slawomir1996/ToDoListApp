@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map, tap } from 'rxjs';
-import { ListEntry } from 'src/app/models/list-entry.dto';
 
-import { ListService } from 'src/app/services/list-service/list.service';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
-import { Title } from 'chart.js';
+import { ListService } from '../../../services/list-service/list.service';
+import { ListEntry } from '../../../models/list-entry.dto';
+
 
 
 @Component({

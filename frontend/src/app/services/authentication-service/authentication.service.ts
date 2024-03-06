@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap, switchMap } from "rxjs/operators";
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, from, of, throwError } from 'rxjs';
 import { UserDtO } from '../../models/user.dto'
 
 export interface LoginForm {
@@ -11,28 +11,49 @@ export interface LoginForm {
 };
 
 export const JWT_NAME = 'blog-token';
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+  private url = 'http://localhost:3000/api/users'
   constructor(private http: HttpClient,
     private jwtHelper: JwtHelperService
   ) { }
-  
-  login(loginForm: LoginForm) {
 
-    return this.http.post<any>('/api/users/login', { email: loginForm.email, password: loginForm.password }).pipe(
-      map((token) => {
-        localStorage.setItem(JWT_NAME, token.access_token);
-        
-        return token;
-      })
-      
-    )
+
+  async login(loginForm: LoginForm) {
+    try {
+      const response = await fetch(`http://localhost:3000/api/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: loginForm.email,
+          password: loginForm.password,
+        } as any),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        const token = data.access_token;
+        console.log(token); // Assuming the token is returned as 'token' in the response
+        localStorage.setItem(JWT_NAME, token); // Store the token in local storage
+        return token; // Return the token
+      } else {
+        throw new Error("Unable to login");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      throw error;
+    }
   }
-  
-logout() {
+
+
+
+
+  logout() {
     localStorage.removeItem(JWT_NAME);
   }
 
@@ -53,34 +74,58 @@ logout() {
       tap((jwt) => console.log(jwt)),
       switchMap((jwt: string | any) => of(this.jwtHelper.decodeToken(jwt)).pipe(
         map((jwt: any) => (jwt.user.id))
-        
+
       )
       ));
 
   }
-  
-checkIsTempPasswordActive():Observable<boolean>{
+
+  checkIsTempPasswordActive(): Observable<boolean> {
     return of(localStorage.getItem(JWT_NAME)).pipe(
       tap((jwt) => console.log(jwt)),
       switchMap((jwt: string | any) => of(this.jwtHelper.decodeToken(jwt)).pipe(
         map((jwt: any) => (jwt.user.isTempPasswordActive))
-        
+
       )
       ));
   }
-updatePassword(updateData: any){
-  const JWT_NAME = 'blog-token';
-   let tokenJWT: string|any
-   tokenJWT=localStorage.getItem(JWT_NAME)
-    let user= this.jwtHelper.decodeToken(tokenJWT)
-    let userId =user.user.id
-    let userEmail= user.user.email
-  user.user.email=userEmail
-   
-  return this.http.post<any>(`/api/users/${userId}/update-password`,updateData)
-}
-forgottenPassword(username: string, email: string) {
-  return this.http.post(`/api/users/recovery-password/${username}/${email}`, { EmailAddress: email });
-}
+  async updatePassword(updateData: any) {
+
+    let tokenJWT: string | any
+    tokenJWT = localStorage.getItem(JWT_NAME)
+    let user = this.jwtHelper.decodeToken(tokenJWT)
+    let userId = user.user.id
+    let userEmail = user.user.email
+    user.user.email = userEmail
+    console.log(updateData);
+    try {
+      const response = await fetch(`http://localhost:3000/api/users/${userId}/update-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${tokenJWT}`
+        },
+        body: JSON.stringify({
+          "email": userEmail,
+          "password": updateData.password,
+          "newPassword": updateData.newPassword
+        }),
+      });
+
+      if (response.ok) {
+
+        return response; // Return the token
+      } else {
+        throw new Error("Unable to login");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      throw error;
+    }
+
+  }
+  forgottenPassword(username: string, email: string) {
+    return from(this.http.post(`${this.url}/recovery-password/${username}/${email}`, { EmailAddress: email }))
+  }
 
 }

@@ -3,13 +3,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { ListEntriesPageable } from 'src/app/models/list-entry.dto';
-import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 
-import { ListService } from 'src/app/services/list-service/list.service';
-import { WINDOW } from 'src/app/window-token';
 import { EditItemComponent } from '../edit-item/edit-item.component';
 import { FormGroup } from '@angular/forms';
+import { ListEntriesPageable } from '../../../models/list-entry.dto';
+import { ListService } from '../../../services/list-service/list.service';
+import { WINDOW } from '../../../window-token';
+import { AuthenticationService } from '../../../services/authentication-service/authentication.service';
 
 
 @Component({

@@ -5,12 +5,13 @@ import { AllTaskComponent } from "./components/list-entry/all-lists-entries/all-
 import { LoginComponent } from './components/forms/login/login.component';
 import { RegisterComponent } from './components/forms/register/register.component';
 import { UpdateProfileComponent } from './components/forms/update-profile/update-profile.component';
-import { UserProfileComponent } from './components/forms/user-profile/user-profile.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { UsersComponent } from './components/users/users.component';
 import { WorkspaceComponent } from './components/workspace/workspace.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ListForDayComponentComponent } from './components/list-entry/list-for-day-component/list-for-day-component.component';
 import { UpdatePasswordComponent } from './components/forms/update-password/updatePassword.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 
 
@@ -54,12 +55,16 @@ const routes: Routes = [
     component: AllTaskComponent,
     canActivate: [AuthGuard]
   },
- 
+
 
   {
     path: '',
     redirectTo: '/workspace',
     pathMatch: 'full'
+  },
+  {
+    path: 'calendary',
+    component: CalendarComponent,
   }
 ];
 

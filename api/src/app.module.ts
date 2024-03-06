@@ -14,10 +14,7 @@ import { ListModule } from './list/list.module';
 
 
 @Module({
-  imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, './', 'frontend'),
-    }),
+  imports: [ 
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',

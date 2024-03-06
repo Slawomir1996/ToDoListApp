@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WeatherService } from 'src/app/services/weatherService/weather.service';
-import { WINDOW } from 'src/app/window-token';
+import { WeatherService } from '../../services/weatherService/weather.service';
+import { WINDOW } from '../../window-token';
 
 @Component({
   selector: 'app-calendar',
@@ -39,9 +39,7 @@ export class CalendarComponent implements OnInit {
       } else {
         this.calendarData = `${this.selected?.getFullYear()}-${Number(this.selected?.getMonth()) + 1}-${this.selected?.getDate()}`
       }
-    }
-    console.log(this.calendarData);
-    ;
+    };
     this.router.navigate(['/list-entries/title/' + this.calendarData], { relativeTo: this.activatedRoute });
     // window.location.reload();
   }
