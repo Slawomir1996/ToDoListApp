@@ -45,20 +45,15 @@ export class ListService {
   findByTitle(title: string) {
     const JWT_NAME = 'blog-token';
     let tokenJWT: string | any
-
     tokenJWT = localStorage.getItem(JWT_NAME)
-    //  console.log(tokenJWT);
     let user = this.jwtHelper.decodeToken(tokenJWT)
     let userId = user.user.id
-  
     return this.http.get(`${this.url}user/${userId}/title/${title}`).pipe();
-
   }
 
   paginateByTitle(title: string, page: number, limit: number): Observable<ListEntriesPageable> {
     const JWT_NAME = 'blog-token';
     let tokenJWT: string | any
-
     tokenJWT = localStorage.getItem(JWT_NAME)
     console.log(tokenJWT);
     let user = this.jwtHelper.decodeToken(tokenJWT)
@@ -68,33 +63,27 @@ export class ListService {
       'Authorization': `Bearer ${JWT_NAME}`
     })
     let params = new HttpParams();
-
     params = params.append('page', String(page));
     params = params.append('limit', String(limit))
-    return this.http.get<ListEntriesPageable>(`${this.url}user/${userId}/title/${title}` + { params })
+    return this.http.get<ListEntriesPageable>(`${this.url}user/${userId}/title/${title}`, { params })
   }
 
 
   post(listEntry: ListEntry) {
-
-    return from(this.http.post<any>('/api/list-entries', listEntry));
+    return from(this.http.post<any>(this.url, listEntry));
   }
 
 
   updateOne(listEntry: ListEntry): Observable<ListEntry> {
     const JWT_NAME = 'blog-token';
     let tokenJWT: string | any
-
     tokenJWT = localStorage.getItem(JWT_NAME)
-  
     let user = this.jwtHelper.decodeToken(tokenJWT)
-
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${JWT_NAME}`
     })
     let params = new HttpParams();
-
     return this.http.put(this.url + listEntry.id, listEntry, { params });
   }
 
@@ -102,9 +91,7 @@ export class ListService {
   delete(id: number): Observable<any> {
     const JWT_NAME = 'blog-token';
     let tokenJWT: string | any
-
     tokenJWT = localStorage.getItem(JWT_NAME)
-   
     let user = this.jwtHelper.decodeToken(tokenJWT)
     let userId = user.user.id
     const headers = new HttpHeaders({
@@ -112,7 +99,6 @@ export class ListService {
       'Authorization': `Bearer ${JWT_NAME}`
     })
     let params = new HttpParams();
-
     return this.http.delete('/api/list-entries/' + id, { params });
   }
 

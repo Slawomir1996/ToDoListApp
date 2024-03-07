@@ -9,19 +9,6 @@ export interface ListEntry {
     startAt?: string;
     author?: UserDtO;
     isDone?: boolean;
-
-    // id?: number;
-    // title?: string;
-    // slug?: string;
-    // description?: string;
-    // body?: string;
-    // createdAt?: Date;
-    // updatedAt?: Date;
-    // likes?: number;
-    // author?: User;
-    // headerImage?: string;
-    // publishedDate?: Date;
-    // isPublished?: boolean;
 }
 
 export class Meta {
@@ -40,6 +27,12 @@ export class Links {
 }
 
 export class ListEntriesPageable {
+    items?: ListEntry[];
+    meta?: Meta;
+    links?: Links;
+}
+
+export class ListEntriesPageableByTitle {
     items?: ListEntry[];
     meta?: Meta;
     links?: Links;

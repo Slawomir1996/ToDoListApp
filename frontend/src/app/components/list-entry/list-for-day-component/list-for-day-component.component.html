@@ -16,7 +16,7 @@
         <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox"
           formControlName="isDone">
         <br> <input class="todo-input form-control taskInput" type="time" min="00:00" max="23:59"
-          formControlName="startAt">
+          formControlName="startAt" [(ngModel)]="defaultValue">
         <br><button mat-flat-button type="submit" class="addBtn" (click)="add()">+</button>
 
       </form>
@@ -24,7 +24,6 @@
     <div *ngFor="let list of (dataSource | async)?.items" class="main-div">
       <br>
       <div class="cart" style="font-family: 'Montserrat', sans-serif">
-        <!-- <div routerLink='id/{{list.id}}'> -->
         <h1>{{list?.title}}</h1>
         <p *ngIf="list.startAt">{{list?.startAt}}</p>
         <h3>task: {{list.body}}</h3>
@@ -34,7 +33,6 @@
           <button class="edit tools" (click)="openDailog(list.id)">📝 </button>
           <button class="delete tools" (click)="delete(list.id)">x</button>
         </div>
-        <!-- </div> -->
       </div>
     </div>
   </div>
