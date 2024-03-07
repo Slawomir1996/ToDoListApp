@@ -1,13 +1,9 @@
 import { forwardRef, Inject, Injectable, Options } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginate';
-import { title } from 'process';
-
 import { Observable, of, switchMap, from, map } from 'rxjs';
 import slugify from 'slugify';
-
 import { UserDtO } from 'src/user/model/user.dto';
-import { UserService } from 'src/user/user-services/user.service';
 import { FindOperator, Repository } from 'typeorm';
 import { ListEntryDTO } from '../models/list-entry.dto';
 import { ListEntryEntity } from '../models/list-entry.entity';
@@ -16,14 +12,9 @@ import { ListEntryEntity } from '../models/list-entry.entity';
 
 @Injectable()
 export class ListService {
-
-
-
     constructor(
-
         @InjectRepository(ListEntryEntity) private readonly listRepository: Repository<ListEntryEntity>
     ) { }
-
 
     create(user: UserDtO, listEntry: ListEntryDTO): Observable<ListEntryDTO> {
         listEntry.author = user;
@@ -53,7 +44,6 @@ export class ListService {
         return from(paginate<ListEntryEntity>(this.listRepository, options, {
             relations: ['author'],
             where: [
-
 
                 { author: { id: userId } }
             ]

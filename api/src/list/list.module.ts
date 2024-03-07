@@ -4,9 +4,7 @@ import { AuthModule } from 'src/auth/auth.module';
 import { UserModule } from 'src/user/user.module';
 import { ListEntryEntity } from './models/list-entry.entity';
 import { ListController } from './list.controller/list.controller';
-
 import { ListService } from './list-service/list.service';
-
 
 
 @Module({

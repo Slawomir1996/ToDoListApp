@@ -1,5 +1,4 @@
 
-
 export class  UserDtO {
     id?: number;
     name?: string;
@@ -9,5 +8,4 @@ export class  UserDtO {
     role?: string;
     profileImage?: string;
   
-    // passwordConfirm?: string;
   }

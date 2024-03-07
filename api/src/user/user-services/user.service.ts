@@ -8,14 +8,11 @@ import { AuthService } from 'src/auth/auth-services/auth.service';
 import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginate';
 
 
-
-
-
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
-    private authService: AuthService, 
+    private authService: AuthService,
   ) { }
 
   isUserUnique(username: string, email: string): Observable<boolean> {
@@ -80,7 +77,7 @@ export class UserService {
         userToUpdate.tempPasswordExpirationDate = expirationDate;
         return this.authService.hashPassword(userToUpdate.tempPassword).pipe(
           switchMap((hashedPassword: string) => {
-            
+
             userToUpdate.tempPassword = hashedPassword;
             return from(this.userRepository.save(userToUpdate)).pipe(
               map(() => userToUpdate));
@@ -168,7 +165,7 @@ export class UserService {
 
               return from(this.userRepository.save(newUser)).pipe(
                 map((user: UserDtO) => {
-                 
+
                   const { password, ...result } = user;
                   return result;
                 }),
@@ -176,7 +173,7 @@ export class UserService {
               );
             })
           );
-          
+
         } else { throw new Error(`email or username is busy`) }
       })
     );

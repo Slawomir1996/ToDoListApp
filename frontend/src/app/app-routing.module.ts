@@ -14,8 +14,6 @@ import { UpdatePasswordComponent } from './components/forms/update-password/upda
 import { CalendarComponent } from './components/calendar/calendar.component';
 
 
-
-
 const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
@@ -37,8 +35,6 @@ const routes: Routes = [
       },
     ]
   },
-
-
   {
     path: 'update-profile',
     component: UpdateProfileComponent,
@@ -49,14 +45,11 @@ const routes: Routes = [
     component: ListForDayComponentComponent,
     canActivate: [AuthGuard]
   },
-
   {
     path: 'all',
     component: AllTaskComponent,
     canActivate: [AuthGuard]
   },
-
-
   {
     path: '',
     redirectTo: '/workspace',

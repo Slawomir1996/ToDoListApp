@@ -31,7 +31,6 @@ export class CalendarComponent implements OnInit {
         this.calendarData = `${this.selected?.getFullYear()}-0${Number(this.selected?.getMonth()) + 1}-${this.selected?.getDate()}`
       }
 
-
     }
     else {
       if (Number(this.selected?.getDate()) <= 9) {

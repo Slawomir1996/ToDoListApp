@@ -10,7 +10,7 @@
         <p class="clockDisplay">{{ currentTime | date: 'HH:mm:ss' }}</p>
       </div>
       <!-- weather -->
-      <mat-card class="weatherCard" >
+      <mat-card class="weatherCard" style="color: aliceblue;" >
         <form class="weatherForm" id="weatherForm" (ngSubmit)="onSubmit(city)">
           <input class="weatherInput" autocomplete="off" required type="text" [(ngModel)]="city"
           name="city" placeholder="cityName" >
@@ -23,7 +23,7 @@
           </div>
         <mat-card-title  class="cityName">{{cityName}}</mat-card-title>
         </mat-card-header>
-        <mat-card-content >
+        <mat-card-content style="color: aliceblue;" >
           <p class="temp">{{(temp -273.15).toFixed(1)}}°C</p>
           <p>Humidity: {{humidity}}%</p>
           <p>Description: {{description}} </p>

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserData, UserService } from '../../services/user/user.service';
+import { UserService } from '../../services/user/user.service';
+import { UserData } from 'src/app/services/user/userData';
 
 @Component({
   selector: 'app-users',

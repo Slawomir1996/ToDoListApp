@@ -24,12 +24,9 @@ export class UserIsAuthorGuard implements CanActivate {
                 map((listEntry: ListEntryDTO) => {
                     let hasPermission = false;
 
-
                     if (user.id === listEntry["author"].id) {
                         hasPermission = true;
                     }
-
-
                     return user && hasPermission;
 
                 })

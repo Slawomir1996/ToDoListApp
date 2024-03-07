@@ -23,22 +23,16 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { UpdateProfileComponent } from './components/forms/update-profile/update-profile.component';
 import { AllTaskComponent } from './components/list-entry/all-lists-entries/all-task.component';
-
-
-
-
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditItemComponent } from './components/list-entry/edit-item/edit-item.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { UpdatePasswordComponent } from './components/forms/update-password/updatePassword.component';
-
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ListForDayComponentComponent } from './components/list-entry/list-for-day-component/list-for-day-component.component';
 import { ForgottenPasswordComponent } from './components/forms/forgottenPassword/forgottenPassword.component';

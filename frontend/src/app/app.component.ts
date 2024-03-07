@@ -15,9 +15,7 @@ export class AppComponent {
 
   constructor(
     private router: Router, private authService: AuthenticationService,
-  ) {
-
-  }
+  ) {}
 
   navigateTo(value: string) {
     this.router.navigate(['../', value]);

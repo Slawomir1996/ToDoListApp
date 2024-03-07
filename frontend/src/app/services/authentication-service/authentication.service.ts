@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, tap, switchMap } from "rxjs/operators";
+import { map, switchMap } from "rxjs/operators";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable, from, of, throwError } from 'rxjs';
 import { UserDtO } from '../../models/user.dto'
@@ -9,7 +9,6 @@ export interface LoginForm {
   email: string;
   password: string;
 };
-
 export const JWT_NAME = 'blog-token';
 @Injectable({
   providedIn: 'root'
@@ -19,7 +18,6 @@ export class AuthenticationService {
   constructor(private http: HttpClient,
     private jwtHelper: JwtHelperService
   ) { }
-
 
   async login(loginForm: LoginForm) {
     try {
@@ -36,11 +34,9 @@ export class AuthenticationService {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         const token = data.access_token;
-        console.log(token); // Assuming the token is returned as 'token' in the response
-        localStorage.setItem(JWT_NAME, token); // Store the token in local storage
-        return token; // Return the token
+        localStorage.setItem(JWT_NAME, token);
+        return token;
       } else {
         throw new Error("Unable to login");
       }
@@ -71,7 +67,6 @@ export class AuthenticationService {
 
   getUserId(): Observable<number> {
     return of(localStorage.getItem(JWT_NAME)).pipe(
-      tap((jwt) => console.log(jwt)),
       switchMap((jwt: string | any) => of(this.jwtHelper.decodeToken(jwt)).pipe(
         map((jwt: any) => (jwt.user.id))
 
@@ -82,7 +77,6 @@ export class AuthenticationService {
 
   checkIsTempPasswordActive(): Observable<boolean> {
     return of(localStorage.getItem(JWT_NAME)).pipe(
-      tap((jwt) => console.log(jwt)),
       switchMap((jwt: string | any) => of(this.jwtHelper.decodeToken(jwt)).pipe(
         map((jwt: any) => (jwt.user.isTempPasswordActive))
 
@@ -97,7 +91,6 @@ export class AuthenticationService {
     let userId = user.user.id
     let userEmail = user.user.email
     user.user.email = userEmail
-    console.log(updateData);
     try {
       const response = await fetch(`http://localhost:3000/api/users/${userId}/update-password`, {
         method: "POST",
@@ -113,8 +106,7 @@ export class AuthenticationService {
       });
 
       if (response.ok) {
-
-        return response; // Return the token
+        return response;
       } else {
         throw new Error("Unable to login");
       }
