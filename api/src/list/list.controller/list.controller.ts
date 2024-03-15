@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, Request, UseGuards } from '@nestjs/common';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-guard';
 import { UserIsAuthorGuard } from '../guards/user-is-author.guard';
 import { ListService } from '../list-service/list.service';
@@ -11,7 +11,7 @@ export const LIST_ENTRIES_URL = 'http://localhost:3000/api/list-entries';
 export class ListController {
     constructor(private listService: ListService) { }
 
-
+    @UseGuards(JwtAuthGuard,)
     @Post()
     create(@Body() listEntry: ListEntryDTO, @Request() req): Observable<ListEntryDTO> {
         const user = req.user;

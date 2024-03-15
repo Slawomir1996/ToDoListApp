@@ -13,7 +13,7 @@ import { ListEntry } from '../../../models/list-entry.dto';
 @Component({
   selector: 'app-edit-item',
   templateUrl: './edit-item.component.html',
-  styleUrls: ['../list.base.scss']
+  styleUrls: ['../list-for-day-component/list-for-day-component.component.scss']
 })
 export class EditItemComponent implements OnInit {
   form: FormGroup | any;
@@ -59,6 +59,6 @@ export class EditItemComponent implements OnInit {
 
   }
   clouse() {
-    this.dialogRef.ngOnDestroy()
+    this.dialogRef.closeAll()
   }
 }

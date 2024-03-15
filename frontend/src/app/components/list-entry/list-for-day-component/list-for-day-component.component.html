@@ -1,9 +1,9 @@
-<app-calendar></app-calendar>
+
 <div>
   <mat-paginator [length]="(dataSource | async)?.meta?.totalItems" [pageSize]="(dataSource | async)?.meta?.itemsPerPage"
     [pageSizeOptions]="[5,10,25,100]" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
   </mat-paginator>
-  <div class="grigContainer">
+  <div class="grigContainer" style="min-height: 1000px;">
     <div class="main-div" *ngIf="currentURL!=='workspace'">
       <form [formGroup]="form" class="addForm">
         <input style="display: none;" type="number" class="todo-input form-control" matInput formControlName="id">
@@ -28,7 +28,7 @@
         <p *ngIf="list.startAt">{{list?.startAt}}</p>
         <h3>task: {{list.body}}</h3>
         <h1 class="status" [ngStyle]="{ 'color': list.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }"
-          (dblclick)="statusChange(list)">status: {{list.isDone ? 'done' : 'to to'}}</h1>
+          (dblclick)="statusChange(list)">status: {{list.isDone ? 'done' : 'todo'}}</h1>
         <div class="toolsBar">
           <button class="edit tools" (click)="openDailog(list.id)">📝 </button>
           <button class="delete tools" (click)="delete(list.id)">x</button>

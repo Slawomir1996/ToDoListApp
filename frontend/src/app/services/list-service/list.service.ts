@@ -15,7 +15,7 @@ export class ListService {
     private http: HttpClient) { }
   private url = 'http://localhost:3000/api/list-entries/'
 
-  findOne(id: number){
+  findOne(id: number) {
     return from(this.http.get<ListEntry>(`${this.url}${id}`));
   }
 
@@ -29,7 +29,7 @@ export class ListService {
   }
 
   findByTitle(title: string) {
-    
+
     this.authenticationService.getUserId().subscribe((id: number) => userId = id);
     return this.http.get(`${this.url}user/${userId}/title/${title}`).pipe();
   }
@@ -46,12 +46,16 @@ export class ListService {
     return this.http.get<ListEntriesPageable>(`${this.url}user/${userId}/title/${title}`, { params })
   }
 
-  post(listEntry: ListEntry):Observable<ListEntry> {
+  post(listEntry: ListEntry){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${JWT_NAME}`
+    })
     let params = new HttpParams();
-    return from(this.http.post<any>(this.url, listEntry,{params}));
+    return from(this.http.post<any>(this.url, listEntry, { params }));
   }
 
-  updateOne(listEntry: ListEntry){
+  updateOne(listEntry: ListEntry) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${JWT_NAME}`
@@ -67,7 +71,7 @@ export class ListService {
       'Authorization': `Bearer ${JWT_NAME}`
     })
     let params = new HttpParams();
-    return this.http.delete('/api/list-entries/' + id, { params });
+    return this.http.delete(this.url + id, { params });
   }
 
 

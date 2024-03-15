@@ -47,7 +47,8 @@ a {
   border-radius: 10px;
 
 }
-a:hover {
+
+.menu a:hover {
   text-decoration: none;
   color: white;
   background-color: royalblue
@@ -67,7 +68,30 @@ a:hover {
 .logoutBtn:hover {
   text-decoration: none;
   color: white;
-  background-color: rgba(65, 105, 225, 0.76)
+  background-color: royalblue
 }
 
+
+footer {
+  text-align: center;
+  padding-top: 12px;
+  background-color: #f2f2f2;
+
+}
+
+
+
+.footer-container {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(65, 105, 225, 0.75);
+  font-size: 1.8rem;
+  padding: 10px;
+
+}
+
+.social-links {
+  margin-top: 1rem;
+}
 
