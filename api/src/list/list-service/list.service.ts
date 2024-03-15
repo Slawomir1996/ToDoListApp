@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable, Options } from '@nestjs/common';
+import { Injectable, Options } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginate';
 import { Observable, of, switchMap, from, map } from 'rxjs';
@@ -24,18 +24,6 @@ export class ListService {
                 listEntry.slug = slug + user.id;
                 return from(this.listRepository.save(listEntry));
             })
-        )
-    }
-
-    findAll(): Observable<ListEntryDTO[]> {
-        return from(this.listRepository.find({ relations: { author: true } }));
-    }
-
-    paginateAll(options: IPaginationOptions): Observable<Pagination<ListEntryDTO>> {
-        return from(paginate<ListEntryEntity>(this.listRepository, options, {
-            relations: ['author']
-        })).pipe(
-            map((listEntries: Pagination<ListEntryDTO>) => listEntries)
         )
     }
 

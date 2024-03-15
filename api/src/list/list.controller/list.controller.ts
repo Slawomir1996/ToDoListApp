@@ -18,22 +18,8 @@ export class ListController {
         return this.listService.create(user, listEntry);
     }
 
-    @UseGuards(JwtAuthGuard,)
-    @Get('user/:user/title')
-    index(
-        @Query('page') page: number = 1,
-        @Query('limit') limit: number = 10
-    ) {
-        limit = limit > 100 ? 100 : limit;
-
-        return this.listService.paginateAll({
-            limit: Number(limit),
-            page: Number(page),
-            route: LIST_ENTRIES_URL
-        })
-    }
     @UseGuards(JwtAuthGuard)
-    @Get('user/:user')
+    @Get('user/:user/title')
     indexByUser(
         @Query('page') page: number = 1,
         @Query('limit') limit: number = 10,
