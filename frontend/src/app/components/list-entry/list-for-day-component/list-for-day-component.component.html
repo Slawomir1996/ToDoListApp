@@ -1,13 +1,12 @@
-<!-- <h1 class="title">{{(listByTitle$ | async)?.items?.[0]?.title}}</h1> -->
-
 <app-calendar></app-calendar>
 <div>
   <mat-paginator [length]="(dataSource | async)?.meta?.totalItems" [pageSize]="(dataSource | async)?.meta?.itemsPerPage"
     [pageSizeOptions]="[5,10,25,100]" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
   </mat-paginator>
   <div class="grigContainer">
-    <div class="main-div">
+    <div class="main-div" *ngIf="currentURL!=='workspace'">
       <form [formGroup]="form" class="addForm">
+        <input style="display: none;" type="number" class="todo-input form-control" matInput formControlName="id">
         <input style="display: none;" type="date" class="todo-input form-control" matInput placeholder="Title"
           formControlName="title">
         <br><input class="todo-input form-control taskInput" placeholder="Add new task" formControlName="body">
@@ -24,6 +23,7 @@
     <div *ngFor="let list of (dataSource | async)?.items" class="main-div">
       <br>
       <div class="cart" style="font-family: 'Montserrat', sans-serif">
+
         <h1>{{list?.title}}</h1>
         <p *ngIf="list.startAt">{{list?.startAt}}</p>
         <h3>task: {{list.body}}</h3>

@@ -24,23 +24,15 @@ export class CalendarComponent implements OnInit {
     }, 1000);
   }
   navigateTo(selected: any) {
-    if (Number(this.selected?.getMonth()) <= 9) {
-      if (Number(this.selected?.getDate()) <= 9) {
-        this.calendarData = `${this.selected?.getFullYear()}-0${Number(this.selected?.getMonth()) + 1}-0${this.selected?.getDate()}`
-      } else {
-        this.calendarData = `${this.selected?.getFullYear()}-0${Number(this.selected?.getMonth()) + 1}-${this.selected?.getDate()}`
-      }
-
+    if (selected) {
+      const year = selected.getFullYear();
+      const month = selected.getMonth() + 1;
+      const day = selected.getDate();
+      const formattedMonth = month < 10 ? `0${month}` : `${month}`;
+      const formattedDay = day < 10 ? `0${day}` : `${day}`;
+      this.calendarData = `${year}-${formattedMonth}-${formattedDay}`;
+      this.router.navigate(['/list-entries/title/' + this.calendarData], { relativeTo: this.activatedRoute });
     }
-    else {
-      if (Number(this.selected?.getDate()) <= 9) {
-        this.calendarData = `${this.selected?.getFullYear()}-${Number(this.selected?.getMonth()) + 1}-0${this.selected?.getDate()}`
-      } else {
-        this.calendarData = `${this.selected?.getFullYear()}-${Number(this.selected?.getMonth()) + 1}-${this.selected?.getDate()}`
-      }
-    };
-    this.router.navigate(['/list-entries/title/' + this.calendarData], { relativeTo: this.activatedRoute });
-    // window.location.reload();
   }
   //weather 
   city: string | any = null;

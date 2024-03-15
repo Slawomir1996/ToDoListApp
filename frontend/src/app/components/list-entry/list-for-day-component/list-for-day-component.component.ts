@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { EditItemComponent } from '../edit-item/edit-item.component';
 import { PageEvent } from '@angular/material/paginator';
-import { ListEntriesPageableByTitle } from '../../../models/list-entry.dto';
+import { ListEntriesPageable } from '../../../models/list-entry.dto';
 import { ListService } from '../../../services/list-service/list.service';
 import { AuthenticationService } from '../../../services/authentication-service/authentication.service';
 import { WINDOW } from 'src/app/window-token';
@@ -14,18 +14,14 @@ import { WINDOW } from 'src/app/window-token';
 @Component({
   selector: 'app-list-for-day-component',
   templateUrl: './list-for-day-component.component.html',
-  styleUrls: ['../list.base.scss']
+  styleUrls: ['./list-for-day-component.component.scss']
 
 })
 export class ListForDayComponentComponent implements OnInit {
-  title: string | null = this.route.snapshot.paramMap.get('title')
-  dataSource: Observable<ListEntriesPageableByTitle> = this.activatedRoute.params.pipe(switchMap((params: Params) => {
-    const title: string = params['title'];
-    return this.listService.paginateByTitle(title, 1, 10).pipe();
-  }))
-  imagePath: string = './img/IMG_20240220_045626_preview_rev_1.png';
+  dataSource: Observable<ListEntriesPageable> = of({} as ListEntriesPageable);
+  currentURL = this.activatedRoute.snapshot.url[0].path;
   form: FormGroup | any;
-  @Input() listEntries?: ListEntriesPageableByTitle;
+  @Input() listEntries?: ListEntriesPageable;
   @Output() paginate: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
   pageEvent?: PageEvent;
   origin = this.window.location.origin;
@@ -38,7 +34,21 @@ export class ListForDayComponentComponent implements OnInit {
     private authService: AuthenticationService,
     private dialogRef: MatDialog,
     private route: ActivatedRoute
-  ) { }
+  ) {
+    this.route.params.subscribe(params => {
+      const title: string | null = params['title'];
+      if (!title || title === "") {
+        this.dataSource = this.listService.indexAll(1, 10);
+      } else {
+        this.dataSource = this.route.params.pipe(
+          switchMap((params: Params) => {
+            const title: string = params['title'];
+            return this.listService.paginateByTitle(title, 1, 10);
+          })
+        );
+      }
+    });
+  }
   defaultValue: string = '';
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -52,13 +62,24 @@ export class ListForDayComponentComponent implements OnInit {
       });
 
       this.authService.isAuthenticated();
-    });
-  }
+    })
 
+  }
   onPaginateChange(event: PageEvent) {
-    let page = event.pageIndex + 1;
-    let limit = event.pageSize;
-    this.dataSource = this.listService.paginateByTitle(String(this.title), page, limit)
+    if (this.activatedRoute.snapshot.paramMap.has('title')) {
+      let page = event.pageIndex + 1;
+      let limit = event.pageSize;
+      this.activatedRoute.params.subscribe(params => {
+        const title: string = params['title'];
+        this.dataSource = this.listService.paginateByTitle(title, page, limit);
+      });
+    } else {
+      let page = event.pageIndex;
+      let limit = event.pageSize;
+      page = page + 1;
+
+      this.dataSource = this.listService.indexAll(page, limit);
+    }
   }
 
   add() {
@@ -86,3 +107,5 @@ export class ListForDayComponentComponent implements OnInit {
     this.listService.updateOne(listEntries).subscribe();
   }
 }
+
+

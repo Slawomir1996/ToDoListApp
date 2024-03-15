@@ -1,7 +1,8 @@
 <div *ngIf="isLoggedIn(); else loginForm">
-    <section class="listOfTask"><app-task></app-task></section>
-  </div>
+  <section class="listOfTask">
+    <app-list-for-day-component/>
+  </section>
+</div>
   <ng-template #loginForm>
     <app-login></app-login>
   </ng-template>
-  

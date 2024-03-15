@@ -6,8 +6,6 @@ import { JWT_NAME } from '../authentication-service/authentication.service';
 import { UserData } from './userData';
 
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -20,12 +18,12 @@ export class UserService {
     )
   }
 
-  updateOne(user:UserDtO): Observable<UserDtO> {
+  updateOne(user:UserDtO){
     
     return this.http.put(this.url + user.id, user);
   }
 
-  findAll(page: number, size: number): Observable<UserData> {
+  findAll(page: number, size: number){
     let params = new HttpParams();
 
     params = params.append('page', String(page));

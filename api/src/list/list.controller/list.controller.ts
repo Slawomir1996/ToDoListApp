@@ -11,7 +11,7 @@ export const LIST_ENTRIES_URL = 'http://localhost:3000/api/list-entries';
 export class ListController {
     constructor(private listService: ListService) { }
 
-    @UseGuards(JwtAuthGuard)
+
     @Post()
     create(@Body() listEntry: ListEntryDTO, @Request() req): Observable<ListEntryDTO> {
         const user = req.user;
@@ -19,7 +19,7 @@ export class ListController {
     }
 
     @UseGuards(JwtAuthGuard,)
-    @Get('')
+    @Get('user/:user/title')
     index(
         @Query('page') page: number = 1,
         @Query('limit') limit: number = 10

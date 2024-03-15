@@ -26,7 +26,6 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { UpdateProfileComponent } from './components/forms/update-profile/update-profile.component';
-import { AllTaskComponent } from './components/list-entry/all-lists-entries/all-task.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditItemComponent } from './components/list-entry/edit-item/edit-item.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -50,7 +49,6 @@ import { WINDOW_PROVIDERS } from './window-token';
     UserProfileComponent,
     UsersComponent,
     WorkspaceComponent,
-    AllTaskComponent,
     ListForDayComponentComponent,
     EditItemComponent,
     CalendarComponent,

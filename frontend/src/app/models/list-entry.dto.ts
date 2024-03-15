@@ -2,13 +2,13 @@ import { UserDtO } from './user.dto';
 
 export interface ListEntry {
     id?: number;
-    slug?: string;
-    title?: string;
-    body?: string;
-    createdAt?: Date;
-    startAt?: string;
-    author?: UserDtO;
-    isDone?: boolean;
+    slug: string;
+    title: string;
+    body: string;
+    createdAt: Date;
+    startAt: string;
+    author: UserDtO;
+    isDone: boolean;
 }
 
 export class Meta {
@@ -27,12 +27,6 @@ export class Links {
 }
 
 export class ListEntriesPageable {
-    items?: ListEntry[];
-    meta?: Meta;
-    links?: Links;
-}
-
-export class ListEntriesPageableByTitle {
     items?: ListEntry[];
     meta?: Meta;
     links?: Links;
