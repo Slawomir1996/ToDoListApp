@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { diskStorage } from 'multer';
 import { join } from 'path';
 import path = require('path');
-
+import { SendEmailDto } from '../model/email.dto';
 
 
 export const storage = {
@@ -59,7 +59,16 @@ export class UserController {
       }),
     );
   }
-
+  @Post('/send-email')
+  sendEmail() {
+    const dto: SendEmailDto = {
+      sender: { name: 'taskMate', address: 'taskMate@exaplle.com' },
+      recipients: '',
+      subject: '',
+      text: '',
+    }
+    return this.userService.sendEmail(dto)
+  }
   @Post()
   create(@Body() user: UserDtO): Observable<UserDtO | Object> {
     return this.userService.create(user).pipe(
