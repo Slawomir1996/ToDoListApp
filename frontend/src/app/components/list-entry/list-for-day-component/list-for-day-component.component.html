@@ -1,8 +1,15 @@
-
 <div>
-  <mat-paginator [length]="(dataSource | async)?.meta?.totalItems" [pageSize]="(dataSource | async)?.meta?.itemsPerPage"
-    [pageSizeOptions]="[5,10,25,100]" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
-  </mat-paginator>
+  <mat-form-field style="position: absolute; margin-left: 3rem;">
+    <mat-label>Status</mat-label>
+    <mat-select  style="width: 20vw; margin: 0px; padding: 0px;" value='all'  [(ngModel)]="selectedStatus" >
+      <mat-option value="all" >All</mat-option>
+      <mat-option value="todo">To Do</mat-option>
+      <mat-option value="done">Done</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-paginator  [length]="(dataSource | async)?.meta?.totalItems" [pageSize]="(dataSource | async)?.meta?.itemsPerPage"
+  [pageSizeOptions]="[5,10,25,100]" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons> 
+</mat-paginator>
   <div class="grigContainer" style="min-height: 1000px;">
     <div class="main-div" *ngIf="currentURL!=='workspace'">
       <form [formGroup]="form" class="addForm">
@@ -20,15 +27,15 @@
 
       </form>
     </div>
-    <div *ngFor="let list of (dataSource | async)?.items" class="main-div">
+    <div *ngFor="let list of (dataSource | async)?.items" class="main-div" [ngStyle]="{ 'display':  setVisibility(list)? 'flex' : 'none' }" >
       <br>
-      <div class="cart" style="font-family: 'Montserrat', sans-serif">
+      <div class="cart" style="font-family: 'Montserrat', sans-serif; ">
 
         <h1>{{list?.title}}</h1>
-        <p *ngIf="list.startAt">{{list?.startAt}}</p>
+        <p *ngIf="list.startAt">start at: {{list?.startAt}}</p>
         <h3>task: {{list.body}}</h3>
         <h1 class="status" [ngStyle]="{ 'color': list.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }"
-          (dblclick)="statusChange(list)">status: {{list.isDone ? 'done' : 'todo'}}</h1>
+          (dblclick)="statusChange(list)">status: {{list.isDone ? 'to do' : 'done'}}</h1>
         <div class="toolsBar">
           <button class="edit tools" (click)="openDailog(list.id)">📝 </button>
           <button class="delete tools" (click)="delete(list.id)">x</button>

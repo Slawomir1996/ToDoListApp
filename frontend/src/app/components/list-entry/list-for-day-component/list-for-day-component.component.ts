@@ -1,14 +1,15 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Observable, of, switchMap, tap } from 'rxjs';
+import { Observable, map, of, switchMap, tap } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { EditItemComponent } from '../edit-item/edit-item.component';
 import { PageEvent } from '@angular/material/paginator';
-import { ListEntriesPageable } from '../../../models/list-entry.dto';
+import { ListEntriesPageable, ListEntry } from '../../../models/list-entry.dto';
 import { ListService } from '../../../services/list-service/list.service';
 import { AuthenticationService } from '../../../services/authentication-service/authentication.service';
 import { WINDOW } from 'src/app/window-token';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -18,6 +19,8 @@ import { WINDOW } from 'src/app/window-token';
 
 })
 export class ListForDayComponentComponent implements OnInit {
+  selected = 'all';
+  selectedStatus: string = 'all'
   dataSource: Observable<ListEntriesPageable> = of({} as ListEntriesPageable);
   currentURL = this.activatedRoute.snapshot.url[0].path;
   form: FormGroup | any;
@@ -62,6 +65,7 @@ export class ListForDayComponentComponent implements OnInit {
       });
 
       this.authService.isAuthenticated();
+      
     })
 
   }
@@ -106,6 +110,19 @@ export class ListForDayComponentComponent implements OnInit {
     listEntries.isDone = !listEntries.isDone;
     this.listService.updateOne(listEntries).subscribe();
   }
-}
+  displayStyle: string = 'none';
+  vizible: boolean = false
 
+  checkStatus(isDone: boolean): string {
+    return !isDone ? 'done' : 'todo';
+  }
+  
+  setVisibility(item: any): boolean {
+    const toDisplay = this.checkStatus(item.isDone);
+    return this.selectedStatus === "all" || this.selectedStatus === toDisplay;
+  }
+ 
+    
+  }
+  
 
