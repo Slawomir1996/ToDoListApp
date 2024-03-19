@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Observable, map, of, switchMap, tap } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { EditItemComponent } from '../edit-item/edit-item.component';
@@ -9,25 +9,24 @@ import { ListEntriesPageable, ListEntry } from '../../../models/list-entry.dto';
 import { ListService } from '../../../services/list-service/list.service';
 import { AuthenticationService } from '../../../services/authentication-service/authentication.service';
 import { WINDOW } from 'src/app/window-token';
-import { Title } from '@angular/platform-browser';
 
 
 @Component({
   selector: 'app-list-for-day-component',
   templateUrl: './list-for-day-component.component.html',
   styleUrls: ['./list-for-day-component.component.scss']
-
 })
 export class ListForDayComponentComponent implements OnInit {
-  selected = 'all';
-  selectedStatus: string = 'all'
+  tasks?: ListEntry[] = [];
+  selectedStatus: string = 'all';
+
   dataSource: Observable<ListEntriesPageable> = of({} as ListEntriesPageable);
-  currentURL = this.activatedRoute.snapshot.url[0].path;
   form: FormGroup | any;
   @Input() listEntries?: ListEntriesPageable;
   @Output() paginate: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
   pageEvent?: PageEvent;
   origin = this.window.location.origin;
+  currentURL = this.activatedRoute.snapshot.url[0].path;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -36,19 +35,28 @@ export class ListForDayComponentComponent implements OnInit {
     @Inject(WINDOW) private window: Window,
     private authService: AuthenticationService,
     private dialogRef: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    
   ) {
     this.route.params.subscribe(params => {
       const title: string | null = params['title'];
       if (!title || title === "") {
-        this.dataSource = this.listService.indexAll(1, 10);
+         this.listService.indexAll(1, 10).subscribe(data => {
+          this.tasks = data.items;
+          console.log(data);
+          
+        });
       } else {
-        this.dataSource = this.route.params.pipe(
+         this.route.params.pipe(
           switchMap((params: Params) => {
             const title: string = params['title'];
-            return this.listService.paginateByTitle(title, 1, 10);
+            return this.listService.paginateByTitle(title, 1, 10)
           })
-        );
+        ).subscribe(data => {
+          this.tasks = data.items;
+          console.log(data);
+          
+        });
       }
     });
   }
@@ -65,10 +73,10 @@ export class ListForDayComponentComponent implements OnInit {
       });
 
       this.authService.isAuthenticated();
-      
-    })
+    });
 
   }
+
   onPaginateChange(event: PageEvent) {
     if (this.activatedRoute.snapshot.paramMap.has('title')) {
       let page = event.pageIndex + 1;
@@ -86,19 +94,19 @@ export class ListForDayComponentComponent implements OnInit {
     }
   }
 
-  add() {
+  addItem() {
     this.listService.post(this.form?.getRawValue()).subscribe(() => {
       window.location.reload();
     });
   }
 
-  delete(id: number | any) {
+  deleteItem(id: number | any) {
     this.listService.delete(Number(id)).subscribe(() => {
       window.location.reload();
     });
   }
 
-  openDailog(taskId: number | any) {
+  openDialog(taskId: number | any) {
     this.dialogRef.open(EditItemComponent, {
       disableClose: true,
       data: {
@@ -106,23 +114,21 @@ export class ListForDayComponentComponent implements OnInit {
       }
     });
   }
-  statusChange(listEntries: any) {
-    listEntries.isDone = !listEntries.isDone;
-    this.listService.updateOne(listEntries).subscribe();
-  }
-  displayStyle: string = 'none';
-  vizible: boolean = false
 
-  checkStatus(isDone: boolean): string {
+  toggleStatus(listEntry: any) {
+    listEntry.isDone = !listEntry.isDone;
+    this.listService.updateOne(listEntry).subscribe();
+  }
+
+  getStatusText(isDone: boolean): string {
     return !isDone ? 'done' : 'todo';
   }
-  
-  setVisibility(item: any): boolean {
-    const toDisplay = this.checkStatus(item.isDone);
-    return this.selectedStatus === "all" || this.selectedStatus === toDisplay;
-  }
- 
-    
-  }
-  
 
+  setVisibility(item: any): boolean {
+    const status = this.getStatusText(item.isDone);
+    return this.selectedStatus === "all" || this.selectedStatus === status;
+  }
+
+  
+ 
+}

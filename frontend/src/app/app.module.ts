@@ -36,6 +36,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { ListForDayComponentComponent } from './components/list-entry/list-for-day-component/list-for-day-component.component';
 import { ForgottenPasswordComponent } from './components/forms/forgottenPassword/forgottenPassword.component';
 import { WINDOW_PROVIDERS } from './window-token';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -53,9 +54,15 @@ import { WINDOW_PROVIDERS } from './window-token';
     EditItemComponent,
     CalendarComponent,
     UpdatePasswordComponent,
-    ForgottenPasswordComponent
+    CalendarComponent,
+    CalendarComponent,
+    ForgottenPasswordComponent,
+
+
+
   ],
   imports: [
+    DragDropModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -78,6 +85,7 @@ import { WINDOW_PROVIDERS } from './window-token';
     MatCardModule,
     MatDialogModule,
     ReactiveFormsModule,
+
   ],
   providers: [
     WINDOW_PROVIDERS,

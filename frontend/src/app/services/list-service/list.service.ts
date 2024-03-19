@@ -46,7 +46,7 @@ export class ListService {
     return this.http.get<ListEntriesPageable>(`${this.url}user/${userId}/title/${title}`, { params })
   }
 
-  post(listEntry: ListEntry){
+  post(listEntry: ListEntry) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${JWT_NAME}`

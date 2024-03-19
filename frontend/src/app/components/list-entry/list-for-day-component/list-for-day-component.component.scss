@@ -53,6 +53,7 @@
  .grigContainer {
      display: grid;
      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+     gap: 10px;
      // grid-template-columns: repeat(5,1fr);
      background-image: url('../../../img/blat-drewniany-dab-bc-szczegol.jpg');
 
@@ -65,15 +66,20 @@
      background-image: url('../../../img/yellowK.png');
      width: 300px;
      height: 310px;
-     font-family: 'Montserrat', sans-serif
+     font-family: 'Montserrat', sans-serif;
+     cursor:grab;
+     &:active{
+        z-index: 1;
+     }
+
  }
 
  .cart {
-     justify-content: center;
      margin-left: auto;
      margin-right: auto;
-     margin-top: 4vh;
-     font-family: 'Montserrat', sans-serif
+     font-family: 'Montserrat', sans-serif;
+     transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+
  }
 
  .toolsBar {
@@ -119,4 +125,6 @@
          border: none;
          font-size: 2rem;
      }
+
+
  }

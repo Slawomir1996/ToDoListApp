@@ -1,46 +1,48 @@
 <div>
-  <mat-form-field style="position: absolute; margin-left: 3rem;">
-    <mat-label>Status</mat-label>
-    <mat-select  style="width: 20vw; margin: 0px; padding: 0px;" value='all'  [(ngModel)]="selectedStatus" >
-      <mat-option value="all" >All</mat-option>
-      <mat-option value="todo">To Do</mat-option>
-      <mat-option value="done">Done</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-paginator  [length]="(dataSource | async)?.meta?.totalItems" [pageSize]="(dataSource | async)?.meta?.itemsPerPage"
-  [pageSizeOptions]="[5,10,25,100]" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons> 
+<mat-form-field style="position: absolute; margin-left: 3rem;">
+  <mat-label>Status</mat-label>
+  <mat-select style="width: 20vw; margin: 0px; padding: 0px;" value='all' [(ngModel)]="selectedStatus">
+    <mat-option value="all">All</mat-option>
+    <mat-option value="todo">To Do</mat-option>
+    <mat-option value="done">Done</mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-paginator [length]="(dataSource | async)?.meta?.totalItems" [pageSize]="(dataSource | async)?.meta?.itemsPerPage"
+  [pageSizeOptions]="[5,10,25,100]" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
 </mat-paginator>
-  <div class="grigContainer" style="min-height: 1000px;">
-    <div class="main-div" *ngIf="currentURL!=='workspace'">
-      <form [formGroup]="form" class="addForm">
-        <input style="display: none;" type="number" class="todo-input form-control" matInput formControlName="id">
-        <input style="display: none;" type="date" class="todo-input form-control" matInput placeholder="Title"
-          formControlName="title">
-        <br><input class="todo-input form-control taskInput" placeholder="Add new task" formControlName="body">
-        <br>
-        <label for="isDone">Is done?</label>
-        <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox"
-          formControlName="isDone">
-        <br> <input class="todo-input form-control taskInput" type="time" min="00:00" max="23:59"
-          formControlName="startAt" [(ngModel)]="defaultValue">
-        <br><button mat-flat-button type="submit" class="addBtn" (click)="add()">+</button>
-
-      </form>
-    </div>
-    <div *ngFor="let list of (dataSource | async)?.items" class="main-div" [ngStyle]="{ 'display':  setVisibility(list)? 'flex' : 'none' }" >
+<div class="grigContainer" style="min-height: 1000px;">
+  <div class="main-div" *ngIf="currentURL!=='workspace'">
+    <form [formGroup]="form" class="addForm">
+      <input style="display: none;" type="number" class="todo-input form-control" matInput formControlName="id">
+      <input style="display: none;" type="date" class="todo-input form-control" matInput placeholder="Title"
+        formControlName="title">
+      <br><input class="todo-input form-control taskInput" placeholder="Add new task" formControlName="body">
       <br>
-      <div class="cart" style="font-family: 'Montserrat', sans-serif; ">
+      <label for="isDone">Is done?</label>
+      <input style="width: 1rem; height: 1rem; margin-bottom: 0.4rem; margin-left: 0.8rem;" type="checkbox"
+        formControlName="isDone">
+      <br> <input class="todo-input form-control taskInput" type="time" min="00:00" max="23:59"
+        formControlName="startAt" [(ngModel)]="defaultValue">
+      <br><button mat-flat-button type="submit" class="addBtn" (click)="addItem()">+</button>
 
-        <h1>{{list?.title}}</h1>
-        <p *ngIf="list.startAt">start at: {{list?.startAt}}</p>
-        <h3>task: {{list.body}}</h3>
-        <h1 class="status" [ngStyle]="{ 'color': list.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }"
-          (dblclick)="statusChange(list)">status: {{list.isDone ? 'to do' : 'done'}}</h1>
-        <div class="toolsBar">
-          <button class="edit tools" (click)="openDailog(list.id)">📝 </button>
-          <button class="delete tools" (click)="delete(list.id)">x</button>
-        </div>
+    </form>
+  </div>
+  <div *ngFor="let list of tasks" class="main-div"
+    [ngStyle]="{ 'display':  setVisibility(list)? 'flex' : 'none' }" cdkDrag>
+    <br>
+    <div class="cart" style="font-family: 'Montserrat', sans-serif;padding-top: 2.5rem; ">
+
+      <h1>{{list?.title}}</h1>
+      <p *ngIf="list.startAt">start at: {{list?.startAt}}</p>
+      <h3>task: {{list.body}}</h3>
+      <h1 class="status" [ngStyle]="{ 'color': list.isDone ? 'rgba(26, 228, 7, 0.7)' : 'orange' }"
+        (dblclick)="toggleStatus(list)">status: {{list.isDone ? 'to do' : 'done'}}</h1>
+      <div class="toolsBar">
+        <button class="edit tools" (click)="openDialog(list.id)">📝 </button>
+        <button class="delete tools" (click)="deleteItem(list.id)">x</button>
       </div>
     </div>
   </div>
 </div>
+</div>
+
